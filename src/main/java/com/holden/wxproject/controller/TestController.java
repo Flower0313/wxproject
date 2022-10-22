@@ -20,9 +20,8 @@ public class TestController {
     private PicBannerService picBannerService;
 
     @GetMapping("/test")
-    public List<PicBanner> getAllPics() {
-        List<PicBanner> allPic = picBannerService.findAllPic();
-        return allPic;
+    public List<String> getAllPics() {
+        return null;
     }
 
 }

@@ -5,4 +5,10 @@
         SELECT id, pic_name, pic_url
         FROM banner_pic;
     </select>
+
+    <select id="getPicUrl" resultType="java.lang.String">
+        SELECT pic_url
+        FROM banner_pic
+        where id = #{picId};
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.holden.wxproject.mapper;
 
 import com.holden.wxproject.pojo.PicBanner;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
 @Mapper
 public interface PicBannerMapper {
     List<PicBanner> findAllPic();
+
+    String getPicUrl(@Param("picId") Long picId);
 }

@@ -1,5 +1,6 @@
 package com.holden.wxproject.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.holden.wxproject.pojo.PicBanner;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import java.util.List;
  * @Describe
  */
 public interface PicBannerService {
-    List<PicBanner> findAllPic();
+    JSONArray findAllPic();
 
     void getPic(HttpServletResponse resp, Long picId) throws IOException;
 }
