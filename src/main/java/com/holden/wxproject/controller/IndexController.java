@@ -1,35 +1,32 @@
-package com.holden.wxproject.service.impl;
+package com.holden.wxproject.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.holden.wxproject.annotation.SourceChange;
-import com.holden.wxproject.config.BaseConstant;
-import com.holden.wxproject.config.DataSourceType;
 import com.holden.wxproject.mapper.PicBannerMapper;
-import com.holden.wxproject.pojo.PicBanner;
 import com.holden.wxproject.service.PicBannerService;
-import lombok.extern.slf4j.Slf4j;
+import com.holden.wxproject.service.impl.PicBannerServiceImpl;
+import com.holden.wxproject.util.DataResult;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
- * @ClassName wxproject-PicBannerServiceImpl
+ * @ClassName wxproject-IndexController
  * @Author Holden_—__——___———____————_____Xiao
- * @Create 2022年10月22日14:49 - 周六
+ * @Create 2022年10月25日11:54 - 周二
  * @Describe
  */
-@Slf4j
-@Service
-public class PicBannerServiceImpl implements PicBannerService {
+@Api(tags = {"首页"})
+@RestController
+public class IndexController {
     @Autowired
     private PicBannerMapper picBannerMapper;
 
@@ -39,21 +36,10 @@ public class PicBannerServiceImpl implements PicBannerService {
     @Value("${file.http}")
     private String FileHttp;
 
-    @Override
-    @SourceChange(BaseConstant.NURSING)
-    public JSONArray findAllPic() {
-        List<PicBanner> allPic = picBannerMapper.findAllPic();
-        JSONArray objects = new JSONArray();
-        for (PicBanner picBanner : allPic) {
-            objects.add(FileHttp + "?picId=" + picBanner.getId());
-        }
-        return objects;
-    }
-
-    @Override
-    public void getPic(HttpServletResponse resp, Long picId) throws IOException {
+    @GetMapping("/")
+    public void index(HttpServletResponse resp) throws IOException {
         //获取图片的url名称
-        String picUrl = picBannerMapper.getPicUrl(picId);
+        String picUrl = picBannerMapper.getPicUrl(7L);
         FileSystemResource file = new FileSystemResource(FileStoreage + "/" + picUrl);
         InputStream inputStream = null;
         BufferedInputStream bufferedInputStream = null;
@@ -66,7 +52,6 @@ public class PicBannerServiceImpl implements PicBannerService {
             bufferedOutputStream = new BufferedOutputStream(resp.getOutputStream());
             FileCopyUtils.copy(bufferedInputStream, bufferedOutputStream);
         } catch (Exception e) {
-            log.error("[class: PicBannerServiceImpl.java]-[method: getPic]-[function: {}] , [Message]: {}", e.getMessage(), e);
         } finally {
             if (null != inputStream) {
                 inputStream.close();
@@ -81,3 +66,4 @@ public class PicBannerServiceImpl implements PicBannerService {
         }
     }
 }
+

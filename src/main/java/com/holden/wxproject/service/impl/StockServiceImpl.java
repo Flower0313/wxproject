@@ -1,11 +1,29 @@
 package com.holden.wxproject.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.holden.wxproject.annotation.SourceChange;
+import com.holden.wxproject.config.BaseConstant;
+import com.holden.wxproject.mapper.StockMapper;
 import com.holden.wxproject.service.SotckService;
+import com.holden.wxproject.util.ClickHouseUtil;
+import com.holden.wxproject.util.DataResult;
 import lombok.extern.slf4j.Slf4j;
+import org.ansj.splitWord.analysis.IndexAnalysis;
+import org.ansj.splitWord.analysis.NlpAnalysis;
+import org.ansj.splitWord.analysis.ToAnalysis;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName wxproject-StockServiceImpl
@@ -16,8 +34,101 @@ import java.util.Map;
 @Service
 @Slf4j
 public class StockServiceImpl implements SotckService {
+    @Autowired
+    private StockMapper stockMapper;
+
+    public boolean timeIsLegel(String str) {
+        Pattern p = Pattern.compile("\\d{4}\\-\\d{1,2}\\-\\d{1,2}");//构造一个模式
+        Matcher m = p.matcher(str);//构造一个匹配器
+        return m.matches();
+    }
+
     @Override
-    public List<Map<String, String>> getSingleStock() {
-        return null;
+    public DataResult<JSONObject> getSingleStock(String code, String date) {
+        if ("".equals(code) || "".equals(date) || code == null || date == null) {
+            return DataResult.fail("值不能为空!");
+        }
+        if (!timeIsLegel(date)) {
+            return DataResult.fail("日期不正确!");
+        }
+        JSONObject data = new JSONObject();
+        try {
+            Connection connection = ClickHouseUtil.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from spider_base.stock_detail where code ='" + code + "' and ds = '" + date + "'");
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    data.put(metaData.getColumnName(i), resultSet.getString(i));
+                }
+            }
+            //若没查询到数据
+            if (data.size() == 0) {
+                return DataResult.fail("没有查询到数据");
+            }
+        } catch (Exception e) {
+            log.error("[class: StockServiceImpl.java]-[method: getSingleStock]-[function: {}] , [Message]: {}", e.getMessage(), e);
+        }
+
+        return DataResult.ok(data);
+    }
+
+    @Override
+    public DataResult<String> getStockNum(String date) {
+        if ("".equals(date) || date == null) {
+            return DataResult.fail("值不能为空!");
+        }
+        if (!timeIsLegel(date)) {
+            return DataResult.fail("日期不正确!");
+        }
+        String result = "";
+        try {
+            Connection connection = ClickHouseUtil.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select count(*) as num from spider_base.stock_detail where ds ='" + date + "'");
+            if (resultSet.next()) {
+                result = resultSet.getString(1);
+            }
+        } catch (Exception e) {
+            log.error("[class: StockServiceImpl.java]-[method: getStockNum]-[function: {}] , [Message]: {}", e.getMessage(), e);
+        }
+        return DataResult.ok(result);
+
+    }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
+    public DataResult<List<Map<String, String>>> getIndustryReport(String date) {
+        List<Map<String, String>> industryReport = stockMapper.getIndustryReport(date);
+        return DataResult.ok(industryReport);
+    }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
+    public DataResult<List<Map<String, Object>>> getContiniation(Integer times, Integer tag) {
+        if (Objects.isNull(times) || Objects.isNull(tag)) {
+            return DataResult.fail("请传值!");
+        }
+        List<Map<String, Object>> results = stockMapper.getContiniation(times, tag);
+        //在内存中对累计值进行排序
+        if (tag == 1) {
+            results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o1.get("sumrate").toString()).compareTo(new BigDecimal(o2.get("sumrate").toString()))));
+        } else {
+            results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o2.get("sumrate").toString()).compareTo(new BigDecimal(o1.get("sumrate").toString()))));
+        }
+        return DataResult.ok(results);
+    }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
+    public DataResult<List<Map<String, Object>>> judgeNews() {
+        List<Map<String, Object>> keywords = stockMapper.keywords();
+        //String rlike = keywords.stream().map(String::valueOf).collect(Collectors.joining("|"));
+        Map<Object, List<Map<String, Object>>> tag = keywords.stream().collect(Collectors.groupingBy(x -> x.get("tag")));
+        String up = tag.get("正").get(0).get("content").toString().replace(",", "|");
+        String down = tag.get("负").get(0).get("content").toString().replace(",", "|");
+        List<Map<String, Object>> result = stockMapper.judgeNews(up, down);
+        return DataResult.ok(result);
     }
 }

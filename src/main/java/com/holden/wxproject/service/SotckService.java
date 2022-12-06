@@ -1,5 +1,10 @@
 package com.holden.wxproject.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.holden.wxproject.util.DataResult;
+
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -10,5 +15,13 @@ import java.util.Map;
  * @Describe
  */
 public interface SotckService {
-    List<Map<String,String>> getSingleStock();
+    DataResult<JSONObject> getSingleStock(String code, String date) throws SQLException;
+
+    DataResult<String> getStockNum(String date);
+
+    DataResult<List<Map<String, String>>> getIndustryReport(String date);
+
+    DataResult<List<Map<String, Object>>> getContiniation(Integer times, Integer tag);
+
+    DataResult<List<Map<String, Object>>> judgeNews();
 }

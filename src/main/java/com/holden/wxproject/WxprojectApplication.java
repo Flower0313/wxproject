@@ -4,9 +4,11 @@ import com.holden.wxproject.service.impl.PicBannerServiceImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-@SpringBootApplication
-@MapperScan("com.holden.wxproject.mapper")
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@EnableAspectJAutoProxy
 public class WxprojectApplication {
 
     public static void main(String[] args) {

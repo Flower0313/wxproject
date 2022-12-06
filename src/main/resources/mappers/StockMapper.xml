@@ -8,4 +8,44 @@
           and is_deleted = 0
           and id = #{picId};
     </select>
+
+    <select id="getIndustryReport" resultType="java.util.Map">
+        SELECT *
+        FROM `df_a_stock_industry_report`
+        where ds = #{date}
+    </select>
+
+    <select id="getContiniation" resultType="java.util.Map">
+        SELECT `code`, sumrate
+        FROM `stock_continuation_up`
+        where times = #{times}
+          and tag = #{tag};
+    </select>
+
+    <select id="judgeNews" resultType="java.util.Map">
+        select `code`, title
+        from df_a_stock_news
+        where 1 = 1
+          and concat(title) REGEXP #{up}
+          and code not in (
+            select distinct code from df_a_stock_news where concat(title) REGEXP #{down}
+            )
+    </select>
+
+    <select id="keywords" resultType="java.util.Map">
+        SELECT CASE
+
+                   WHEN 0 > weight THEN
+                       '负'
+                   ELSE '正'
+                   END            as tag,
+               GROUP_CONCAT(name) as content
+        FROM `stock_key_word`
+        GROUP BY CASE
+
+                     WHEN 0 > weight THEN
+                         '负'
+                     ELSE '正'
+                     END
+    </select>
 </mapper>

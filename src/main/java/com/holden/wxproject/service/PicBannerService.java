@@ -1,11 +1,9 @@
 package com.holden.wxproject.service;
 
 import com.alibaba.fastjson.JSONArray;
-import com.holden.wxproject.pojo.PicBanner;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @ClassName wxproject-PicBannerService

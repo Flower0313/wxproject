@@ -1,6 +1,8 @@
 package com.holden.wxproject.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.holden.wxproject.annotation.SourceChange;
+import com.holden.wxproject.config.BaseConstant;
 import com.holden.wxproject.mapper.NursingMapper;
 import com.holden.wxproject.pojo.NursingInfo;
 import com.holden.wxproject.service.NursingService;
@@ -23,6 +25,7 @@ public class NursingServiceImpl implements NursingService {
     private NursingMapper nursingMapper;
 
     @Override
+    @SourceChange(BaseConstant.NURSING)
     public List<NursingInfo> getAllNursing() {
         List<NursingInfo> allNursing = nursingMapper.findAllNursing();
         return allNursing;
