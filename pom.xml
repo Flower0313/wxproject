@@ -84,6 +84,17 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!--ageiport-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>ageiport-processor-core</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.2</version>
+        </dependency>
 
         <!-- 开源中文分词器Ansj -->
         <dependency>
@@ -91,6 +102,32 @@
             <artifactId>ansj_seg</artifactId>
             <version>5.1.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.plexpt</groupId>
+            <artifactId>chatgpt</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!-- xml -->
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.18</version>
+        </dependency>
+
+
+        <!--<dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>wx-java-mp-spring-boot-starter</artifactId>
+            <version>4.2.0</version>
+        </dependency>-->
+
 
     </dependencies>
 

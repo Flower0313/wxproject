@@ -23,5 +23,10 @@ public interface SotckService {
 
     DataResult<List<Map<String, Object>>> getContiniation(Integer times, Integer tag);
 
+    DataResult<List<Map<String, Object>>> getContiniationFinance(Integer times, Integer tag);
+
     DataResult<List<Map<String, Object>>> judgeNews();
+
+    DataResult<List<Map<String, Object>>> stockHot();
+
 }

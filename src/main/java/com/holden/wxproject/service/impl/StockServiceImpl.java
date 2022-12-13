@@ -15,7 +15,10 @@ import org.ansj.splitWord.analysis.ToAnalysis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.sql.*;
 import java.util.Comparator;
 import java.util.List;
@@ -122,6 +125,22 @@ public class StockServiceImpl implements SotckService {
 
     @Override
     @SourceChange(BaseConstant.SPIDER)
+    public DataResult<List<Map<String, Object>>> getContiniationFinance(Integer times, Integer tag) {
+        if (Objects.isNull(times) || Objects.isNull(tag)) {
+            return DataResult.fail("请传值!");
+        }
+        List<Map<String, Object>> results = stockMapper.getContiniation(times, tag);
+        //在内存中对累计值进行排序
+        if (tag == 1) {
+            results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o1.get("sumprice").toString()).compareTo(new BigDecimal(o2.get("sumprice").toString()))));
+        } else {
+            results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o2.get("sumprice").toString()).compareTo(new BigDecimal(o1.get("sumprice").toString()))));
+        }
+        return DataResult.ok(results);
+    }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> judgeNews() {
         List<Map<String, Object>> keywords = stockMapper.keywords();
         //String rlike = keywords.stream().map(String::valueOf).collect(Collectors.joining("|"));
@@ -131,4 +150,13 @@ public class StockServiceImpl implements SotckService {
         List<Map<String, Object>> result = stockMapper.judgeNews(up, down);
         return DataResult.ok(result);
     }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
+    public DataResult<List<Map<String, Object>>> stockHot() {
+        List<Map<String, Object>> result = stockMapper.sotckHot();
+        return DataResult.ok(result);
+    }
+
+
 }

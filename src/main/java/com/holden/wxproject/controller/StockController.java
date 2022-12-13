@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,8 @@ import java.util.Objects;
 public class StockController {
     @Autowired
     private SotckService stockService;
+
+
 
     @SneakyThrows
     @ApiOperation(value = "获取单个股票基本面信息")
@@ -69,7 +72,18 @@ public class StockController {
             @ApiImplicitParam(name = "tag", value = "1上涨2下跌", dataType = "Integer", required = false, defaultValue = "1"),
     })
     public DataResult<List<Map<String, Object>>> getContiniation(@RequestParam("times") Integer times, @RequestParam("tag") Integer tag) {
-        return stockService.getContiniation(times,tag);
+        return stockService.getContiniation(times, tag);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "截止当天连续上涨或下跌的融资融券")
+    @GetMapping("/get-continuation-finance")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "times", value = "连涨次数", dataType = "Integer", required = false, defaultValue = "3"),
+            @ApiImplicitParam(name = "tag", value = "1上涨2下跌", dataType = "Integer", required = false, defaultValue = "1"),
+    })
+    public DataResult<List<Map<String, Object>>> getContiniationFinance(@RequestParam("times") Integer times, @RequestParam("tag") Integer tag) {
+        return stockService.getContiniationFinance(times, tag);
     }
 
     @SneakyThrows
@@ -78,5 +92,15 @@ public class StockController {
     public DataResult<List<Map<String, Object>>> judgeNews() {
         return stockService.judgeNews();
     }
+
+    @SneakyThrows
+    @ApiOperation(value = "获取讨论热度的股")
+    @GetMapping("/stock-hot")
+    public DataResult<List<Map<String, Object>>> stockHot() {
+        return stockService.stockHot();
+    }
+
+
+
 
 }

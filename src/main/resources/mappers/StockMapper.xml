@@ -22,6 +22,13 @@
           and tag = #{tag};
     </select>
 
+    <select id="getContiniationFinance" resultType="java.util.Map">
+        SELECT `code`, sumprice
+        FROM `finance_continuation_up`
+        where times = #{times}
+          and tag = #{tag};
+    </select>
+
     <select id="judgeNews" resultType="java.util.Map">
         select `code`, title
         from df_a_stock_news
@@ -47,5 +54,14 @@
                          '负'
                      ELSE '正'
                      END
+    </select>
+
+    <select id="sotckHot" resultType="java.util.Map">
+        SELECT `code`,
+               comment_hot,
+               visit_hot
+        FROM df_a_stock_hot
+        ORDER BY comment_hot DESC,
+                 visit_hot DESC limit 20
     </select>
 </mapper>

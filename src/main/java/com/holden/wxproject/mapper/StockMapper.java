@@ -20,9 +20,13 @@ public interface StockMapper {
 
     List<Map<String, Object>> getContiniation(@Param("times") int times, @Param("tag") int tag);
 
+    List<Map<String, Object>> getContiniationFinance(@Param("times") int times, @Param("tag") int tag);
+
     List<Map<String, Object>> judgeNews(@Param("up") String up, @Param("down") String down);
 
     List<Map<String, Object>> keywords();
+
+    List<Map<String, Object>> sotckHot();
 
 
 }

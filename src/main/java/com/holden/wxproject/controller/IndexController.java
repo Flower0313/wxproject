@@ -12,11 +12,15 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 /**
  * @ClassName wxproject-IndexController
@@ -36,34 +40,10 @@ public class IndexController {
     @Value("${file.http}")
     private String FileHttp;
 
-    @GetMapping("/")
-    public void index(HttpServletResponse resp) throws IOException {
-        //获取图片的url名称
-        String picUrl = picBannerMapper.getPicUrl(7L);
-        FileSystemResource file = new FileSystemResource(FileStoreage + "/" + picUrl);
-        InputStream inputStream = null;
-        BufferedInputStream bufferedInputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-        //将文件变成excel格式
-        resp.setContentType("image/png");
-        try {
-            inputStream = file.getInputStream();
-            bufferedInputStream = new BufferedInputStream(inputStream);
-            bufferedOutputStream = new BufferedOutputStream(resp.getOutputStream());
-            FileCopyUtils.copy(bufferedInputStream, bufferedOutputStream);
-        } catch (Exception e) {
-        } finally {
-            if (null != inputStream) {
-                inputStream.close();
-            }
-            if (null != bufferedInputStream) {
-                bufferedInputStream.close();
-            }
-            if (null != bufferedOutputStream) {
-                bufferedOutputStream.flush();
-                bufferedOutputStream.close();
-            }
-        }
-    }
-}
 
+
+
+
+
+
+}
