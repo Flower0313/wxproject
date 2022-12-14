@@ -1,5 +1,6 @@
 package com.holden.wxproject;
 
+import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.github.plexpt.chatgpt.Chatbot;
 import com.holden.wxproject.annotation.SourceChange;
@@ -18,11 +19,9 @@ import java.util.Map;
 
 class WxprojectApplicationTests {
     public static void main(String[] args) {
-        String value = "{\\" +
-                "    \"access_token\": \"63_aGSW_INagq_Lvy3FPEqmJlCEw40zSSVlndATWJtS5Nu1Fyz2ay9EExsZW4YpynmDs7JS45ceCVlHu_Ymub_cdIGYxADMcVb7UkxlP3mIiCzDtWr79d-WwxB5bIQRTLjAIAHJB\",\\" +
-                "    \"expires_in\": 7200\\" +
-                "}";
-        JSONArray json = (JSONArray) JSONArray.parse(value);
-        System.out.println(json);
+        String url = "http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + "dhasjkhdadhajdhakdhahkdjashda";
+        String post = HttpUtil.post(url, (String) null);
+        System.out.println(post);
+
     }
 }

@@ -26,6 +26,10 @@ public interface StockMapper {
 
     List<Map<String, Object>> keywords();
 
+    List<Map<String, Object>> targetNews(@Param("target") String target);
+
+    List<Map<String, Object>> targetStock(@Param("code") String code, @Param("name") String name);
+
     List<Map<String, Object>> sotckHot();
 
 

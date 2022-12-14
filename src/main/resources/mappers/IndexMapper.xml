@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.holden.wxproject.mapper.IndexMapper">
+    <select id="MA" resultType="com.holden.wxproject.pojo.StockDTO">
+        select code, current_price
+        from df_a_stock_detail
+        where code = #{code}
+        order by ds desc limit #{day};
+    </select>
+
+    <select id="BIAS" resultType="com.holden.wxproject.pojo.StockDTO">
+        select code, current_price
+        from df_a_stock_detail
+        where code = #{code}
+        order by ds desc limit #{day};
+    </select>
+
+    <select id="WR" resultType="com.holden.wxproject.pojo.StockDTO">
+        select code, current_price, highest, lowest
+        from df_a_stock_detail
+        where code = #{code}
+        order by ds desc limit #{day};
+    </select>
+
+    <select id="num" resultType="java.lang.Integer">
+        select count(1) as num
+        from df_a_stock_detail
+        where code = #{code};
+    </select>
+
+    <select id="List" resultType="com.holden.wxproject.pojo.StockDTO">
+        select code, current_price, highest, lowest, ds
+        from df_a_stock_detail
+        where code = #{code}
+        order by ds desc limit #{day};
+    </select>
+
+
+</mapper>

@@ -11,4 +11,6 @@ public class BaseConstant {
     public static final String NURSING = "nursing";
     public static final String SPIDER = "spider";
 
+    public static final Integer BBI = 24;
+
 }

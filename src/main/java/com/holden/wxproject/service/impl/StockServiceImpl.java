@@ -129,7 +129,7 @@ public class StockServiceImpl implements SotckService {
         if (Objects.isNull(times) || Objects.isNull(tag)) {
             return DataResult.fail("请传值!");
         }
-        List<Map<String, Object>> results = stockMapper.getContiniation(times, tag);
+        List<Map<String, Object>> results = stockMapper.getContiniationFinance(times, tag);
         //在内存中对累计值进行排序
         if (tag == 1) {
             results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o1.get("sumprice").toString()).compareTo(new BigDecimal(o2.get("sumprice").toString()))));
@@ -149,6 +149,20 @@ public class StockServiceImpl implements SotckService {
         String down = tag.get("负").get(0).get("content").toString().replace(",", "|");
         List<Map<String, Object>> result = stockMapper.judgeNews(up, down);
         return DataResult.ok(result);
+    }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
+    public DataResult<List<Map<String, Object>>> targetNews(String keyword) {
+        List<Map<String, Object>> maps = stockMapper.targetNews(keyword);
+        return DataResult.ok(maps);
+    }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
+    public DataResult<List<Map<String, Object>>> targetStock(String code, String name) {
+        List<Map<String, Object>> maps = stockMapper.targetStock(code, name);
+        return DataResult.ok(maps);
     }
 
     @Override

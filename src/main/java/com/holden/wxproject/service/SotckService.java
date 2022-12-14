@@ -27,6 +27,10 @@ public interface SotckService {
 
     DataResult<List<Map<String, Object>>> judgeNews();
 
+    DataResult<List<Map<String, Object>>> targetNews(String keyword);
+
+    DataResult<List<Map<String, Object>>> targetStock(String code,String name);
+
     DataResult<List<Map<String, Object>>> stockHot();
 
 }

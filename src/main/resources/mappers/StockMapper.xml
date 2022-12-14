@@ -16,17 +16,19 @@
     </select>
 
     <select id="getContiniation" resultType="java.util.Map">
-        SELECT `code`, sumrate
+        SELECT `code`, sumrate, `times`
         FROM `stock_continuation_up`
-        where times = #{times}
-          and tag = #{tag};
+        where times >= #{times}
+          and tag = #{tag}
+        order by sumrate desc;
     </select>
 
     <select id="getContiniationFinance" resultType="java.util.Map">
-        SELECT `code`, sumprice
+        SELECT `code`, sumprice, `times`
         FROM `finance_continuation_up`
-        where times = #{times}
-          and tag = #{tag};
+        where times >= #{times}
+          and tag = #{tag}
+        order by sumprice desc;
     </select>
 
     <select id="judgeNews" resultType="java.util.Map">
@@ -63,5 +65,31 @@
         FROM df_a_stock_hot
         ORDER BY comment_hot DESC,
                  visit_hot DESC limit 20
+    </select>
+
+    <select id="targetNews" resultType="java.util.Map">
+        select `code`, title
+        from df_a_stock_news
+        where 1 = 1
+          and concat(title) REGEXP #{target}
+    </select>
+
+    <select id="targetStock" resultType="java.util.Map">
+        SELECT
+            `code`,
+            `name`,
+            current_price,
+            up_down_rate,
+            turnover_rate,
+            ( main_inflow + Slarge_inflow + large_inflow ) AS big,
+            ( mid_inflow + small_inflow ) AS small,
+            deal_amount
+        FROM
+            `df_a_stock_detail`
+        WHERE
+            concat(code) REGEXP #{code} or concat(name) REGEXP #{name}
+        ORDER BY
+            ds DESC
+            LIMIT 1
     </select>
 </mapper>
