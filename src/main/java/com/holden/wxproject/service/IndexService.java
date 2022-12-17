@@ -1,5 +1,6 @@
 package com.holden.wxproject.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.holden.wxproject.pojo.StockDTO;
 import com.holden.wxproject.util.DataResult;
 
@@ -14,18 +15,30 @@ import java.util.Map;
  */
 
 public interface IndexService {
-    Double MA(String code, Integer day);
+    Double MA(String code, Integer day, String date);
 
-    Double BIAS(String code, Integer day);
+    Double BIAS(String code, Integer day, String date);
 
-    Double RSI(String code, Integer day);
+    Double WR(String code, Integer day, String date);
 
-    Double WR(String code, Integer day);
+    Double ROC(String code, Integer day, String date);
 
-    Double ROC(String code, Integer day);
+    Double PSY(String code, Integer day, String date);
 
-    Double UPPER_ENE(String code, Integer day);
+    Double ATR(String code, Integer day, String date);
 
-    Double BBI(String code);
+    Double EMV(String code, String date, Integer day);
+
+    Double DPO(String code, String date, Integer day, Integer circle);
+
+    Double MTM(String code, String date, Integer circle);
+
+    Double ASI(String code, String date, Integer day);
+
+    JSONObject ENE(String code, Integer day, String date);
+
+    JSONObject BRAR(String code, Integer day, String date);
+
+    Double BBI(String code, String date);
 
 }

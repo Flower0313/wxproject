@@ -15,13 +15,32 @@ import java.util.Map;
  */
 @Mapper
 public interface IndexMapper {
-    List<StockDTO> MA(@Param("code") String code, @Param("day") Integer day);
+    List<StockDTO> MA(@Param("code") String code, @Param("day") Integer day, @Param("date") String date);
 
-    List<StockDTO> BIAS(@Param("code") String code, @Param("day") Integer day);
+    List<StockDTO> List(@Param("code") String code, @Param("date") String date, @Param("day") Integer day);
 
-    List<StockDTO> WR(@Param("code") String code, @Param("day") Integer day);
-
-    List<StockDTO> List(@Param("code") String code, @Param("day") Integer day);
+    StockDTO current(@Param("code") String code, @Param("date") String date);
 
     Integer num(@Param("code") String code);
+
+    List<String> ifExecute(@Param("date") String date);
+
+    //包含今天
+    List<String> getPreDate(@Param("date") String date, @Param("day") Integer day);
+
+    String lastExecute(@Param("date") String date);
+
+    Double getHighest(@Param("code") String code, @Param("date") String date);
+
+    Double getLowest(@Param("code") String code, @Param("date") String date);
+
+    Double getClosingPrice(@Param("code") String code, @Param("date") String date);
+
+    String getTargetDate(@Param("code") String code, @Param("date") String date, @Param("day") Integer day);
+
+    Double AVG(@Param("code") String code, @Param("date") String date, @Param("day") Integer day, @Param("field") String field);
+
+    Double HIGH(@Param("code") String code, @Param("date") String date, @Param("day") Integer day, @Param("field") String field);
+
+    Double LOW(@Param("code") String code, @Param("date") String date, @Param("day") Integer day, @Param("field") String field);
 }

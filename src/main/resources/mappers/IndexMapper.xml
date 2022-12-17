@@ -5,6 +5,8 @@
         select code, current_price
         from df_a_stock_detail
         where code = #{code}
+          and #{date} >= ds
+          and current_price > 0
         order by ds desc limit #{day};
     </select>
 
@@ -12,6 +14,8 @@
         select code, current_price
         from df_a_stock_detail
         where code = #{code}
+          and #{date} >= ds
+          and current_price > 0
         order by ds desc limit #{day};
     </select>
 
@@ -19,21 +23,147 @@
         select code, current_price, highest, lowest
         from df_a_stock_detail
         where code = #{code}
+          and current_price > 0
         order by ds desc limit #{day};
     </select>
 
     <select id="num" resultType="java.lang.Integer">
         select count(1) as num
         from df_a_stock_detail
-        where code = #{code};
+        where code = #{code}
+          and current_price > 0
     </select>
 
     <select id="List" resultType="com.holden.wxproject.pojo.StockDTO">
-        select code, current_price, highest, lowest, ds
+        select code,
+               current_price,
+               highest,
+               lowest,
+               ds,
+               t_1_price,
+               opening_price,
+               deal_vol,
+               deal_amount
         from df_a_stock_detail
         where code = #{code}
+          and #{date} >= ds
+          and current_price > 0
         order by ds desc limit #{day};
     </select>
 
+    <select id="targetDate" resultType="com.holden.wxproject.pojo.StockDTO">
+        select code,
+               current_price,
+               highest,
+               lowest,
+               ds,
+               t_1_price,
+               opening_price,
+               deal_vol
+        from df_a_stock_detail
+        where code = #{code}
+          and current_price > 0
+          and ds = #{date} limit 1;
+    </select>
+
+    <select id="ifExecute" resultType="java.lang.String">
+        select ds
+        from df_calendar
+        where Astatus = 1
+          and ds = #{date} limit 1
+    </select>
+
+    <select id="lastExecute" resultType="java.lang.String">
+        SELECT ds
+        FROM df_calendar
+        WHERE Astatus = 1
+          AND #{date} > ds
+        order by ds desc limit 1;
+    </select>
+
+    <select id="getPreDate" resultType="java.lang.String">
+        SELECT ds
+        FROM df_calendar
+        WHERE Astatus = 1
+          AND #{date} >= ds
+        order by ds desc limit #{day};
+    </select>
+
+    <select id="getHighest" resultType="java.lang.Double">
+        select highest
+        from df_a_stock_detail
+        where code = #{code}
+          and current_price > 0
+          and ds = #{date} limit 1
+    </select>
+
+    <select id="getLowest" resultType="java.lang.Double">
+        select lowest
+        from df_a_stock_detail
+        where code = #{code}
+          and current_price > 0
+          and ds = #{date} limit 1
+    </select>
+
+    <select id="getClosingPrice" resultType="java.lang.Double">
+        select current_price
+        from df_a_stock_detail
+        where code = #{code}
+          and current_price > 0
+          and ds = #{date} limit 1
+    </select>
+
+    <select id="getTargetDate" resultType="java.lang.String">
+        SELECT ds
+        FROM df_calendar
+        WHERE Astatus = 1
+          AND #{date} >= ds
+        order by ds desc limit #{day}, 1;
+    </select>
+
+    <select id="current" resultType="com.holden.wxproject.pojo.StockDTO">
+        select code,
+               current_price,
+               highest,
+               lowest,
+               ds,
+               t_1_price,
+               opening_price,
+               deal_vol
+        from df_a_stock_detail
+        where code = #{code}
+          and current_price > 0
+          and ds = #{date} limit 1;
+    </select>
+
+    <select id="AVG" resultType="java.lang.Double">
+        SELECT avg(${field}) AS field
+        FROM (SELECT *
+              FROM df_a_stock_detail
+              WHERE CODE = #{code}
+                AND current_price > 0
+                AND #{date} >= ds
+              ORDER BY ds DESC LIMIT #{day}) a
+    </select>
+
+    <select id="HIGH" resultType="java.lang.Double">
+        SELECT max(${field}) AS field
+        FROM (SELECT *
+              FROM df_a_stock_detail
+              WHERE CODE = #{code}
+                AND current_price > 0
+                AND #{date} >= ds
+              ORDER BY ds DESC LIMIT #{day}) a
+    </select>
+
+    <select id="LOW" resultType="java.lang.Double">
+        SELECT min(${field}) AS field
+        FROM (SELECT *
+              FROM df_a_stock_detail
+              WHERE CODE = #{code}
+                AND current_price > 0
+                AND #{date} >= ds
+              ORDER BY ds DESC LIMIT #{day}) a
+    </select>
 
 </mapper>

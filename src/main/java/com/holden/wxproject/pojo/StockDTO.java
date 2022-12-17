@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 /**
  * @ClassName wxproject-StockDTO
  * @Author Holden_—__——___———____————_____Xiao
@@ -24,4 +26,8 @@ public class StockDTO {
     private String ds;
     private Double highest;
     private Double lowest;
+    private Double t_1_price;
+    private Double opening_price;
+    private BigDecimal deal_vol;
+    private BigDecimal deal_amount;
 }
