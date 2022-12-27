@@ -32,15 +32,14 @@ public class StockController {
     private SotckService stockService;
 
 
-
     @SneakyThrows
     @ApiOperation(value = "获取单个股票基本面信息")
     @GetMapping("/get-single-stock")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = true, defaultValue = "301266"),
-            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = true, defaultValue = "2022-08-04"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = true, defaultValue = "2022-12-04"),
     })
-    public DataResult<JSONObject> getSingleStock(@RequestParam("code") String code, @RequestParam("date") String date) {
+    public DataResult<Map<String, String>> getSingleStock(@RequestParam("code") String code, @RequestParam("date") String date) {
         return stockService.getSingleStock(code, date);
     }
 
@@ -100,7 +99,25 @@ public class StockController {
         return stockService.stockHot();
     }
 
+    @SneakyThrows
+    @ApiOperation(value = "获取指定日期的沪深主板的股票(普通人可以买入的)")
+    @GetMapping("/get-stock-codes")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = true, defaultValue = "2022-12-04"),
+    })
+    public DataResult<List<String>> getStockCode(@RequestParam("date") String date) {
+        return stockService.getStockCode(date);
+    }
 
+    @SneakyThrows
+    @ApiOperation(value = "获得k线图")
+    @GetMapping("/get-stock-kline")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "代码", dataType = "String", required = true, defaultValue = "000001"),
+    })
+    public DataResult<Object> getKline(@RequestParam("code") String code) {
+        return stockService.getKline(code);
+    }
 
 
 }

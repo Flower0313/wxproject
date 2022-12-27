@@ -43,4 +43,6 @@ public interface IndexMapper {
     Double HIGH(@Param("code") String code, @Param("date") String date, @Param("day") Integer day, @Param("field") String field);
 
     Double LOW(@Param("code") String code, @Param("date") String date, @Param("day") Integer day, @Param("field") String field);
+
+    List<Map<String, Object>> recursiveIndex(@Param("code") String code, @Param("date") String date);
 }

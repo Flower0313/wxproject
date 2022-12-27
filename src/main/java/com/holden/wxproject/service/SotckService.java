@@ -15,7 +15,7 @@ import java.util.Map;
  * @Describe
  */
 public interface SotckService {
-    DataResult<JSONObject> getSingleStock(String code, String date) throws SQLException;
+    DataResult<Map<String, String>> getSingleStock(String code, String date) throws SQLException;
 
     DataResult<String> getStockNum(String date);
 
@@ -29,8 +29,12 @@ public interface SotckService {
 
     DataResult<List<Map<String, Object>>> targetNews(String keyword);
 
-    DataResult<List<Map<String, Object>>> targetStock(String code,String name);
+    DataResult<List<Map<String, Object>>> targetStock(String code, String name);
 
     DataResult<List<Map<String, Object>>> stockHot();
+
+    DataResult<List<String>> getStockCode(String date);
+
+    DataResult<Object> getKline(String code);
 
 }

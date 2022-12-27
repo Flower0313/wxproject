@@ -41,4 +41,15 @@ public interface IndexService {
 
     Double BBI(String code, String date);
 
+    JSONObject KDJ(String code, String date);
+
+    JSONObject MACD(String code, String date);
+
+    Double SAR(String code, String date);
+
+    JSONObject DMI(String code, String date);
+    JSONObject MIKE(String code, String date);
+    JSONObject RSI(String code, String date);
+    Double OBV(String code, String date);
+    Double RSV(String code, String date);
 }

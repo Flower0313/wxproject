@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 public class StockDTO {
     private String code;
     private String name;
-    private Double current_price;
+    private Double closing_price;
     private String ds;
     private Double highest;
     private Double lowest;

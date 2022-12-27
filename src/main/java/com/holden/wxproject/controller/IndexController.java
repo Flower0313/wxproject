@@ -187,4 +187,92 @@ public class IndexController {
     public Double ASI(@RequestParam("code") String code, @RequestParam("date") String date, @RequestParam("day") Integer day) {
         return indexService.ASI(code, date, day);
     }
+
+    @SneakyThrows
+    @ApiOperation(value = "KDJ指标(递归)")
+    @PostMapping("kdj")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
+    })
+    public JSONObject KDJ(@RequestParam("code") String code,@RequestParam("date") String date) {
+        return indexService.KDJ(code, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "MACD指标(递归)")
+    @PostMapping("macd")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
+    })
+    public JSONObject MACD(@RequestParam("code") String code,@RequestParam("date") String date) {
+        return indexService.MACD(code, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "SAR指标(递归)")
+    @PostMapping("sar")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
+    })
+    public Double SAR(@RequestParam("code") String code,@RequestParam("date") String date) {
+        return indexService.SAR(code, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "DMI指标(递归)")
+    @PostMapping("dmi")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
+    })
+    public JSONObject DMI(@RequestParam("code") String code,@RequestParam("date") String date) {
+        return indexService.DMI(code, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "MIKE指标(递归)")
+    @PostMapping("mike")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
+    })
+    public JSONObject MIKE(@RequestParam("code") String code,@RequestParam("date") String date) {
+        return indexService.MIKE(code, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "RSI指标(递归)")
+    @PostMapping("rsi")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
+    })
+    public JSONObject RSI(@RequestParam("code") String code,@RequestParam("date") String date) {
+        return indexService.RSI(code, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "OBV指标(递归)")
+    @PostMapping("obv")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
+    })
+    public Double OBV(@RequestParam("code") String code,@RequestParam("date") String date) {
+        return indexService.OBV(code, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "RSV指标(递归)")
+    @PostMapping("rsv")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
+    })
+    public Double RSV(@RequestParam("code") String code,@RequestParam("date") String date) {
+        return indexService.RSV(code, date);
+    }
 }

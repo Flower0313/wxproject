@@ -2,67 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.holden.wxproject.mapper.IndexMapper">
     <select id="MA" resultType="com.holden.wxproject.pojo.StockDTO">
-        select code, current_price
-        from df_a_stock_detail
+        select code, closing_price
+        from df_stock
         where code = #{code}
           and #{date} >= ds
-          and current_price > 0
         order by ds desc limit #{day};
     </select>
 
     <select id="BIAS" resultType="com.holden.wxproject.pojo.StockDTO">
-        select code, current_price
-        from df_a_stock_detail
+        select code, closing_price
+        from df_stock
         where code = #{code}
           and #{date} >= ds
-          and current_price > 0
         order by ds desc limit #{day};
     </select>
 
     <select id="WR" resultType="com.holden.wxproject.pojo.StockDTO">
-        select code, current_price, highest, lowest
-        from df_a_stock_detail
+        select code, closing_price, highest, lowest
+        from df_stock
         where code = #{code}
-          and current_price > 0
         order by ds desc limit #{day};
     </select>
 
     <select id="num" resultType="java.lang.Integer">
         select count(1) as num
-        from df_a_stock_detail
+        from df_stock
         where code = #{code}
-          and current_price > 0
     </select>
 
     <select id="List" resultType="com.holden.wxproject.pojo.StockDTO">
         select code,
-               current_price,
+               closing_price,
                highest,
                lowest,
                ds,
-               t_1_price,
                opening_price,
                deal_vol,
                deal_amount
-        from df_a_stock_detail
+        from df_stock
         where code = #{code}
           and #{date} >= ds
-          and current_price > 0
         order by ds desc limit #{day};
     </select>
 
     <select id="targetDate" resultType="com.holden.wxproject.pojo.StockDTO">
         select code,
-               current_price,
+               closing_price,
                highest,
                lowest,
                ds,
-               t_1_price,
                opening_price,
                deal_vol
-        from df_a_stock_detail
+        from df_stock
         where code = #{code}
-          and current_price > 0
           and ds = #{date} limit 1;
     </select>
 
@@ -91,25 +83,22 @@
 
     <select id="getHighest" resultType="java.lang.Double">
         select highest
-        from df_a_stock_detail
+        from df_stock
         where code = #{code}
-          and current_price > 0
           and ds = #{date} limit 1
     </select>
 
     <select id="getLowest" resultType="java.lang.Double">
         select lowest
-        from df_a_stock_detail
+        from df_stock
         where code = #{code}
-          and current_price > 0
           and ds = #{date} limit 1
     </select>
 
     <select id="getClosingPrice" resultType="java.lang.Double">
-        select current_price
-        from df_a_stock_detail
+        select closing_price
+        from df_stock
         where code = #{code}
-          and current_price > 0
           and ds = #{date} limit 1
     </select>
 
@@ -123,25 +112,22 @@
 
     <select id="current" resultType="com.holden.wxproject.pojo.StockDTO">
         select code,
-               current_price,
+               closing_price,
                highest,
                lowest,
                ds,
-               t_1_price,
                opening_price,
                deal_vol
-        from df_a_stock_detail
+        from df_stock
         where code = #{code}
-          and current_price > 0
           and ds = #{date} limit 1;
     </select>
 
     <select id="AVG" resultType="java.lang.Double">
         SELECT avg(${field}) AS field
         FROM (SELECT *
-              FROM df_a_stock_detail
+              FROM df_stock
               WHERE CODE = #{code}
-                AND current_price > 0
                 AND #{date} >= ds
               ORDER BY ds DESC LIMIT #{day}) a
     </select>
@@ -149,9 +135,8 @@
     <select id="HIGH" resultType="java.lang.Double">
         SELECT max(${field}) AS field
         FROM (SELECT *
-              FROM df_a_stock_detail
+              FROM df_stock
               WHERE CODE = #{code}
-                AND current_price > 0
                 AND #{date} >= ds
               ORDER BY ds DESC LIMIT #{day}) a
     </select>
@@ -159,11 +144,17 @@
     <select id="LOW" resultType="java.lang.Double">
         SELECT min(${field}) AS field
         FROM (SELECT *
-              FROM df_a_stock_detail
+              FROM df_stock
               WHERE CODE = #{code}
-                AND current_price > 0
                 AND #{date} >= ds
               ORDER BY ds DESC LIMIT #{day}) a
+    </select>
+
+    <select id="recursiveIndex" resultType="java.util.Map">
+        SELECT *
+        FROM `df_stock`
+        where code = #{code}
+          and ds = #{date} limit 1
     </select>
 
 </mapper>

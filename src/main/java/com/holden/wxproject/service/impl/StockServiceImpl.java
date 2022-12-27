@@ -47,34 +47,25 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    public DataResult<JSONObject> getSingleStock(String code, String date) {
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Map<String, String>> getSingleStock(String code, String date) {
         if ("".equals(code) || "".equals(date) || code == null || date == null) {
             return DataResult.fail("值不能为空!");
         }
         if (!timeIsLegel(date)) {
             return DataResult.fail("日期不正确!");
         }
-        JSONObject data = new JSONObject();
         try {
-            Connection connection = ClickHouseUtil.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from spider_base.stock_detail where code ='" + code + "' and ds = '" + date + "'");
-            ResultSetMetaData metaData = resultSet.getMetaData();
-            int columnCount = metaData.getColumnCount();
-            while (resultSet.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    data.put(metaData.getColumnName(i), resultSet.getString(i));
-                }
+            List<Map<String, String>> singleStock = stockMapper.getSingleStock(code, date);
+            if (singleStock.size() > 0) {
+                return DataResult.ok(singleStock.get(0));
             }
-            //若没查询到数据
-            if (data.size() == 0) {
-                return DataResult.fail("没有查询到数据");
-            }
+            return DataResult.fail("未查询到数据！");
+
         } catch (Exception e) {
             log.error("[class: StockServiceImpl.java]-[method: getSingleStock]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("出错了！");
         }
-
-        return DataResult.ok(data);
     }
 
     @Override
@@ -170,6 +161,30 @@ public class StockServiceImpl implements SotckService {
     public DataResult<List<Map<String, Object>>> stockHot() {
         List<Map<String, Object>> result = stockMapper.sotckHot();
         return DataResult.ok(result);
+    }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
+    public DataResult<List<String>> getStockCode(String date) {
+        try {
+            List<String> stockCode = stockMapper.getStockCode(date);
+            return DataResult.ok(stockCode);
+        } catch (Exception e) {
+            log.error("[class: StockServiceImpl.java]-[method: getStockCode]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("getStockCode出错了");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> getKline(String code) {
+        try {
+            List<Map<String, Object>> kline = stockMapper.getKline(code);
+            return DataResult.ok(kline);
+        } catch (Exception e) {
+            log.error("[class: StockServiceImpl.java]-[method: getKline]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("getStockCode出错了");
+        }
     }
 
 

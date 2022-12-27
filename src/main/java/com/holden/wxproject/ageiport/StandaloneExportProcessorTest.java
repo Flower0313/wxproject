@@ -1,15 +1,19 @@
 package com.holden.wxproject.ageiport;
 
 import com.alibaba.ageiport.common.utils.JsonUtil;
+import com.alibaba.ageiport.ext.arch.ExtensionLoader;
 import com.alibaba.ageiport.processor.core.AgeiPort;
 import com.alibaba.ageiport.processor.core.AgeiPortOptions;
+import com.alibaba.ageiport.processor.core.Processor;
 import com.alibaba.ageiport.processor.core.spi.service.TaskExecuteParam;
 import com.alibaba.ageiport.processor.core.spi.service.TaskExecuteResult;
+import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @ClassName wxproject-StandaloneExportProcessorTest
@@ -41,5 +45,11 @@ public class StandaloneExportProcessorTest {
         //4.使用内部封装的TaskHelp方法判断任务是否执行成功
         //Helper testHelper = new Helper(ageiPort);
         //testHelper.assertWithFile(response.getMainTaskId(), query.getTotalCount());
+    }
+
+    @Test
+    public void log() {
+        long l = Runtime.getRuntime().totalMemory() / 1024 / 1024;
+        System.out.println(l);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName wxproject-IndexServiceImpl
@@ -26,12 +27,12 @@ public class IndexServiceImpl implements IndexService {
     private IndexMapper indexMapper;
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double MA(String code, Integer day, String date) {
         try {
             //截止当日的MA
             List<StockDTO> ma = indexMapper.MA(code, day, date);
-            double current_price = ma.stream().mapToDouble(StockDTO::getCurrent_price).sum();
+            double current_price = ma.stream().mapToDouble(StockDTO::getClosing_price).sum();
             return current_price / day;
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: BIAS]-[function: {}] , [Message]: {}", e.getMessage(), e);
@@ -41,12 +42,12 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double BIAS(String code, Integer day, String date) {
         try {
             //n日内收盘均价
             double avg = AVG(code, date, day, BaseConstant.CLOSEPRICE);
-            double first = indexMapper.current(code, date).getCurrent_price();
+            double first = indexMapper.current(code, date).getClosing_price();
             return (first - avg) * 100 / avg;
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: BIAS]-[function: {}] , [Message]: {}", e.getMessage(), e);
@@ -56,7 +57,7 @@ public class IndexServiceImpl implements IndexService {
 
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double WR(String code, Integer day, String date) {
         try {
             //n日内最高价
@@ -64,7 +65,7 @@ public class IndexServiceImpl implements IndexService {
             //n日内最低价
             double lowest = LOW(code, date, day, BaseConstant.LOWEST);
             //当日收盘价
-            double current_price = indexMapper.current(code, date).getCurrent_price();
+            double current_price = indexMapper.current(code, date).getClosing_price();
             return (highest - current_price) * 100 / (highest - lowest);
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: WR]-[function: {}] , [Message]: {}", e.getMessage(), e);
@@ -73,12 +74,12 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double ROC(String code, Integer day, String date) {
         try {
             List<StockDTO> stock = indexMapper.List(code, date, day);
-            double current_price = stock.stream().findFirst().get().getCurrent_price();
-            Double first = stock.stream().skip(stock.size() - 1).findFirst().get().getCurrent_price();
+            double current_price = stock.stream().findFirst().get().getClosing_price();
+            Double first = stock.stream().skip(stock.size() - 1).findFirst().get().getClosing_price();
             return (current_price - first) * 100 / first;
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: ROC]-[function: {}] , [Message]: {}", e.getMessage(), e);
@@ -87,11 +88,11 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double PSY(String code, Integer day, String date) {
         try {
             List<StockDTO> stock = indexMapper.List(code, date, day);
-            double sum = stock.stream().mapToDouble(x -> x.getCurrent_price() - x.getT_1_price() > 0 ? 1 : 0).sum();
+            double sum = stock.stream().mapToDouble(x -> x.getClosing_price() - getClosingPrice(code, lastExecute(date)) > 0 ? 1 : 0).sum();
             if (stock.size() <= 12) {
                 sum -= 1;
             }
@@ -103,7 +104,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double ATR(String code, Integer day, String date) {
         try {
             List<StockDTO> stock = indexMapper.List(code, date, day);
@@ -113,8 +114,9 @@ public class IndexServiceImpl implements IndexService {
             double mtr = 0;
             for (StockDTO stockDTO : stock) {
                 double hsl = stockDTO.getHighest() - stockDTO.getLowest();
-                double ll = Math.abs(stockDTO.getT_1_price() - stockDTO.getLowest());
-                double lh = Math.abs(stockDTO.getT_1_price() - stockDTO.getHighest());
+                double last_closing = getClosingPrice(code, lastExecute(stockDTO.getDs()));
+                double ll = Math.abs(last_closing - stockDTO.getLowest());
+                double lh = Math.abs(last_closing - stockDTO.getHighest());
                 mtr += hsl > lh ? Math.max(hsl, ll) : Math.max(lh, ll);
             }
             return mtr / day;
@@ -125,7 +127,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double EMV(String code, String date, Integer day) {
         try {
             List<StockDTO> list = indexMapper.List(code, date, day);
@@ -148,12 +150,12 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double DPO(String code, String date, Integer day, Integer circle) {
         try {
             StockDTO current = indexMapper.current(code, date);
             Double lag_ma = MA(code, day, getTargetDate(code, date, circle));
-            return current.getCurrent_price() - lag_ma;
+            return current.getClosing_price() - lag_ma;
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: DPO]-[function: {}] , [Message]: {}", e.getMessage(), e);
             return -999.0;
@@ -161,12 +163,12 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double MTM(String code, String date, Integer circle) {
         try {
-            Double closingPrice = indexMapper.getClosingPrice(code, getTargetDate(code, date, circle));
+            double closingPrice = indexMapper.getClosingPrice(code, getTargetDate(code, date, circle));
             StockDTO current = indexMapper.current(code, date);
-            return current.getCurrent_price() - closingPrice;
+            return current.getClosing_price() - closingPrice;
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: MTM]-[function: {}] , [Message]: {}", e.getMessage(), e);
             return -999.0;
@@ -174,18 +176,19 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double ASI(String code, String date, Integer day) {
         try {
             List<StockDTO> list = indexMapper.List(code, date, day);
             double asi = 0.0;
             for (StockDTO dto : list) {
                 StockDTO yesterday = indexMapper.current(code, lastExecute(dto.getDs()));
-                double aa = Math.abs(dto.getHighest() - dto.getT_1_price());
-                double bb = Math.abs(dto.getLowest() - dto.getT_1_price());
+                double last_closing = getClosingPrice(code, lastExecute(dto.getDs()));
+                double aa = Math.abs(dto.getHighest() - last_closing);
+                double bb = Math.abs(dto.getLowest() - last_closing);
                 double cc = Math.abs(dto.getHighest() - yesterday.getLowest());
-                double dd = Math.abs(yesterday.getCurrent_price() - yesterday.getOpening_price());
-                double x = dto.getCurrent_price() - dto.getT_1_price() + (dto.getCurrent_price() - dto.getOpening_price()) / 2 + yesterday.getCurrent_price() - yesterday.getOpening_price();
+                double dd = Math.abs(yesterday.getClosing_price() - yesterday.getOpening_price());
+                double x = dto.getClosing_price() - last_closing + (dto.getClosing_price() - dto.getOpening_price()) / 2 + yesterday.getClosing_price() - yesterday.getOpening_price();
                 double r = 0.0;
                 if (aa > bb && aa > cc) {
                     r = aa + bb / 2 + dd / 4;
@@ -206,7 +209,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public JSONObject ENE(String code, Integer day, String date) {
         try {
             Double ma25 = MA(code, day, date);
@@ -224,15 +227,15 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public JSONObject BRAR(String code, Integer day, String date) {
         try {
             JSONObject result = new JSONObject();
             List<StockDTO> stock = indexMapper.List(code, date, day);
             double ar1 = stock.stream().mapToDouble(x -> x.getHighest() - x.getOpening_price()).sum();
             double ar2 = stock.stream().mapToDouble(x -> x.getOpening_price() - x.getLowest()).sum();
-            double br1 = stock.stream().mapToDouble(x -> x.getHighest() - x.getT_1_price() > 0 ? x.getHighest() - x.getT_1_price() : 0).sum();
-            double br2 = stock.stream().mapToDouble(x -> x.getT_1_price() - x.getLowest() > 0 ? x.getT_1_price() - x.getLowest() : 0).sum();
+            double br1 = stock.stream().mapToDouble(x -> x.getHighest() - getClosingPrice(code, lastExecute(x.getDs())) > 0 ? x.getHighest() - getClosingPrice(code, lastExecute(x.getDs())) : 0).sum();
+            double br2 = stock.stream().mapToDouble(x -> getClosingPrice(code, lastExecute(x.getDs())) - x.getLowest() > 0 ? getClosingPrice(code, lastExecute(x.getDs())) - x.getLowest() : 0).sum();
             result.put("ar", ar1 * 100 / ar2);
             result.put("br", br1 * 100 / br2);
             return result;
@@ -243,7 +246,7 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double BBI(String code, String date) {
         try {
             Integer num = indexMapper.num(code);
@@ -254,6 +257,135 @@ public class IndexServiceImpl implements IndexService {
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: BBI]-[function: {}] , [Message]: {}", e.getMessage(), e);
             return -999.0;
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public JSONObject KDJ(String code, String date) {
+        try {
+            JSONObject result = new JSONObject();
+            List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
+            if (list.size() == BaseConstant.ONE) {
+                result.put("k", list.get(0).get("k"));
+                result.put("d", list.get(0).get("d"));
+                result.put("j", list.get(0).get("j"));
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: KDJ]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public JSONObject MACD(String code, String date) {
+        try {
+            JSONObject result = new JSONObject();
+            List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
+            if (list.size() == BaseConstant.ONE) {
+                result.put("dif", list.get(0).get("dif"));
+                result.put("dea", list.get(0).get("dea"));
+                result.put("macd", list.get(0).get("macd"));
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: MACD]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public Double SAR(String code, String date) {
+        try {
+            List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
+            return (Double) list.get(0).get("sar");
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: SAR]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public JSONObject DMI(String code, String date) {
+        try {
+            JSONObject result = new JSONObject();
+            List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
+            if (list.size() == BaseConstant.ONE) {
+                result.put("pdi", list.get(0).get("pdi"));
+                result.put("mdi", list.get(0).get("mdi"));
+                result.put("adx", list.get(0).get("adx"));
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: DMI]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public JSONObject MIKE(String code, String date) {
+        try {
+            JSONObject result = new JSONObject();
+            List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
+            if (list.size() == BaseConstant.ONE) {
+                result.put("stor", list.get(0).get("stor"));
+                result.put("midr", list.get(0).get("midr"));
+                result.put("wekr", list.get(0).get("wekr"));
+                result.put("weks", list.get(0).get("weks"));
+                result.put("mids", list.get(0).get("mids"));
+                result.put("stos", list.get(0).get("stos"));
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: MIKE]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public JSONObject RSI(String code, String date) {
+        try {
+            JSONObject result = new JSONObject();
+            List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
+            if (list.size() == BaseConstant.ONE) {
+                result.put("rsi6", list.get(0).get("rsi6"));
+                result.put("rsi12", list.get(0).get("rsi12"));
+                result.put("rsi24", list.get(0).get("rsi24"));
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: RSI]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public Double OBV(String code, String date) {
+        try {
+            List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
+            return (Double) list.get(0).get("obv");
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: SAR]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public Double RSV(String code, String date) {
+        try {
+            List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
+            return (Double) list.get(0).get("rsv");
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: SAR]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return null;
         }
     }
 
@@ -268,7 +400,7 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public String lastExecute(String date) {
         try {
             return indexMapper.lastExecute(date);
@@ -278,7 +410,7 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double getHighest(String code, String date) {
         try {
             return indexMapper.getHighest(code, date);
@@ -288,7 +420,7 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double getLowest(String code, String date) {
         try {
             return indexMapper.getLowest(code, date);
@@ -298,7 +430,7 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double getClosingPrice(String code, String date) {
         try {
             return indexMapper.getClosingPrice(code, date);
@@ -318,7 +450,7 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double AVG(String code, String date, Integer day, String field) {
         try {
             return indexMapper.AVG(code, date, day, field);
@@ -328,7 +460,7 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double HIGH(String code, String date, Integer day, String field) {
         try {
             return indexMapper.HIGH(code, date, day, field);
@@ -338,7 +470,7 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public Double LOW(String code, String date, Integer day, String field) {
         try {
             return indexMapper.LOW(code, date, day, field);
