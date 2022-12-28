@@ -6,6 +6,7 @@ import com.holden.wxproject.config.BaseConstant;
 import com.holden.wxproject.mapper.IndexMapper;
 import com.holden.wxproject.pojo.StockDTO;
 import com.holden.wxproject.service.IndexService;
+import com.holden.wxproject.util.DataResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,18 @@ public class IndexServiceImpl implements IndexService {
             return -999.0;
         }
 
+    }
+
+    @Override
+    public DataResult<Object> MALIST(String code, Integer day, String year) {
+        try {
+            //截止当日的MA
+            List<Map<String, Object>> malist = indexMapper.MALIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: MALIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
     }
 
     @Override

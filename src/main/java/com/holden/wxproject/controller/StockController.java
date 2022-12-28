@@ -37,10 +37,11 @@ public class StockController {
     @GetMapping("/get-single-stock")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = true, defaultValue = "301266"),
-            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = true, defaultValue = "2022-12-04"),
+            @ApiImplicitParam(name = "dateType", value = "日期类型(0无，1年，2月,3日)", dataType = "Integer", required = false, defaultValue = "3"),
+            @ApiImplicitParam(name = "value", value = "日期值", dataType = "String", required = false, defaultValue = "2022-12-26"),
     })
-    public DataResult<Map<String, String>> getSingleStock(@RequestParam("code") String code, @RequestParam("date") String date) {
-        return stockService.getSingleStock(code, date);
+    public DataResult<Object> getSingleStock(@RequestParam("code") String code, @RequestParam("dateType") Integer dateType, @RequestParam("value") String value) {
+        return stockService.getSingleStock(code, dateType, value);
     }
 
     @SneakyThrows
@@ -114,9 +115,32 @@ public class StockController {
     @GetMapping("/get-stock-kline")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "code", value = "代码", dataType = "String", required = true, defaultValue = "000001"),
+            @ApiImplicitParam(name = "dateType", value = "日期类型(0无，1年，2月)", dataType = "Integer", required = false, defaultValue = "0"),
+            @ApiImplicitParam(name = "value", value = "日期值", dataType = "String", required = false, defaultValue = "2022"),
     })
-    public DataResult<Object> getKline(@RequestParam("code") String code) {
-        return stockService.getKline(code);
+    public DataResult<Object> getKline(@RequestParam("code") String code, @RequestParam("dateType") Integer dateType, @RequestParam("value") String value) {
+        return stockService.getKline(code, dateType, value);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "获得股价可执行日期")
+    @GetMapping("/get-stock-calendar")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "dateType", value = "日期类型(0无，1年，2月)", dataType = "Integer", required = false, defaultValue = "1"),
+            @ApiImplicitParam(name = "value", value = "日期值(可以传多值，用逗号隔开)", dataType = "String", required = false, defaultValue = "2022"),
+    })
+    public DataResult<Object> getCalendar(@RequestParam("dateType") Integer dateType, @RequestParam("value") String value) {
+        return stockService.getCalendar(dateType, value);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "获得每年首次末次执行年月")
+    @GetMapping("/get-max-min-ds")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "date", value = "日期值(年)", dataType = "String", required = false, defaultValue = "2022"),
+    })
+    public DataResult<Object> getMaxMinDs(@RequestParam("date") String date) {
+        return stockService.getMaxMinDs(date);
     }
 
 

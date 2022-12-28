@@ -8,6 +8,7 @@ import com.holden.wxproject.mapper.StockMapper;
 import com.holden.wxproject.service.SotckService;
 import com.holden.wxproject.util.ClickHouseUtil;
 import com.holden.wxproject.util.DataResult;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.ansj.splitWord.analysis.IndexAnalysis;
 import org.ansj.splitWord.analysis.NlpAnalysis;
@@ -20,10 +21,7 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -48,17 +46,14 @@ public class StockServiceImpl implements SotckService {
 
     @Override
     @SourceChange(BaseConstant.NURSING)
-    public DataResult<Map<String, String>> getSingleStock(String code, String date) {
-        if ("".equals(code) || "".equals(date) || code == null || date == null) {
+    public DataResult<Object> getSingleStock(String code, Integer dateType, String value) {
+        if ("".equals(code) || "".equals(value) || code == null || value == null) {
             return DataResult.fail("值不能为空!");
         }
-        if (!timeIsLegel(date)) {
-            return DataResult.fail("日期不正确!");
-        }
         try {
-            List<Map<String, String>> singleStock = stockMapper.getSingleStock(code, date);
+            List<Map<String, String>> singleStock = stockMapper.getSingleStock(code, dateType, value);
             if (singleStock.size() > 0) {
-                return DataResult.ok(singleStock.get(0));
+                return DataResult.ok(singleStock);
             }
             return DataResult.fail("未查询到数据！");
 
@@ -177,13 +172,39 @@ public class StockServiceImpl implements SotckService {
 
     @Override
     @SourceChange(BaseConstant.NURSING)
-    public DataResult<Object> getKline(String code) {
+    public DataResult<Object> getKline(String code, Integer dateType, String value) {
         try {
-            List<Map<String, Object>> kline = stockMapper.getKline(code);
+            List<Map<String, Object>> kline = stockMapper.getKline(code, dateType, value);
             return DataResult.ok(kline);
         } catch (Exception e) {
             log.error("[class: StockServiceImpl.java]-[method: getKline]-[function: {}] , [Message]: {}", e.getMessage(), e);
             return DataResult.fail("getStockCode出错了");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> getCalendar(Integer dateType, String value) {
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("('").append(String.join("','", value.split(","))).append("')");
+            List<Map<String, Object>> kline = stockMapper.getCalendar(dateType, sb.toString());
+            return DataResult.ok(kline);
+        } catch (Exception e) {
+            log.error("[class: StockServiceImpl.java]-[method: getCalendar]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("getCalendar出错了");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> getMaxMinDs(String date) {
+        try {
+            List<Map<String, Object>> maxMinDs = stockMapper.getMaxMinDs(date);
+            return DataResult.ok(maxMinDs);
+        } catch (Exception e) {
+            log.error("[class: StockServiceImpl.java]-[method: getMaxMinDs]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("getMaxMinDs出错了");
         }
     }
 

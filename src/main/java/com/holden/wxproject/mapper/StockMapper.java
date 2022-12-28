@@ -14,7 +14,7 @@ import java.util.Map;
  */
 @Mapper
 public interface StockMapper {
-    List<Map<String, String>> getSingleStock(@Param("code") String code, @Param("date") String date);
+    List<Map<String, String>> getSingleStock(@Param("code") String code, @Param("dateType") Integer dateType, @Param("value") String value);
 
     List<Map<String, String>> getIndustryReport(@Param("date") String date);
 
@@ -34,5 +34,9 @@ public interface StockMapper {
 
     List<String> getStockCode(@Param("date") String date);
 
-    List<Map<String, Object>> getKline(@Param("code") String code);
+    List<Map<String, Object>> getKline(@Param("code") String code, @Param("dateType") Integer dateType, @Param("value") String value);
+
+    List<Map<String, Object>> getCalendar (@Param("dateType") Integer dateType, @Param("value") String value);
+
+    List<Map<String, Object>> getMaxMinDs (@Param("date") String date);
 }

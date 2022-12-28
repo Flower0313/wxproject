@@ -9,6 +9,19 @@
         order by ds desc limit #{day};
     </select>
 
+    <select id="MALIST" resultType="java.util.Map">
+        select *
+        from (SELECT ds,
+                     avg(closing_price) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) AS
+        MA${day}
+              FROM df_stock
+              WHERE CODE = #{code}
+                AND (substr(ds, 1, 4) in (#{year}) and concat(#{year}, '01-01')
+                  or (ds > DATE_ADD(concat(#{year}, '01-01'), interval -${day} day) and
+                      concat(#{year}, '01-01') > ds))) a
+        where substr(ds, 1, 4) IN (#{year})
+    </select>
+
     <select id="BIAS" resultType="com.holden.wxproject.pojo.StockDTO">
         select code, closing_price
         from df_stock

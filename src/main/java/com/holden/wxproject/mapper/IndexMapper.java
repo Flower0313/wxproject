@@ -17,6 +17,8 @@ import java.util.Map;
 public interface IndexMapper {
     List<StockDTO> MA(@Param("code") String code, @Param("day") Integer day, @Param("date") String date);
 
+    List<Map<String, Object>> MALIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
     List<StockDTO> List(@Param("code") String code, @Param("date") String date, @Param("day") Integer day);
 
     StockDTO current(@Param("code") String code, @Param("date") String date);

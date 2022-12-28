@@ -3,6 +3,7 @@ package com.holden.wxproject.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.holden.wxproject.service.IndexService;
+import com.holden.wxproject.util.DataResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -37,6 +38,19 @@ public class IndexController {
     public Double MA(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("date") String date) {
 
         return indexService.MA(code, day, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "MA指标列表")
+    @PostMapping("ma-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> MALIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.MALIST(code, day, year);
     }
 
     @SneakyThrows

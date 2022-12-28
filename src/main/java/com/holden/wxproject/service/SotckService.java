@@ -15,7 +15,7 @@ import java.util.Map;
  * @Describe
  */
 public interface SotckService {
-    DataResult<Map<String, String>> getSingleStock(String code, String date) throws SQLException;
+    DataResult<Object> getSingleStock(String code, Integer dateType, String value) throws SQLException;
 
     DataResult<String> getStockNum(String date);
 
@@ -35,6 +35,10 @@ public interface SotckService {
 
     DataResult<List<String>> getStockCode(String date);
 
-    DataResult<Object> getKline(String code);
+    DataResult<Object> getKline(String code, Integer dateType, String value);
+
+    DataResult<Object> getCalendar(Integer dateType, String value);
+
+    DataResult<Object> getMaxMinDs(String date);
 
 }

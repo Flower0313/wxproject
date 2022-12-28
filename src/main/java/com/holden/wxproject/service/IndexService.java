@@ -17,6 +17,8 @@ import java.util.Map;
 public interface IndexService {
     Double MA(String code, Integer day, String date);
 
+    DataResult<Object> MALIST(String code, Integer day, String year);
+
     Double BIAS(String code, Integer day, String date);
 
     Double WR(String code, Integer day, String date);
@@ -48,8 +50,12 @@ public interface IndexService {
     Double SAR(String code, String date);
 
     JSONObject DMI(String code, String date);
+
     JSONObject MIKE(String code, String date);
+
     JSONObject RSI(String code, String date);
+
     Double OBV(String code, String date);
+
     Double RSV(String code, String date);
 }
