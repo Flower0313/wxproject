@@ -159,4 +159,21 @@
         WHERE Astatus = 1
           and substr(ds, 1, 4) = #{date}
     </select>
+
+    <select id="getBigMarketStocks" resultType="java.util.Map">
+        SELECT `code`
+        FROM (
+                 SELECT `CODE`,
+                        circulation_market_v,
+                        row_number() over ( ORDER BY circulation_market_v DESC ) AS market_rk, floor(count(*) over()*${ratio/100}) as nums
+                 FROM df_a_stock_detail
+                 WHERE ds = #{date}
+                   AND circulation_market_v > 0
+                   AND board IN (2, 6)
+                   AND current_price > 0
+             ) a
+        where nums >= market_rk;
+
+
+    </select>
 </mapper>

@@ -208,5 +208,17 @@ public class StockServiceImpl implements SotckService {
         }
     }
 
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> getBigMarketStocks(String date, Integer ratio) {
+        try {
+            List<String> maxMinDs = stockMapper.getBigMarketStocks(date,ratio);
+            return DataResult.ok(maxMinDs);
+        } catch (Exception e) {
+            log.error("[class: StockServiceImpl.java]-[method: getBigMarketStocks]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("getBigMarketStocks出错了");
+        }
+    }
+
 
 }

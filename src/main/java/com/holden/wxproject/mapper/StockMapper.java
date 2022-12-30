@@ -39,4 +39,6 @@ public interface StockMapper {
     List<Map<String, Object>> getCalendar (@Param("dateType") Integer dateType, @Param("value") String value);
 
     List<Map<String, Object>> getMaxMinDs (@Param("date") String date);
+
+    List<String> getBigMarketStocks (@Param("date") String date,@Param("ratio") Integer ratio);
 }

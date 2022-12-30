@@ -143,5 +143,16 @@ public class StockController {
         return stockService.getMaxMinDs(date);
     }
 
+    @SneakyThrows
+    @ApiOperation(value = "获得大盘股")
+    @GetMapping("/get-big-market")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "date", value = "日期值", dataType = "String", required = false, defaultValue = "2022-12-30"),
+            @ApiImplicitParam(name = "ratio", value = "比例(1-100)%", dataType = "Integer", required = false, defaultValue = "16"),
+    })
+    public DataResult<Object> getBigMarketStocks(@RequestParam("date") String date, @RequestParam("ratio") Integer ratio) {
+        return stockService.getBigMarketStocks(date, ratio);
+    }
+
 
 }
