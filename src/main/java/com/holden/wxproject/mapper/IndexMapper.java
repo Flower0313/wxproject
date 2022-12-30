@@ -19,6 +19,34 @@ public interface IndexMapper {
 
     List<Map<String, Object>> MALIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
 
+    List<Map<String, Object>> BIASLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
+    List<Map<String, Object>> WRLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
+    List<Map<String, Object>> ROCLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
+    List<Map<String, Object>> ENELIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
+    List<Map<String, Object>> PSYLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
+    List<Map<String, Object>> BRARLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
+    List<Map<String, Object>> ATRLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
+    List<Map<String, Object>> EMVLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year, @Param("circle") Integer circle);
+
+    List<Map<String, Object>> MTMLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
+    List<Map<String, Object>> DPOLIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year, @Param("circle") Integer circle);
+
+    List<Map<String, Object>> BBILIST(@Param("code") String code, @Param("year") String year);
+
+    List<Map<String, Object>> KDJLIST(@Param("code") String code, @Param("year") String year);
+
+    List<Map<String, Object>> MACDLIST(@Param("code") String code, @Param("year") String year);
+
+    List<Map<String, Object>> ASILIST(@Param("code") String code, @Param("day") Integer day, @Param("year") String year);
+
     List<StockDTO> List(@Param("code") String code, @Param("date") String date, @Param("day") Integer day);
 
     StockDTO current(@Param("code") String code, @Param("date") String date);

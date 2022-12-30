@@ -21,6 +21,34 @@ public interface IndexService {
 
     Double BIAS(String code, Integer day, String date);
 
+    DataResult<Object> BIASLIST(String code, Integer day, String year);
+
+    DataResult<Object> WRLIST(String code, Integer day, String year);
+
+    DataResult<Object> ROCLIST(String code, Integer day, String year);
+
+    DataResult<Object> BBILIST(String code, String year);
+
+    DataResult<Object> KDJLIST(String code, String year);
+
+    DataResult<Object> MACDLIST(String code, String year);
+
+    DataResult<Object> ENELIST(String code, Integer day, String year);
+
+    DataResult<Object> PSYLIST(String code, Integer day, String year);
+
+    DataResult<Object> BRARLIST(String code, Integer day, String year);
+
+    DataResult<Object> ATRLIST(String code, Integer day, String year);
+
+    DataResult<Object> EMVLIST(String code, Integer day, String year,Integer circle);
+
+    DataResult<Object> MTMLIST(String code, Integer day, String year);
+
+    DataResult<Object> DPOLIST(String code, Integer day, String year,Integer circle);
+
+    DataResult<Object> ASILIST(String code, Integer day, String year);
+
     Double WR(String code, Integer day, String date);
 
     Double ROC(String code, Integer day, String date);
@@ -29,7 +57,7 @@ public interface IndexService {
 
     Double ATR(String code, Integer day, String date);
 
-    Double EMV(String code, String date, Integer day);
+    Double EMV(String code, String date, Integer day, Integer circle);
 
     Double DPO(String code, String date, Integer day, Integer circle);
 

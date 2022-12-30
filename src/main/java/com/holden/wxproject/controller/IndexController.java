@@ -65,6 +65,19 @@ public class IndexController {
         return indexService.BIAS(code, day, date);
     }
 
+    @SneakyThrows
+    @ApiOperation(value = "BIAS指标列表")
+    @PostMapping("bias-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> BIASLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.BIASLIST(code, day, year);
+    }
+
 
     @SneakyThrows
     @ApiOperation(value = "WR指标(非递归)")
@@ -76,6 +89,19 @@ public class IndexController {
     })
     public Double WR(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.WR(code, day, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "WR指标列表")
+    @PostMapping("wr-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> WRLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.WRLIST(code, day, year);
     }
 
 
@@ -91,6 +117,18 @@ public class IndexController {
     }
 
     @SneakyThrows
+    @ApiOperation(value = "BBI指标列表")
+    @PostMapping("bbi-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> BBILIST(@RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.BBILIST(code, year);
+    }
+
+    @SneakyThrows
     @ApiOperation(value = "ROC指标(非递归)")
     @PostMapping("roc")
     @ApiImplicitParams({
@@ -100,6 +138,19 @@ public class IndexController {
     })
     public Double ROC(@RequestParam("code") String code, @RequestParam("day") Integer day, @RequestParam("date") String date) {
         return indexService.ROC(code, day, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "ROC指标列表")
+    @PostMapping("roc-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> ROCLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.ROCLIST(code, day, year);
     }
 
     @SneakyThrows
@@ -115,6 +166,20 @@ public class IndexController {
     }
 
     @SneakyThrows
+    @ApiOperation(value = "ENE指标列表")
+    @PostMapping("ene-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> ENELIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.ENELIST(code, day, year);
+    }
+
+
+    @SneakyThrows
     @ApiOperation(value = "PSY指标(非递归)")
     @PostMapping("psy")
     @ApiImplicitParams({
@@ -127,6 +192,20 @@ public class IndexController {
     }
 
     @SneakyThrows
+    @ApiOperation(value = "PSY指标列表")
+    @PostMapping("psy-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> PSYLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.PSYLIST(code, day, year);
+    }
+
+
+    @SneakyThrows
     @ApiOperation(value = "BRAR指标(非递归)")
     @PostMapping("brar")
     @ApiImplicitParams({
@@ -136,6 +215,19 @@ public class IndexController {
     })
     public JSONObject BRAR(@RequestParam("code") String code, @RequestParam("day") Integer day, @RequestParam("date") String date) {
         return indexService.BRAR(code, day, date);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "BRAR指标列表")
+    @PostMapping("brar-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> BRARLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.BRARLIST(code, day, year);
     }
 
     @SneakyThrows
@@ -152,15 +244,44 @@ public class IndexController {
     }
 
     @SneakyThrows
+    @ApiOperation(value = "ATR指标列表")
+    @PostMapping("atr-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> ATRLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.ATRLIST(code, day, year);
+    }
+
+    @SneakyThrows
     @ApiOperation(value = "EMV指标(非递归)")
     @PostMapping("emv")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
-            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-15"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "000001"),
+            @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-30"),
             @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "14"),
+            @ApiImplicitParam(name = "circle", value = "周期内移动平均", dataType = "Integer", required = false, defaultValue = "9"),
     })
-    public Double EMV(@RequestParam("code") String code, @RequestParam("date") String date, @RequestParam("day") Integer day) {
-        return indexService.EMV(code, date, day);
+    public Double EMV(@RequestParam("code") String code, @RequestParam("date") String date, @RequestParam("day") Integer day, @RequestParam("circle") Integer circle) {
+        return indexService.EMV(code, date, day,circle);
+    }
+
+    @SneakyThrows
+    @ApiOperation(value = "EMV指标列表")
+    @PostMapping("emv-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "14"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "000002"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+            @ApiImplicitParam(name = "circle", value = "周期内移动平均", dataType = "Integer", required = false, defaultValue = "9"),
+
+
+    })
+    public DataResult<Object> EMVLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year, @RequestParam("circle") Integer circle) {
+        return indexService.EMVLIST(code, day, year,circle);
     }
 
     @SneakyThrows
@@ -177,6 +298,19 @@ public class IndexController {
     }
 
     @SneakyThrows
+    @ApiOperation(value = "DPO指标列表")
+    @PostMapping("dpo-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+            @ApiImplicitParam(name = "circle", value = "周期内移动平均", dataType = "Integer", required = false, defaultValue = "10"),
+    })
+    public DataResult<Object> DPOLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year, @RequestParam("circle") Integer circle) {
+        return indexService.DPOLIST(code, day, year, circle);
+    }
+
+    @SneakyThrows
     @ApiOperation(value = "MTM指标(非递归)")
     @PostMapping("mtm")
     @ApiImplicitParams({
@@ -188,6 +322,20 @@ public class IndexController {
     public Double MTM(@RequestParam("code") String code, @RequestParam("date") String date, @RequestParam("circle") Integer circle) {
         return indexService.MTM(code, date, circle);
     }
+
+    @SneakyThrows
+    @ApiOperation(value = "MTM指标列表")
+    @PostMapping("mtm-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> MTMLIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.MTMLIST(code, day, year);
+    }
+
 
     @SneakyThrows
     @ApiOperation(value = "ASI指标(非递归)")
@@ -203,15 +351,41 @@ public class IndexController {
     }
 
     @SneakyThrows
+    @ApiOperation(value = "ASI指标列表")
+    @PostMapping("asi-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "day", value = "几日移动平均", dataType = "Integer", required = false, defaultValue = "5"),
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> ASILIST(@RequestParam("day") Integer day, @RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.ASILIST(code, day, year);
+    }
+
+    @SneakyThrows
     @ApiOperation(value = "KDJ指标(递归)")
     @PostMapping("kdj")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
             @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
     })
-    public JSONObject KDJ(@RequestParam("code") String code,@RequestParam("date") String date) {
+    public JSONObject KDJ(@RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.KDJ(code, date);
     }
+
+    @SneakyThrows
+    @ApiOperation(value = "KDJ指标列表")
+    @PostMapping("kdj-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> KDJLIST(@RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.KDJLIST(code, year);
+    }
+
 
     @SneakyThrows
     @ApiOperation(value = "MACD指标(递归)")
@@ -220,9 +394,22 @@ public class IndexController {
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
             @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
     })
-    public JSONObject MACD(@RequestParam("code") String code,@RequestParam("date") String date) {
+    public JSONObject MACD(@RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.MACD(code, date);
     }
+
+    @SneakyThrows
+    @ApiOperation(value = "MACD指标列表")
+    @PostMapping("macd-list")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "002336"),
+            @ApiImplicitParam(name = "year", value = "年", dataType = "String", required = false, defaultValue = "2022"),
+
+    })
+    public DataResult<Object> MACDLIST(@RequestParam("code") String code, @RequestParam("year") String year) {
+        return indexService.MACDLIST(code, year);
+    }
+
 
     @SneakyThrows
     @ApiOperation(value = "SAR指标(递归)")
@@ -231,7 +418,7 @@ public class IndexController {
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
             @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
     })
-    public Double SAR(@RequestParam("code") String code,@RequestParam("date") String date) {
+    public Double SAR(@RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.SAR(code, date);
     }
 
@@ -242,7 +429,7 @@ public class IndexController {
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
             @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
     })
-    public JSONObject DMI(@RequestParam("code") String code,@RequestParam("date") String date) {
+    public JSONObject DMI(@RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.DMI(code, date);
     }
 
@@ -253,7 +440,7 @@ public class IndexController {
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
             @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
     })
-    public JSONObject MIKE(@RequestParam("code") String code,@RequestParam("date") String date) {
+    public JSONObject MIKE(@RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.MIKE(code, date);
     }
 
@@ -264,7 +451,7 @@ public class IndexController {
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
             @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
     })
-    public JSONObject RSI(@RequestParam("code") String code,@RequestParam("date") String date) {
+    public JSONObject RSI(@RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.RSI(code, date);
     }
 
@@ -275,7 +462,7 @@ public class IndexController {
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
             @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
     })
-    public Double OBV(@RequestParam("code") String code,@RequestParam("date") String date) {
+    public Double OBV(@RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.OBV(code, date);
     }
 
@@ -286,7 +473,7 @@ public class IndexController {
             @ApiImplicitParam(name = "code", value = "股票代码", dataType = "String", required = false, defaultValue = "301299"),
             @ApiImplicitParam(name = "date", value = "日期", dataType = "String", required = false, defaultValue = "2022-12-21"),
     })
-    public Double RSV(@RequestParam("code") String code,@RequestParam("date") String date) {
+    public Double RSV(@RequestParam("code") String code, @RequestParam("date") String date) {
         return indexService.RSV(code, date);
     }
 }

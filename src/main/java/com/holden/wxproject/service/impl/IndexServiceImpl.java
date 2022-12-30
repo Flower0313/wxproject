@@ -68,6 +68,174 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> BIASLIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.BIASLIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: BIASLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> WRLIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.WRLIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: WRLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> ROCLIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.ROCLIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: ROCLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> BBILIST(String code, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.BBILIST(code, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: BBILIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> KDJLIST(String code, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.KDJLIST(code, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: KDJLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> MACDLIST(String code, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.MACDLIST(code, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: MACDLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> ENELIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.ENELIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: ENELIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> PSYLIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.PSYLIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: PSYLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> BRARLIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.BRARLIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: BRARLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> ATRLIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.ATRLIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: ATRLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> EMVLIST(String code, Integer day, String year, Integer circle) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.EMVLIST(code, day, year, circle);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: EMVLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> MTMLIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.MTMLIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: MTMLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> DPOLIST(String code, Integer day, String year, Integer circle) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.DPOLIST(code, day, year, circle);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: DPOLIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
+    @Override
+    @SourceChange(BaseConstant.NURSING)
+    public DataResult<Object> ASILIST(String code, Integer day, String year) {
+        try {
+            List<Map<String, Object>> malist = indexMapper.ASILIST(code, day, year);
+            return DataResult.ok(malist);
+        } catch (Exception e) {
+            log.error("[class: IndexServiceImpl.java]-[method: ASILIST]-[function: {}] , [Message]: {}", e.getMessage(), e);
+            return DataResult.fail("没数据");
+        }
+    }
+
 
     @Override
     @SourceChange(BaseConstant.NURSING)
@@ -79,6 +247,7 @@ public class IndexServiceImpl implements IndexService {
             double lowest = LOW(code, date, day, BaseConstant.LOWEST);
             //当日收盘价
             double current_price = indexMapper.current(code, date).getClosing_price();
+            System.out.println(highest + "||" + lowest + "||" + current_price + ">>>>");
             return (highest - current_price) * 100 / (highest - lowest);
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: WR]-[function: {}] , [Message]: {}", e.getMessage(), e);
@@ -141,7 +310,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     @SourceChange(BaseConstant.NURSING)
-    public Double EMV(String code, String date, Integer day) {
+    public Double EMV(String code, String date, Integer day, Integer circle) {
         try {
             List<StockDTO> list = indexMapper.List(code, date, day);
             double emv = 0.0;
@@ -155,7 +324,7 @@ public class IndexServiceImpl implements IndexService {
                 double vol = AVG(code, dto.getDs(), day, BaseConstant.DEALVOL) / dto.getDeal_vol().doubleValue();
                 emv += mid * vol * (dto.getHighest() - dto.getLowest()) / Math.max(1.0, h_l);
             }
-            return emv / day;
+            return emv / circle;
         } catch (Exception e) {
             log.error("[class: IndexServiceImpl.java]-[method: EMV]-[function: {}] , [Message]: {}", e.getMessage(), e);
             return -999.0;

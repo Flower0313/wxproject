@@ -159,7 +159,7 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @SourceChange(BaseConstant.NURSING)
     public DataResult<List<String>> getStockCode(String date) {
         try {
             List<String> stockCode = stockMapper.getStockCode(date);

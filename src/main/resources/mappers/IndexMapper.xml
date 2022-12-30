@@ -13,13 +13,318 @@
         select *
         from (SELECT ds,
                      avg(closing_price) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) AS
-        MA${day}
+        MA
               FROM df_stock
               WHERE CODE = #{code}
-                AND (substr(ds, 1, 4) in (#{year}) and concat(#{year}, '01-01')
-                  or (ds > DATE_ADD(concat(#{year}, '01-01'), interval -${day} day) and
-                      concat(#{year}, '01-01') > ds))) a
-        where substr(ds, 1, 4) IN (#{year})
+                AND (substr(ds, 1, 4) in (#{year})
+                  or (ds >= DATE_ADD(concat(#{year}, '-01-01'), interval -${day} day) and
+                      concat(#{year}, '-01-01') > ds))) a
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="BIASLIST" resultType="java.util.Map">
+        select *
+        from (
+                 SELECT ds, (closing_price - avg${day}) * 100 / avg${day} AS bias
+                 FROM (
+                          SELECT ds,
+                                 closing_price,
+                                 AVG(closing_price) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) AS avg${day}
+                          FROM df_stock
+                          WHERE CODE = #{code}
+                            AND (substr(ds, 1, 4) in (#{year})
+                              or (ds >= DATE_ADD(concat(#{year}, '-01-01'), interval -${day} day) and
+                                  concat(#{year}, '-01-01') > ds))
+                      ) a
+             ) b
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="WRLIST" resultType="java.util.Map">
+        SELECT *
+        FROM (SELECT ds,
+                     (highest${day} - closing_price) * 100 / IF((highest${day} - lowest${day}) = 0,
+                                                                1,
+                                                                highest${day} - lowest${day}
+                         ) AS WR
+              FROM (
+                       SELECT ds,
+                              closing_price,
+                              MAX(highest) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) AS highest${day}, MIN(lowest) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) AS lowest${day}
+                       FROM df_stock
+                       WHERE CODE = #{code}
+                         AND (
+                                   substr(ds, 1, 4) IN (#{year})
+                               OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                                   concat(#{year}, '-01-01') > ds))
+                   ) a
+             ) b
+        WHERE substr(ds, 1, 4) = #{year};
+    </select>
+
+    <select id="ASILIST" resultType="java.util.Map">
+        SELECT ds,
+               SUM(
+                                   16 * x / r *
+                                   IF
+                                       (aa > bb, aa,
+                                        bb)) OVER (ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) AS asi
+        FROM (
+                 SELECT *,
+                        IF
+                            (
+                                        aa > bb
+                                    AND aa > cc,
+                                        aa + bb / 2 + dd / 4,
+                                        IF
+                                            (bb > cc AND bb > aa, bb + aa / 2 + dd / 4, cc + dd / 4)) AS r,
+                        closing_price - last_closing + (closing_price - opening_price) / 2 + last_closing -
+                        last_opening                                                                  AS x
+                 FROM (
+                          SELECT *,
+                                 abs(highest - last_closing)      AS aa,
+                                 abs(lowest - last_closing)       AS bb,
+                                 abs(highest - last_low)          AS cc,
+                                 abs(last_closing - last_opening) AS dd
+                          FROM (
+                                   SELECT ds,
+                                          closing_price,
+                                          `code`,
+                                          highest,
+                                          lowest,
+                                          opening_price,
+                                          last_closing,
+                                          lag(lowest, 1) over (ORDER BY ds ) AS last_low, lag(opening_price, 1) over (ORDER BY ds ) AS last_opening
+                                   FROM `df_stock`
+                                   WHERE CODE = #{code}
+                                     AND (
+                                               substr(ds, 1, 4) IN (#{year})
+                                           OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                                               concat(#{year}, '-01-01') > ds))
+                               ) a
+                      ) b
+             ) c
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="ROCLIST" resultType="java.util.Map">
+        SELECT *
+        FROM (SELECT ds,
+                     (highest${day} - closing_price) * 100 / IF((highest${day} - lowest${day}) = 0,
+                                                                1,
+                                                                highest${day} - lowest${day}
+                         ) AS WR${day}
+              FROM (
+                       SELECT ds,
+                              closing_price,
+                              FIRST_VALUE(closing_price) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) pre_day
+                       FROM df_stock
+                       WHERE CODE = #{code}
+                         AND (
+                                   substr(ds, 1, 4) IN (#{year})
+                               OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                                   concat(#{year}, '-01-01') > ds))
+                   ) a
+             ) b
+        WHERE substr(ds, 1, 4) = #{year};
+    </select>
+
+    <select id="ENELIST" resultType="java.util.Map">
+        SELECT ds, upper_ene, lower_ene, ((upper_ene + lower_ene) / 2) AS ene
+        FROM (
+                 SELECT *,
+                        (1 + 6 / 100) * c AS upper_ene,
+                        (1 - 6 / 100) * c AS lower_ene
+                 FROM (
+                          SELECT ds,
+                                 closing_price,
+                                 `code`,
+                                 IF
+                                     (
+                                         ROW_NUMBER() OVER ( ORDER BY ds ) >= ${day},
+                                         AVG(closing_price) OVER ( ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW),
+                                         0
+                                     ) AS c
+                          FROM `df_stock`
+                          WHERE CODE = #{code}
+                            AND (
+                                      substr(ds, 1, 4) IN (#{year})
+                                  OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                                      concat(#{year}, '-01-01') > ds))
+                      ) a
+             ) b
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="BBILIST" resultType="java.util.Map">
+        SELECT ds,
+               IFnull((MA3 + MA6 + MA12 + MA24) / 4, 0) AS BBI
+        FROM (
+                 SELECT ds,
+                        IFnull(avg(closing_price) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN 2 PRECEDING AND CURRENT ROW ), 0)  AS MA3,
+                        IFnull(avg(closing_price) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN 5 PRECEDING AND CURRENT ROW ), 0)  AS MA6,
+                        IFnull(avg(closing_price) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN 11 PRECEDING AND CURRENT ROW ), 0) AS MA12,
+                        IFnull(avg(closing_price) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN 23 PRECEDING AND CURRENT ROW ), 0) AS MA24
+                 FROM `df_stock`
+                 WHERE CODE = #{code}
+                   AND (
+                             substr(ds, 1, 4) IN (#{year})
+                         OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                             concat(#{year}, '-01-01') > ds))
+             ) a
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="PSYLIST" resultType="java.util.Map">
+        select *
+        from (
+                 SELECT ds,
+                        avg(IF(closing_price > last_closing, 1, 0)) OVER ( PARTITION BY CODE ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW )*100 AS psy
+                 FROM `df_stock`
+                 where code = #{code}
+                   AND (
+                             substr(ds, 1, 4) IN (#{year})
+                         OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                             concat(#{year}, '-01-01') > ds))
+             ) a
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="KDJLIST" resultType="java.util.Map">
+        select ds, k, d, j
+        from df_stock
+        where code = #{code}
+          and substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="MTMLIST" resultType="java.util.Map">
+        select *
+        from (SELECT ds,
+                     closing_price - LAG(closing_price, ${day}, closing_price) OVER ( PARTITION BY CODE ORDER BY ds ) AS mtm
+              FROM `df_stock`
+              WHERE CODE = #{code}
+                AND (
+                          substr(ds, 1, 4) IN (#{year})
+                      OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                          concat(#{year}, '-01-01') > ds))) a
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="BRARLIST" resultType="java.util.Map">
+        SELECT ds,
+               ifnull(
+                       SUM(br1) OVER (ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW) * 100 / SUM(br2)
+                           OVER(ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW),
+                       0
+                   ) AS br,
+               ifnull(
+                       SUM(ar1) OVER (ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW) * 100 / SUM(ar2)
+                           OVER(ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW),
+                       0
+                   ) AS ar
+        FROM (
+                 SELECT ds,
+                        IF
+                            (highest - last_closing > 0, highest - last_closing, 0) AS br1,
+                        IF
+                            (last_closing - lowest > 0, last_closing - lowest, 0)   AS br2,
+                        highest - opening_price                                     AS ar1,
+                        opening_price - lowest                                      AS ar2
+                 FROM `df_stock`
+                 WHERE CODE = #{code}
+                   AND (
+                             substr(ds, 1, 4) IN (#{year})
+                         OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                             concat(#{year}, '-01-01') > ds))
+             ) a
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="ATRLIST" resultType="java.util.Map">
+        SELECT ds,
+               IF
+                   (
+                       ROW_NUMBER() OVER ( ORDER BY ds ) >= ${day},
+                       AVG(mtr) OVER ( ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW),
+                       0
+                   ) AS ATR
+        FROM (
+                 SELECT ds,
+                        IF
+                            (
+                                    hsl > lh,
+                                    IF
+                                        (hsl > ll, hsl, ll),
+                                    IF
+                                        (lh > ll, lh, ll)) AS mtr
+                 FROM (
+                          SELECT ds,
+                                 abs(last_closing - highest) AS lh,
+                                 abs(last_closing - lowest)  AS ll,
+                                 highest - lowest            AS hsl
+                          FROM `df_stock`
+                          WHERE CODE = #{code}
+                            AND (
+                                      substr(ds, 1, 4) IN (#{year})
+                                  OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                                      concat(#{year}, '-01-01') > ds))
+                      ) a
+             ) b
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="MACDLIST" resultType="java.util.Map">
+        select ds, dif, dea, macd
+        from df_stock
+        where code = #{code}
+          and substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="EMVLIST" resultType="java.util.Map">
+        SELECT ds,
+               round(
+                       AVG(mid * volume * (highest - lowest) / h_l) OVER (ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING
+                           AND CURRENT ROW),
+                       ${circle}
+                   ) AS emv
+        FROM (
+                 SELECT ds,
+                        highest,
+                        lowest,
+                        h_l,
+                        100 * (highest + lowest - last_hl) / (highest + lowest) AS mid,
+                        volume
+                 FROM (
+                          SELECT ds,
+                                 highest,
+                                 lowest,
+                                 AVG(deal_vol) OVER (ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) / deal_vol AS volume, LAG(highest + lowest, 1, highest + lowest) OVER (ORDER BY ds ) AS last_hl, AVG(highest - lowest) OVER (ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) AS h_l
+                          FROM df_stock
+                          WHERE CODE = #{code}
+                            AND (
+                                      substr(ds, 1, 4) IN (#{year})
+                                  OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                                      concat(#{year}, '-01-01') > ds))
+                      ) a
+             ) b
+        where substr(ds, 1, 4) = #{year}
+    </select>
+
+    <select id="DPOLIST" resultType="java.util.Map">
+        SELECT ds,
+               closing_price - LAG(MA, ${circle}, MA) OVER ( ORDER BY ds ) dpo
+        FROM (
+                 SELECT ds,
+                        closing_price,
+                        avg(closing_price) OVER ( ORDER BY ds ROWS BETWEEN ${day-1} PRECEDING AND CURRENT ROW ) AS MA
+                 FROM `df_stock`
+                 WHERE CODE = #{code}
+                   AND (
+                             substr(ds, 1, 4) IN (#{year})
+                         OR (ds >= DATE_ADD(concat(#{year}, '-01-01'), INTERVAL -${day} DAY) AND
+                             concat(#{year}, '-01-01') > ds))
+             ) a
+        where substr(ds, 1, 4) = #{year}
     </select>
 
     <select id="BIAS" resultType="com.holden.wxproject.pojo.StockDTO">
