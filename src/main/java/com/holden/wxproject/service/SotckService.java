@@ -41,6 +41,6 @@ public interface SotckService {
 
     DataResult<Object> getMaxMinDs(String date);
 
-    DataResult<Object> getBigMarketStocks(String date,Integer ratio);
+    DataResult<Object> getBigMarketStocks(String date,Double ratio,String order,Integer type);
 
 }

@@ -144,14 +144,16 @@ public class StockController {
     }
 
     @SneakyThrows
-    @ApiOperation(value = "获得大盘股")
-    @GetMapping("/get-big-market")
+    @ApiOperation(value = "根据市值来选择股票")
+    @GetMapping("/get-column")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "date", value = "日期值", dataType = "String", required = false, defaultValue = "2022-12-30"),
-            @ApiImplicitParam(name = "ratio", value = "比例(1-100)%", dataType = "Integer", required = false, defaultValue = "16"),
+            @ApiImplicitParam(name = "date", value = "日期值", dataType = "String", required = true, defaultValue = "2022-12-30"),
+            @ApiImplicitParam(name = "ratio", value = "比例(1-100)%", dataType = "Double", required = false, defaultValue = "16"),
+            @ApiImplicitParam(name = "type", value = "基本面字段", dataType = "Integer", required = false, defaultValue = "10002"),
+            @ApiImplicitParam(name = "order", value = "排序(desc或asc)", dataType = "String", required = false, defaultValue = "desc"),
     })
-    public DataResult<Object> getBigMarketStocks(@RequestParam("date") String date, @RequestParam("ratio") Integer ratio) {
-        return stockService.getBigMarketStocks(date, ratio);
+    public DataResult<Object> getBigMarketStocks(@RequestParam("date") String date, @RequestParam("ratio") Double ratio, @RequestParam("order") String order,@RequestParam("type") Integer type) {
+        return stockService.getBigMarketStocks(date, ratio, order,type);
     }
 
 

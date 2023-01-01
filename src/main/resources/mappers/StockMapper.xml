@@ -164,12 +164,13 @@
         SELECT `code`
         FROM (
                  SELECT `CODE`,
-                        circulation_market_v,
-                        row_number() over ( ORDER BY circulation_market_v DESC ) AS market_rk, floor(count(*) over()*${ratio/100}) as nums
+                        ${column},
+                        row_number() over ( ORDER BY ${column} ${order} ) AS market_rk, floor(count(*) over()*${ratio/100}) as nums
                  FROM df_a_stock_detail
                  WHERE ds = #{date}
-                   AND circulation_market_v > 0
-                   AND board IN (2, 6)
+                   AND ${column} > 0
+                   and REPLACE(substr(DATE_ADD(now(), interval -180 day), 1, 10), '-', '') >= time_to_market
+                   and name not like '%ST%'
                    AND current_price > 0
              ) a
         where nums >= market_rk;

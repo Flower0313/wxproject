@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.holden.wxproject.annotation.SourceChange;
 import com.holden.wxproject.config.BaseConstant;
 import com.holden.wxproject.mapper.StockMapper;
+import com.holden.wxproject.pojo.StockTypeEnum;
 import com.holden.wxproject.service.SotckService;
 import com.holden.wxproject.util.ClickHouseUtil;
 import com.holden.wxproject.util.DataResult;
@@ -210,9 +211,16 @@ public class StockServiceImpl implements SotckService {
 
     @Override
     @SourceChange(BaseConstant.NURSING)
-    public DataResult<Object> getBigMarketStocks(String date, Integer ratio) {
+    public DataResult<Object> getBigMarketStocks(String date, Double ratio, String order, Integer type) {
         try {
-            List<String> maxMinDs = stockMapper.getBigMarketStocks(date,ratio);
+            if (!("desc").equals(order) && !("asc").equals(order)) {
+                return DataResult.fail("排序方式错误，只能选desc或asc");
+            }
+            StockTypeEnum column = StockTypeEnum.getType(type);
+            if(Objects.isNull(column)){
+                return DataResult.fail("未找到对应的字段，请重新输入。");
+            }
+            List<String> maxMinDs = stockMapper.getBigMarketStocks(date, ratio, order, column.getValue());
             return DataResult.ok(maxMinDs);
         } catch (Exception e) {
             log.error("[class: StockServiceImpl.java]-[method: getBigMarketStocks]-[function: {}] , [Message]: {}", e.getMessage(), e);
