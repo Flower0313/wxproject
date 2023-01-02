@@ -1,6 +1,10 @@
 package com.holden.wxproject.pojo;
 
 import lombok.Getter;
+import lombok.ToString;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @ClassName wxproject-StockTypeEnum
@@ -9,6 +13,7 @@ import lombok.Getter;
  * @Describe
  */
 @Getter
+@ToString
 public enum StockTypeEnum {
     PE(10001, "PE_ratio_d", "市盈率（动）"),
     Market(10002, "total_market_v", "市值"),
@@ -27,6 +32,10 @@ public enum StockTypeEnum {
         this.type = type;
         this.value = value;
         this.desc = desc;
+    }
+
+    public static List<StockTypeEnum> getStockEnum(){
+        return Arrays.asList(values());
     }
 
     public static StockTypeEnum getType(Integer type) {

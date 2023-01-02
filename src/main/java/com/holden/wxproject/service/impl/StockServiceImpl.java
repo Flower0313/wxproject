@@ -217,8 +217,14 @@ public class StockServiceImpl implements SotckService {
                 return DataResult.fail("排序方式错误，只能选desc或asc");
             }
             StockTypeEnum column = StockTypeEnum.getType(type);
-            if(Objects.isNull(column)){
-                return DataResult.fail("未找到对应的字段，请重新输入。");
+            if (Objects.isNull(column)) {
+                StringBuilder sb = new StringBuilder();
+                sb.append("未找到对应的指标，请从以下这些指标中选择：");
+                List<StockTypeEnum> stockEnum = StockTypeEnum.getStockEnum();
+                for (StockTypeEnum stockTypeEnum : stockEnum) {
+                    sb.append("(").append(stockTypeEnum.getType()).append(",").append(stockTypeEnum.getDesc()).append(")");
+                }
+                return DataResult.fail(sb.toString());
             }
             List<String> maxMinDs = stockMapper.getBigMarketStocks(date, ratio, order, column.getValue());
             return DataResult.ok(maxMinDs);
