@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * @Create 2022年10月25日11:54 - 周二
  * @Describe
  */
-@Api(tags = {"指标计算"})
+@Api(tags = {"指标计算(2008-12-01 到 2022-12-30)"})
 @RestController
 @RequestMapping(value = "/index/")
 public class IndexController {

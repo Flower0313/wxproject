@@ -26,7 +26,7 @@ public class SwaggerConfig {
                 //生产环境不开启swagger
                 .enable(!profile.contains("prod"))
                 .apiInfo(new ApiInfoBuilder()
-                        .title("陪你娃微信小程序Swagger API文档")
+                        .title("华小量化Swagger API文档")
                         .description("by 肖华")
                         .version("1.0")
                         .contact(new Contact("holdenxiao", "https://holden.games", "123103003@qq.com"))
