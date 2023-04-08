@@ -1,27 +1,33 @@
 package com.holden.wxproject;
 
-import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson.JSONArray;
-import com.github.plexpt.chatgpt.Chatbot;
-import com.holden.wxproject.annotation.SourceChange;
-import com.holden.wxproject.mapper.PicBannerMapper;
-import com.holden.wxproject.mapper.StockMapper;
-import org.ansj.splitWord.analysis.BaseAnalysis;
-import org.ansj.splitWord.analysis.IndexAnalysis;
-import org.ansj.splitWord.analysis.NlpAnalysis;
-import org.ansj.splitWord.analysis.ToAnalysis;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-import java.util.Map;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 class WxprojectApplicationTests {
-    public static void main(String[] args) {
-        String url = "http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + "dhasjkhdadhajdhakdhahkdjashda";
-        String post = HttpUtil.post(url, (String) null);
-        System.out.println(post);
+    public static final String TOKEN = "6048362883:AAHYWhv1ZEh2fL5f6LUN3FWLXdSQ5s6GdtU";
+
+    public static void main(String[] args) throws TelegramApiException {
+        Logger logger = LogManager.getLogManager().getLogger("");
+        // 设置日志级别为WARNING
+        logger.setLevel(Level.OFF);
+
+        TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
+        DefaultBotOptions botOptions = new DefaultBotOptions();
+
+        botOptions.setProxyHost("127.0.0.1");
+        botOptions.setProxyPort(7890);
+        botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
+
+        MyBot bot = new MyBot(TOKEN, botOptions);
+
+        botsApi.registerBot(bot);
 
     }
 }
