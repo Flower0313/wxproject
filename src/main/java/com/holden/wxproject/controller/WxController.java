@@ -33,6 +33,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @ClassName wxproject-WxController
@@ -164,12 +166,12 @@ public class WxController {
             sb.append("截止今日9:15一共有").append(data.size()).append("条利好新闻消息：").append("\n");
             int index = 0;
             for (Map<String, Object> datum : data) {
-                if (index++ >= 20) {
+                if (index++ >= 15) {
                     break;
                 }
                 sb.append(index).append(".").append(datum.get("title")).append("(").append(datum.get("code")).append(")").append("\n");
             }
-            sb.append("......由于字数限制只展示前20条,想看更多请访问\nhttps://holden.games/swagger-ui.html");
+            sb.append("......由于字数限制只展示前15条,想看更多请访问\nhttps://holden.games/swagger-ui.html");
             return sb.toString();
         }
         ////////////////////////////
@@ -216,13 +218,29 @@ public class WxController {
             int index = 0;
             sb.append("截止今日9:15一共获得").append(data.size()).append("条关于").append(content.substring(1)).append("的消息:\n");
             for (Map<String, Object> datum : data) {
-                if (index++ >= 20) {
+                if (index++ >= 15) {
                     break;
                 }
                 sb.append(index).append(".").append(datum.get("title")).append("(").append(datum.get("code")).append(")").append("\n");
             }
-            sb.append("......由于字数限制只展示前20条,想看更多请访问\nhttps://holden.games/swagger-ui.html");
+            sb.append("......由于字数限制只展示前15条,想看更多请访问\nhttps://holden.games/swagger-ui.html");
             return sb.toString();
+        } else if (content.contains("jpsall")) {
+            StringBuilder LoadedFileName = new StringBuilder();
+            String line = "";
+            try {
+                Process process = Runtime.getRuntime().exec("ssh 8.130.49.69 '/root/bin/tools/jpsall'");
+                BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                while ((line = in.readLine()) != null) {
+                    LoadedFileName.append(line).append("\n");
+                }
+                in.close();
+                int re = process.waitFor();
+                return LoadedFileName.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "";
+            }
         }
         //////////////////////////
         else {
