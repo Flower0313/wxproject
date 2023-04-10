@@ -2,6 +2,8 @@ package com.holden.wxproject.controller;
 
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.holden.wxproject.pojo.ImageMessage;
 import com.holden.wxproject.pojo.InMessage;
@@ -14,6 +16,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.dom4j.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +37,7 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -65,7 +72,7 @@ public class WxController {
         JSONObject jsonObject = null;
         try {
             // 创建URL对象
-            URL url = new URL("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + AppId + "&secret=" + AppSecret);
+            URL url = new URL("http://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + AppId + "&secret=" + AppSecret);
             // 打开连接
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             // 读取数据
@@ -117,7 +124,7 @@ public class WxController {
     public Object handlerMessage(@RequestBody InMessage inMessage) {
         try {
             String msgType = inMessage.getMsgType();
-            if (!msgType.equals("text")) {
+            if (!("text").equals(msgType)) {
                 return "success";
             }
             OutputMessage outputMsg = new OutputMessage();
@@ -171,7 +178,7 @@ public class WxController {
                 }
                 sb.append(index).append(".").append(datum.get("title")).append("(").append(datum.get("code")).append(")").append("\n");
             }
-            sb.append("......由于字数限制只展示前15条,想看更多请访问\nhttps://holden.games/swagger-ui.html");
+            sb.append("......由于字数限制只展示前15条,想看更多请访问\nhttp://holden.games/swagger-ui.html");
             return sb.toString();
         }
         ////////////////////////////
@@ -189,7 +196,7 @@ public class WxController {
                         .append("的股票连续上涨了").append(datum.get("times"))
                         .append("次(天)，总涨幅为").append(datum.get("sumrate")).append("%\n");
             }
-            sb.append("......由于字数限制只展示前20条,想看更多请访问\nhttps://holden.games/swagger-ui.html");
+            sb.append("......由于字数限制只展示前20条,想看更多请访问\nhttp://holden.games/swagger-ui.html");
             return sb.toString();
         }
         ////////////////////////////
@@ -207,7 +214,7 @@ public class WxController {
                         .append("的股票连续融了").append(datum.get("times"))
                         .append("次(天)，总融资为").append(datum.get("sumprice")).append("元\n");
             }
-            sb.append("......由于字数限制只展示前20条,想看更多请访问\nhttps://holden.games/swagger-ui.html");
+            sb.append("......由于字数限制只展示前20条,想看更多请访问\nhttp://holden.games/swagger-ui.html");
             return sb.toString();
         }
         ////////////////////////////
@@ -223,7 +230,7 @@ public class WxController {
                 }
                 sb.append(index).append(".").append(datum.get("title")).append("(").append(datum.get("code")).append(")").append("\n");
             }
-            sb.append("......由于字数限制只展示前15条,想看更多请访问\nhttps://holden.games/swagger-ui.html");
+            sb.append("......由于字数限制只展示前15条,想看更多请访问\nhttp://holden.games/swagger-ui.html");
             return sb.toString();
         } else if (content.contains("jpsall")) {
             StringBuilder LoadedFileName = new StringBuilder();
@@ -244,25 +251,55 @@ public class WxController {
         }
         //////////////////////////
         else {
-            DataResult<List<Map<String, Object>>> result = stockService.targetStock(content, content);
-            List<Map<String, Object>> data = result.getData();
-            if (data.size() == 0) {
-                String url = "http://api.qingyunke.com/api.php?key=free&appid=0&msg=" + content;
-                return JSONObject.parseObject(HttpUtil.post(url, (String) null)).getString("content");
+            try {
+                DataResult<List<Map<String, Object>>> result = stockService.targetStock(content, content);
+                List<Map<String, Object>> data = result.getData();
+                if (data.size() == 0) {
+                    String url = "https://api.openai.com/v1/chat/completions";
+                    // 设置 JSON 参数
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("model", "gpt-3.5-turbo");
+
+                    JSONObject contents = new JSONObject();
+                    JSONArray objects = new JSONArray();
+                    contents.put("role", "user");
+                    contents.put("content", content);
+                    objects.add(contents);
+                    params.put("messages", objects);
+
+                    String jsonParams = JSONUtil.toJsonStr(params);
+                    OkHttpClient httpClient = new OkHttpClient();
+                    okhttp3.RequestBody requestBody = okhttp3.RequestBody.create(MediaType.parse("application/json"), jsonParams);
+                    System.out.println(jsonParams);
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .post(requestBody)
+                            .addHeader("Authorization", "Bearer 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")
+                            .addHeader("Content-Type", "application/json")
+                            .build();
+
+                    // 发送请求并获取响应
+                    Response response = httpClient.newCall(request).execute();
+                    String responseBody = response.body().string();
+                    JSONObject jsonObject = JSONArray.parseObject(responseBody);
+                    return jsonObject.getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content");
+                }
+                StringBuilder sb = new StringBuilder();
+                sb.append(content).append("最新的消息如下：\n");
+                for (Map<String, Object> datum : data) {
+                    sb.append("名称：").append(datum.get("name")).append("\n")
+                            .append("代码：").append(datum.get("code")).append("\n")
+                            .append("当前价：").append(datum.get("current_price")).append("\n")
+                            .append("涨跌幅：").append(datum.get("up_down_rate")).append("\n")
+                            .append("换手率：").append(datum.get("turnover_rate")).append("\n")
+                            .append("主力净流入：").append(datum.get("big")).append("\n")
+                            .append("散户净流入：").append(datum.get("small")).append("\n")
+                            .append("成交量：").append(datum.get("deal_amount")).append("\n");
+                }
+                return sb.toString();
+            } catch (Exception e) {
+                return "对话接口出错";
             }
-            StringBuilder sb = new StringBuilder();
-            sb.append(content).append("最新的消息如下：\n");
-            for (Map<String, Object> datum : data) {
-                sb.append("名称：").append(datum.get("name")).append("\n")
-                        .append("代码：").append(datum.get("code")).append("\n")
-                        .append("当前价：").append(datum.get("current_price")).append("\n")
-                        .append("涨跌幅：").append(datum.get("up_down_rate")).append("\n")
-                        .append("换手率：").append(datum.get("turnover_rate")).append("\n")
-                        .append("主力净流入：").append(datum.get("big")).append("\n")
-                        .append("散户净流入：").append(datum.get("small")).append("\n")
-                        .append("成交量：").append(datum.get("deal_amount")).append("\n");
-            }
-            return sb.toString();
         }
     }
 

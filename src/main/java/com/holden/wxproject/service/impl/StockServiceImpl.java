@@ -97,52 +97,70 @@ public class StockServiceImpl implements SotckService {
     @Override
     @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> getContiniation(Integer times, Integer tag) {
-        if (Objects.isNull(times) || Objects.isNull(tag)) {
-            return DataResult.fail("请传值!");
+        try {
+            if (Objects.isNull(times) || Objects.isNull(tag)) {
+                return DataResult.fail("请传值!");
+            }
+            List<Map<String, Object>> results = stockMapper.getContiniation(times, tag);
+            //在内存中对累计值进行排序
+            if (tag == 1) {
+                results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o1.get("sumrate").toString()).compareTo(new BigDecimal(o2.get("sumrate").toString()))));
+            } else {
+                results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o2.get("sumrate").toString()).compareTo(new BigDecimal(o1.get("sumrate").toString()))));
+            }
+            return DataResult.ok(results);
+        } catch (Exception e) {
+            return DataResult.fail("股票出错");
         }
-        List<Map<String, Object>> results = stockMapper.getContiniation(times, tag);
-        //在内存中对累计值进行排序
-        if (tag == 1) {
-            results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o1.get("sumrate").toString()).compareTo(new BigDecimal(o2.get("sumrate").toString()))));
-        } else {
-            results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o2.get("sumrate").toString()).compareTo(new BigDecimal(o1.get("sumrate").toString()))));
-        }
-        return DataResult.ok(results);
+
     }
 
     @Override
     @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> getContiniationFinance(Integer times, Integer tag) {
-        if (Objects.isNull(times) || Objects.isNull(tag)) {
-            return DataResult.fail("请传值!");
+        try {
+            if (Objects.isNull(times) || Objects.isNull(tag)) {
+                return DataResult.fail("请传值!");
+            }
+            List<Map<String, Object>> results = stockMapper.getContiniationFinance(times, tag);
+            //在内存中对累计值进行排序
+            if (tag == 1) {
+                results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o1.get("sumprice").toString()).compareTo(new BigDecimal(o2.get("sumprice").toString()))));
+            } else {
+                results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o2.get("sumprice").toString()).compareTo(new BigDecimal(o1.get("sumprice").toString()))));
+            }
+            return DataResult.ok(results);
+        } catch (Exception e) {
+            return DataResult.fail("融资融券");
         }
-        List<Map<String, Object>> results = stockMapper.getContiniationFinance(times, tag);
-        //在内存中对累计值进行排序
-        if (tag == 1) {
-            results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o1.get("sumprice").toString()).compareTo(new BigDecimal(o2.get("sumprice").toString()))));
-        } else {
-            results.sort((o1, o2) -> Integer.compare(0, new BigDecimal(o2.get("sumprice").toString()).compareTo(new BigDecimal(o1.get("sumprice").toString()))));
-        }
-        return DataResult.ok(results);
+
     }
 
     @Override
     @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> judgeNews() {
-        List<Map<String, Object>> keywords = stockMapper.keywords();
-        //String rlike = keywords.stream().map(String::valueOf).collect(Collectors.joining("|"));
-        Map<Object, List<Map<String, Object>>> tag = keywords.stream().collect(Collectors.groupingBy(x -> x.get("tag")));
-        String up = tag.get("正").get(0).get("content").toString().replace(",", "|");
-        String down = tag.get("负").get(0).get("content").toString().replace(",", "|");
-        List<Map<String, Object>> result = stockMapper.judgeNews(up, down);
-        return DataResult.ok(result);
+        try {
+            List<Map<String, Object>> keywords = stockMapper.keywords();
+            //String rlike = keywords.stream().map(String::valueOf).collect(Collectors.joining("|"));
+            Map<Object, List<Map<String, Object>>> tag = keywords.stream().collect(Collectors.groupingBy(x -> x.get("tag")));
+            String up = tag.get("正").get(0).get("content").toString().replace(",", "|");
+            String down = tag.get("负").get(0).get("content").toString().replace(",", "|");
+            List<Map<String, Object>> result = stockMapper.judgeNews(up, down);
+            return DataResult.ok(result);
+        } catch (Exception e) {
+            return DataResult.fail("消息出错");
+        }
     }
 
     @Override
     @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> targetNews(String keyword) {
-        List<Map<String, Object>> maps = stockMapper.targetNews(keyword);
-        return DataResult.ok(maps);
+        try {
+            List<Map<String, Object>> maps = stockMapper.targetNews(keyword);
+            return DataResult.ok(maps);
+        } catch (Exception e) {
+            return DataResult.fail("新闻消息出错");
+        }
     }
 
     @Override

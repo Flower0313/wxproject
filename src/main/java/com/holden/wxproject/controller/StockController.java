@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -32,7 +33,6 @@ public class StockController {
     private SotckService stockService;
 
 
-    @SneakyThrows
     @ApiOperation(value = "获取单个股票基本面信息")
     @GetMapping("/get-single-stock")
     @ApiImplicitParams({
@@ -41,10 +41,14 @@ public class StockController {
             @ApiImplicitParam(name = "value", value = "日期值", dataType = "String", required = false, defaultValue = "2022-12-26"),
     })
     public DataResult<Object> getSingleStock(@RequestParam("code") String code, @RequestParam("dateType") Integer dateType, @RequestParam("value") String value) {
-        return stockService.getSingleStock(code, dateType, value);
+        try {
+            return stockService.getSingleStock(code, dateType, value);
+        } catch (SQLException e) {
+            return DataResult.fail("getSingleStock出错");
+        }
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "统计指定日期的股票数")
     @GetMapping("/get-up-stock")
     @ApiImplicitParams({
@@ -54,7 +58,7 @@ public class StockController {
         return stockService.getStockNum(date);
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "行业研报")
     @GetMapping("/get-industry-report")
     @ApiImplicitParams({
@@ -64,7 +68,7 @@ public class StockController {
         return stockService.getIndustryReport(date);
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "截止当天连续上涨或下跌的股票")
     @GetMapping("/get-continuation")
     @ApiImplicitParams({
@@ -75,7 +79,7 @@ public class StockController {
         return stockService.getContiniation(times, tag);
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "截止当天连续上涨或下跌的融资融券")
     @GetMapping("/get-continuation-finance")
     @ApiImplicitParams({
@@ -86,21 +90,21 @@ public class StockController {
         return stockService.getContiniationFinance(times, tag);
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "分析昨日新闻对今日股价的涨跌")
     @GetMapping("/judge-news")
     public DataResult<List<Map<String, Object>>> judgeNews() {
         return stockService.judgeNews();
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "获取讨论热度的股")
     @GetMapping("/stock-hot")
     public DataResult<List<Map<String, Object>>> stockHot() {
         return stockService.stockHot();
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "获取指定日期的沪深主板的股票(普通人可以买入的)")
     @GetMapping("/get-stock-codes")
     @ApiImplicitParams({
@@ -110,7 +114,7 @@ public class StockController {
         return stockService.getStockCode(date);
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "获得k线图")
     @GetMapping("/get-stock-kline")
     @ApiImplicitParams({
@@ -122,7 +126,7 @@ public class StockController {
         return stockService.getKline(code, dateType, value);
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "获得股价可执行日期")
     @GetMapping("/get-stock-calendar")
     @ApiImplicitParams({
@@ -133,7 +137,7 @@ public class StockController {
         return stockService.getCalendar(dateType, value);
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "获得每年首次末次执行年月")
     @GetMapping("/get-max-min-ds")
     @ApiImplicitParams({
@@ -143,7 +147,7 @@ public class StockController {
         return stockService.getMaxMinDs(date);
     }
 
-    @SneakyThrows
+
     @ApiOperation(value = "根据市值来选择股票")
     @GetMapping("/get-column")
     @ApiImplicitParams({
@@ -152,8 +156,8 @@ public class StockController {
             @ApiImplicitParam(name = "type", value = "基本面字段", dataType = "Integer", required = false, defaultValue = "10002"),
             @ApiImplicitParam(name = "order", value = "排序(desc或asc)", dataType = "String", required = false, defaultValue = "desc"),
     })
-    public DataResult<Object> getBigMarketStocks(@RequestParam("date") String date, @RequestParam("ratio") Double ratio, @RequestParam("order") String order,@RequestParam("type") Integer type) {
-        return stockService.getBigMarketStocks(date, ratio, order,type);
+    public DataResult<Object> getBigMarketStocks(@RequestParam("date") String date, @RequestParam("ratio") Double ratio, @RequestParam("order") String order, @RequestParam("type") Integer type) {
+        return stockService.getBigMarketStocks(date, ratio, order, type);
     }
 
 
