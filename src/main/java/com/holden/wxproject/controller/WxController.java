@@ -51,7 +51,6 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 @Api(tags = {"微信公众号接口"})
-@RestController
 public class WxController {
     @Value("${wx.AppId}")
     private String AppId;
