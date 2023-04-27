@@ -20,4 +20,10 @@ public class HomeController {
     public ModelAndView info() throws SQLException {
         return new ModelAndView("index.html");
     }
+
+    @GetMapping("/data_center")
+    public ModelAndView data() throws SQLException {
+        return new ModelAndView("data.html");
+    }
+
 }

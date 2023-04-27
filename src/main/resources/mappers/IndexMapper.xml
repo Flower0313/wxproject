@@ -475,4 +475,17 @@
           and ds = #{date} limit 1
     </select>
 
+    <select id="oneRow" resultType="com.holden.wxproject.pojo.resp.OneRowResp">
+        SELECT sum(main_inflow + Slarge_inflow + large_inflow) AS mainFlow,
+               sum(mid_inflow + small_inflow)                  AS smallFlow,
+               concat(max(up_down_rate), '%')                  as upRate,
+               concat(min(up_down_rate), '%')                  as upDown,
+               sum(outer_disk)                                 as outside,
+               sum(inner_disk)                                 as `inner`,
+               sum(deal_vol)                                   as dealVol,
+               max(highest)                                    as highest
+        FROM `df_a_stock_detail`
+        WHERE ds = #{date}
+    </select>
+
 </mapper>

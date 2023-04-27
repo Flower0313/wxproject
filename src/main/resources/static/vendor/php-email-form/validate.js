@@ -72,7 +72,7 @@
       }
     })
     .catch((error) => {
-      displayError(thisForm, error);
+      displayError(thisForm, "此功能暂时不能用！");
     });
   }
 

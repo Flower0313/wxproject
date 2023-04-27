@@ -1,6 +1,7 @@
 package com.holden.wxproject.mapper;
 
 import com.holden.wxproject.pojo.StockDTO;
+import com.holden.wxproject.pojo.resp.OneRowResp;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -75,4 +76,14 @@ public interface IndexMapper {
     Double LOW(@Param("code") String code, @Param("date") String date, @Param("day") Integer day, @Param("field") String field);
 
     List<Map<String, Object>> recursiveIndex(@Param("code") String code, @Param("date") String date);
+
+    /**
+     * 第一栏信息
+     *
+     * @param date 当前日期
+     * @return Map
+     */
+    OneRowResp oneRow(@Param("date") String date);
+
+
 }
