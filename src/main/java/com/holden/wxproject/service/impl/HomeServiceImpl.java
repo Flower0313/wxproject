@@ -1,9 +1,10 @@
 package com.holden.wxproject.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.holden.wxproject.annotation.SourceChange;
 import com.holden.wxproject.config.BaseConstant;
 import com.holden.wxproject.mapper.IndexMapper;
-import com.holden.wxproject.pojo.resp.OneRowResp;
+import com.holden.wxproject.pojo.resp.*;
 import com.holden.wxproject.service.HomeService;
 import com.holden.wxproject.util.DataResult;
 import com.holden.wxproject.util.DateUtil;
@@ -31,14 +32,30 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     @SourceChange(BaseConstant.SPIDER)
-    public DataResult<List<Map<String, Object>>> getInfo() {
+    public DataResult<JSONObject> getInfo() throws Exception {
+
         LocalDate currentDate = LocalDate.now();
         String date = currentDate.format(DateTimeFormatter.ofPattern(DateUtil.DATE_FORMAT_OUTPUT_ACCURATE_TIME_DAY));
-        OneRowResp oneRowResp = indexMapper.oneRow(date);
+        //第一栏
+        List<OneRowResp> oneRowResp = indexMapper.oneRow(date);
+        //第二栏
+        List<TwoRowResp> twoRowResp = indexMapper.twoRow();
+        //第三栏左边
+        List<ThreeRowResp> threeRowResp = indexMapper.threeRow();
+        //第三栏右边
+        List<FourRowResp> fourRowResp = indexMapper.fourRow(date);
+        //新闻
+        List<NewsInfoResp> newsInfoResp = indexMapper.newInfo(date);
 
 
+        //返回结果
+        JSONObject result = new JSONObject();
+        result.put("t1", oneRowResp);
+        result.put("t2", twoRowResp);
+        result.put("t3l", threeRowResp);
+        result.put("t3r", fourRowResp);
+        result.put("news", newsInfoResp);
 
-
-        return null;
+        return DataResult.ok(result);
     }
 }

@@ -1,6 +1,11 @@
 package com.holden.wxproject.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.holden.wxproject.service.HomeService;
+import com.holden.wxproject.service.IndexService;
+import com.holden.wxproject.util.DataResult;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,14 +21,26 @@ import java.sql.SQLException;
 @Api(tags = {"个人简历"})
 @RestController
 public class HomeController {
+    @Autowired
+    private HomeService homeService;
+
     @GetMapping("/")
     public ModelAndView info() throws SQLException {
         return new ModelAndView("index.html");
     }
 
     @GetMapping("/data_center")
-    public ModelAndView data() throws SQLException {
+    public ModelAndView data() {
+        try {
+            DataResult<JSONObject> info = homeService.getInfo();
+            System.out.println(info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new ModelAndView("data.html");
     }
 
+    public DataResult<JSONObject> datatest() throws Exception {
+        return homeService.getInfo();
+    }
 }

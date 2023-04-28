@@ -1,7 +1,7 @@
 package com.holden.wxproject.mapper;
 
 import com.holden.wxproject.pojo.StockDTO;
-import com.holden.wxproject.pojo.resp.OneRowResp;
+import com.holden.wxproject.pojo.resp.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -83,7 +83,26 @@ public interface IndexMapper {
      * @param date 当前日期
      * @return Map
      */
-    OneRowResp oneRow(@Param("date") String date);
+    List<OneRowResp> oneRow(@Param("date") String date);
+
+    /**
+     * @return 第二栏
+     */
+    List<TwoRowResp> twoRow();
+
+    /**
+     * @return 第三栏左边
+     */
+    List<ThreeRowResp> threeRow();
+
+    /**
+     * 第三栏右边
+     *
+     * @return 第三栏右边边
+     */
+    List<FourRowResp> fourRow(@Param("date") String date);
+
+    List<NewsInfoResp> newInfo(@Param("date") String date);
 
 
 }

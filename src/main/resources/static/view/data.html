@@ -9,6 +9,12 @@
     <link href="../css/data_style.css" rel="stylesheet">
     <script src="../js/echarts.js"></script>
     <script src="../js/jquery-1.10.2.min.js"></script>
+    <style>
+        .scroll-box::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    </style>
 </head>
 <body>
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
@@ -16,11 +22,18 @@
     <div class="main">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-8 p-r-0 title-margin-right">
-                    <div class="page-header">
-                        <div class="page-title">
-                            <h1>数据主看板<span>    返回</span></h1>
-                        </div>
+                <div class="col-lg-12">
+                    <div class="jumbotron">
+                        <h1 class="display-4">数据看板 <span class="badge badge-success">运行中</span></h1>
+
+                        <p class="lead">数据集皆来源于<a href="https://www.eastmoney.com/" target="_blank"
+                                                  style="color:blue;text-decoration: underline;">东方财富网</a>，均为符合该网站要求的合法爬虫。
+                        </p>
+                        <hr class="my-4">
+                        <p>The dataset is sourced from <a href="https://www.eastmoney.com/" target="_blank"
+                                                          style="color:blue;text-decoration: underline;">#eastmoney</a>
+                            website and is a legitimate crawler that meets the requirements of the website.</p>
+                        <button type="button" class="btn btn-light"><a href="https://holden.games">返回</a></button>
                     </div>
                 </div>
 
@@ -33,7 +46,7 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bxs-dollar-circle'></i>
+                                <div class="stat-icon dib"><i class='bx bxs-dollar-circle' style="color:green"></i>
                                 </div>
                                 <div class="stat-content dib">
                                     <div class="stat-text">主力净流入</div>
@@ -45,7 +58,7 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-dollar-circle'></i>
+                                <div class="stat-icon dib"><i class='bx bx-dollar-circle' style="color:red"></i>
                                 </div>
                                 <div class="stat-content dib">
                                     <div class="stat-text">主力净流出</div>
@@ -57,7 +70,7 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bxs-user-check'></i>
+                                <div class="stat-icon dib"><i class='bx bxs-user-check' style="color:green"></i>
                                 </div>
                                 <div class="stat-content dib">
                                     <div class="stat-text">散户净流入</div>
@@ -69,7 +82,7 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bxs-user-x'></i></div>
+                                <div class="stat-icon dib"><i class='bx bxs-user-x' style="color:red"></i></div>
                                 <div class="stat-content dib">
                                     <div class="stat-text">散户净流出</div>
                                     <div class="stat-digit">￥<span>515</span></div>
@@ -83,7 +96,7 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-trending-up'></i>
+                                <div class="stat-icon dib"><i class='bx bx-trending-up' style="color:#1cde0f"></i>
                                 </div>
                                 <div class="stat-content dib">
                                     <div class="stat-text">最佳涨幅（代码）</div>
@@ -95,7 +108,7 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-trending-down'></i>
+                                <div class="stat-icon dib"><i class='bx bx-trending-down' style="color:#c05533"></i>
                                 </div>
                                 <div class="stat-content dib">
                                     <div class="stat-text">最强跌幅（代码）</div>
@@ -107,7 +120,7 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-coin-stack'></i>
+                                <div class="stat-icon dib"><i class='bx bx-coin-stack' style="color:#9719c0"></i>
                                 </div>
                                 <div class="stat-content dib">
                                     <div class="stat-text">成交量</div>
@@ -119,7 +132,7 @@
                     <div class="col-lg-3">
                         <div class="card">
                             <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-dollar'></i></div>
+                                <div class="stat-icon dib"><i class='bx bx-dollar' style="color:#be260e"></i></div>
                                 <div class="stat-content dib">
                                     <div class="stat-text">最高价</div>
                                     <div class="stat-digit">￥<span>515</span></div>
@@ -132,12 +145,8 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card">
-<!--                            <div class="card-title">-->
-<!--                                <h4>大盘走势</h4>-->
-<!--                            </div>-->
-
                             <div class="card-body">
-                                <div id="main" style="width: 100%;height: 400px"></div>
+                                <div id="t1" style="width: 100%;height: 400px"></div>
 
                             </div>
                         </div>
@@ -147,251 +156,133 @@
                         <div class="card">
 
                             <div class="card-body">
-                                <div class="ct-pie-chart"></div>
+                                <div id="t2" style="width: 100%;height: 400px"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card bg-primary">
-                                    <div class="weather-widget">
-                                        <div id="weather-one" class="weather-one p-22"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="testimonial-widget-one p-17">
-                                        <div class="testimonial-widget-one owl-carousel owl-theme">
-                                            <div class="item">
-                                                <div class="testimonial-content">
-                                                    <div class="testimonial-text">
-                                                        <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet,
-                                                        consectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                        minim veniam, quis
-                                                        nostrud exercitation <i class="fa fa-quote-right"></i>
-                                                    </div>
-                                                    <img class="testimonial-author-img"
-                                                         src="images/avatar/1.jpg" alt=""/>
-                                                    <div class="testimonial-author">TYRION LANNISTER</div>
-                                                    <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="testimonial-content">
-                                                    <div class="testimonial-text">
-                                                        <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet,
-                                                        consectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                        minim veniam, quis
-                                                        nostrud exercitation <i class="fa fa-quote-right"></i>
-                                                    </div>
-                                                    <img class="testimonial-author-img"
-                                                         src="images/avatar/1.jpg" alt=""/>
-                                                    <div class="testimonial-author">TYRION LANNISTER</div>
-                                                    <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="testimonial-content">
-                                                    <div class="testimonial-text">
-                                                        <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet,
-                                                        consectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                        minim veniam, quis
-                                                        nostrud exercitation <i class="fa fa-quote-right"></i>
-                                                    </div>
-                                                    <img class="testimonial-author-img"
-                                                         src="images/avatar/1.jpg" alt=""/>
-                                                    <div class="testimonial-author">TYRION LANNISTER</div>
-                                                    <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="testimonial-content">
-                                                    <div class="testimonial-text">
-                                                        <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet,
-                                                        consectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                        minim veniam, quis
-                                                        nostrud exercitation <i class="fa fa-quote-right"></i>
-                                                    </div>
-                                                    <img class="testimonial-author-img"
-                                                         src="images/avatar/1.jpg" alt=""/>
-                                                    <div class="testimonial-author">TYRION LANNISTER</div>
-                                                    <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="testimonial-content">
-                                                    <div class="testimonial-text">
-                                                        <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet,
-                                                        consectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                        minim veniam, quis
-                                                        nostrud exercitation <i class="fa fa-quote-right"></i>
-                                                    </div>
-                                                    <img class="testimonial-author-img"
-                                                         src="images/avatar/1.jpg" alt=""/>
-                                                    <div class="testimonial-author">TYRION LANNISTER</div>
-                                                    <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="testimonial-content">
-                                                    <div class="testimonial-text">
-                                                        <i class="fa fa-quote-left"></i> Lorem ipsum dolor sit amet,
-                                                        consectetur adipisicing elit, sed do eiusmod tempor
-                                                        incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                                        minim veniam, quis
-                                                        nostrud exercitation <i class="fa fa-quote-right"></i>
-                                                    </div>
-                                                    <img class="testimonial-author-img"
-                                                         src="images/avatar/1.jpg" alt=""/>
-                                                    <div class="testimonial-author">TYRION LANNISTER</div>
-                                                    <div class="testimonial-author-position">Founder-Ceo. Dell Corp
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                        <div class="card" style="height: 500px">
+                            <div class="card-body">
+                                <div id="t3" style="width: 100%;height: 440px"></div>
                             </div>
                         </div>
                     </div>
                     <!-- /# column -->
                     <div class="col-lg-8">
-                        <div class="card">
+                        <div class="card" style="height: 500px">
                             <div class="card-title pr">
-                                <h4>All Exam Result</h4>
+                                <h4><b>今日涨幅排行</b></h4>
+                            </div>
+                            <div class="scroll-box" style="overflow: auto">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">代码</th>
+                                        <th scope="col">收盘价</th>
+                                        <th scope="col">涨幅</th>
+                                        <th scope="col">成交量</th>
+                                        <th scope="col">市盈率</th>
+                                        <th scope="col">所属板块</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>@mdo</td>
+                                        <td>@mdo</td>
+                                        <td>@mdo</td>
+                                        <td>@mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>@fat</td>
+                                        <td>@fat</td>
+                                        <td>@fat</td>
+                                        <td>@fat</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                        <td>@twitter</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table student-data-table m-t-20">
-                                        <thead>
-                                        <tr>
-                                            <th><label><input type="checkbox" value=""></label>Exam Name</th>
-                                            <th>Subject</th>
-                                            <th>Grade Point</th>
-                                            <th>Percent Form</th>
-                                            <th>Percent Upto</th>
-                                            <th>Date</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Class Test</td>
-                                            <td>Mathmatics</td>
-                                            <td>
-                                                4.00
-                                            </td>
-                                            <td>
-                                                95.00
-                                            </td>
-                                            <td>
-                                                100
-                                            </td>
-                                            <td>20/04/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Class Test</td>
-                                            <td>Mathmatics</td>
-                                            <td>
-                                                4.00
-                                            </td>
-                                            <td>
-                                                95.00
-                                            </td>
-                                            <td>
-                                                100
-                                            </td>
-                                            <td>20/04/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Class Test</td>
-                                            <td>English</td>
-                                            <td>
-                                                4.00
-                                            </td>
-                                            <td>
-                                                95.00
-                                            </td>
-                                            <td>
-                                                100
-                                            </td>
-                                            <td>20/04/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Class Test</td>
-                                            <td>Bangla</td>
-                                            <td>
-                                                4.00
-                                            </td>
-                                            <td>
-                                                95.00
-                                            </td>
-                                            <td>
-                                                100
-                                            </td>
-                                            <td>20/04/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Class Test</td>
-                                            <td>Mathmatics</td>
-                                            <td>
-                                                4.00
-                                            </td>
-                                            <td>
-                                                95.00
-                                            </td>
-                                            <td>
-                                                100
-                                            </td>
-                                            <td>20/04/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Class Test</td>
-                                            <td>English</td>
-                                            <td>
-                                                4.00
-                                            </td>
-                                            <td>
-                                                95.00
-                                            </td>
-                                            <td>
-                                                100
-                                            </td>
-                                            <td>20/04/2017</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Class Test</td>
-                                            <td>Mathmatics</td>
-                                            <td>
-                                                4.00
-                                            </td>
-                                            <td>
-                                                95.00
-                                            </td>
-                                            <td>
-                                                100
-                                            </td>
-                                            <td>20/04/2017</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!-- /# column -->
@@ -402,11 +293,11 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-facebook">
-                                    <i class="ti-facebook"></i>
+                                    <i class='bx bxs-dollar-circle'></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-digit">8,268</div>
-                                    <div class="stat-text">Likes</div>
+                                    <div class="stat-digit">5400</div>
+                                    <div class="stat-text">历史总股</div>
                                 </div>
                             </div>
                         </div>
@@ -415,11 +306,11 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-youtube">
-                                    <i class="ti-youtube"></i>
+                                    <i class='bx bxs-tennis-ball'></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-digit">12,545</div>
-                                    <div class="stat-text">Subscribes</div>
+                                    <div class="stat-digit">1232</div>
+                                    <div class="stat-text">消失股票</div>
                                 </div>
                             </div>
                         </div>
@@ -428,11 +319,11 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-twitter">
-                                    <i class="ti-twitter"></i>
+                                    <i class='bx bxs-plane'></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-digit">7,982</div>
-                                    <div class="stat-text">Tweets</div>
+                                    <div class="stat-digit">2223</div>
+                                    <div class="stat-text">沪股</div>
                                 </div>
                             </div>
                         </div>
@@ -441,21 +332,31 @@
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
                                 <div class="stat-icon bg-danger">
-                                    <i class="ti-linkedin"></i>
+                                    <i class='bx bxs-game'></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-digit">9,658</div>
-                                    <div class="stat-text">Followers</div>
+                                    <div class="stat-digit">1342</div>
+                                    <div class="stat-text">深股</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--最新新闻-->
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="card">
+                        <div class="card" style="">
+                            <img src="../img/stock.png" class="card-img-top" alt="...">
                             <div class="card-body">
-                                <div class="year-calendar"></div>
+                                <h5 class="card-title">比亚迪 - 301299</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">1.今日有利好消息</li>
+                                <li class="list-group-item">2.有高管购入</li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="http://quote.eastmoney.com/sz002594.html" class="card-link" target="_blank"
+                                   style="color:blue">跳转连接</a>
                             </div>
                         </div>
                         <!-- /# card -->
@@ -464,74 +365,63 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-title">
-                                <h4>Notice Board </h4>
-
+                                <h4><b>最新新闻</b></h4>
                             </div>
-                            <div class="recent-comment m-t-15">
+                            <div class="recent-comment m-t-15 scroll-box" style="height: 440px;overflow: auto">
                                 <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="images/avatar/1.jpg"
-                                                         alt="..."></a>
-                                    </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading color-primary">john doe</h4>
-                                        <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                        <p class="comment-date">10 min ago</p>
+                                        <h4 class="media-heading color-primary">每日经济新闻</h4>
+                                        <p>神州高铁：2023年第一季度净利润约-3295万元</p>
+                                        <p class="comment-date">2023-04-27 17:17:45</p>
                                     </div>
                                 </div>
                                 <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="images/avatar/2.jpg"
-                                                         alt="..."></a>
-                                    </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading color-success">Mr. John</h4>
-                                        <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                        <p class="comment-date">1 hour ago</p>
+                                        <h4 class="media-heading color-success">财联社</h4>
+                                        <p>招行、平安首季营收均同比下降 主因却是非息收入 涉房业务继续调整</p>
+                                        <p class="comment-date">2023-04-27 19:35:42</p>
                                     </div>
                                 </div>
                                 <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="images/avatar/3.jpg"
-                                                         alt="..."></a>
-                                    </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading color-danger">Mr. John</h4>
-                                        <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                        <div class="comment-date">Yesterday</div>
+                                        <h4 class="media-heading color-success">华夏时报</h4>
+                                        <p>平安银行一季度净利同比增13.6%背后：零售转型进入第六年 新银保如何抢占先机？</p>
+                                        <p class="comment-date">2023-04-27 19:35:42</p>
                                     </div>
                                 </div>
                                 <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="images/avatar/1.jpg"
-                                                         alt="..."></a>
-                                    </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading color-primary">john doe</h4>
-                                        <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                        <p class="comment-date">10 min ago</p>
+                                        <h4 class="media-heading color-success">证券时报网</h4>
+                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
+                                        <p class="comment-date">2023-04-27 19:35:42</p>
                                     </div>
                                 </div>
                                 <div class="media">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="images/avatar/2.jpg"
-                                                         alt="..."></a>
-                                    </div>
                                     <div class="media-body">
-                                        <h4 class="media-heading color-success">Mr. John</h4>
-                                        <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                        <p class="comment-date">1 hour ago</p>
+                                        <h4 class="media-heading color-success">证券时报网</h4>
+                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
+                                        <p class="comment-date">2023-04-27 19:35:42</p>
                                     </div>
                                 </div>
-                                <div class="media no-border">
-                                    <div class="media-left">
-                                        <a href="#"><img class="media-object" src="images/avatar/3.jpg"
-                                                         alt="..."></a>
-                                    </div>
+                                <div class="media">
                                     <div class="media-body">
-                                        <h4 class="media-heading color-info">Mr. John</h4>
-                                        <p>Cras sit amet nibh libero, in gravida nulla.</p>
-                                        <div class="comment-date">Yesterday</div>
+                                        <h4 class="media-heading color-success">证券时报网</h4>
+                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
+                                        <p class="comment-date">2023-04-27 19:35:42</p>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h4 class="media-heading color-success">证券时报网</h4>
+                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
+                                        <p class="comment-date">2023-04-27 19:35:42</p>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h4 class="media-heading color-success">证券时报网</h4>
+                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
+                                        <p class="comment-date">2023-04-27 19:35:42</p>
                                     </div>
                                 </div>
                             </div>
@@ -807,33 +697,153 @@
 </div>
 
 <script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
+    $(function () {
+        t1();
+        t2();
+        t3();
 
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: 'A股大盘走势'
-        },
-        tooltip: {},
-        legend: {
-            data: ['收盘价']
-        },
-        xAxis: {
-            data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-        },
-        yAxis: {},
-        series: [
-            {
-                name: '收盘价',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
+    })
+
+    function t1() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('t1'));
+
+        // 指定图表的配置项和数据
+        option = {
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            title: {
+                text: 'A股大盘14天走势'
+            },
+            series: [
+                {
+                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    type: 'line',
+                    smooth: true
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    function t2() {
+        var chartDom = document.getElementById('t2');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        var xAxisData = [];
+        var data1 = [];
+        var data2 = [];
+        for (var i = 1; i < 30; i++) {
+            xAxisData.push('' + i);
+            data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
+            data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
+        }
+        option = {
+            title: {
+                text: '近14天成交量占比'
+            },
+            legend: {
+                data: ['流入', '流出']
+            },
+            toolbox: {
+                // y: 'bottom',
+                feature: {}
+            },
+            tooltip: {},
+            xAxis: {
+                data: xAxisData,
+                splitLine: {
+                    show: false
+                }
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '流入',
+                    type: 'bar',
+                    data: data1,
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    animationDelay: function (idx) {
+                        return idx * 10;
+                    }
+                },
+                {
+                    name: '流出',
+                    type: 'bar',
+                    data: data2,
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    animationDelay: function (idx) {
+                        return idx * 10 + 100;
+                    }
+                }
+            ],
+            animationEasing: 'elasticOut',
+            animationDelayUpdate: function (idx) {
+                return idx * 5;
             }
-        ]
-    };
+        };
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+        option && myChart.setOption(option);
+    }
+
+    function t3() {
+        var chartDom = document.getElementById('t3');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+        option = {
+            legend: {
+                show: false
+            },
+            title: {
+                text: '各板块占比'
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true}
+                }
+            },
+            series: [
+                {
+                    name: 'Nightingale Chart',
+                    type: 'pie',
+                    radius: [15, 150],
+                    center: ['50%', '50%'],
+                    roseType: 'area',
+                    itemStyle: {
+                        borderRadius: 8
+                    },
+                    data: [
+                        {value: 40, name: '保险'},
+                        {value: 38, name: '白酒'},
+                        {value: 32, name: '文化传媒'},
+                        {value: 30, name: '游戏'},
+                        {value: 28, name: '通信服务'},
+                        {value: 26, name: '计算机设备'},
+                        {value: 22, name: '软件开发'},
+                        {value: 18, name: '互联网服务'}
+                    ]
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+    }
+
+
 </script>
 </body>
 </html>

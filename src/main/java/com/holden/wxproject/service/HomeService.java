@@ -1,5 +1,6 @@
 package com.holden.wxproject.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.holden.wxproject.util.DataResult;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface HomeService {
      *
      * @return data
      */
-    DataResult<List<Map<String, Object>>> getInfo();
+    DataResult<JSONObject> getInfo() throws Exception;
 }

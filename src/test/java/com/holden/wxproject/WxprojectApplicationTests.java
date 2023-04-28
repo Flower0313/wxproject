@@ -11,7 +11,7 @@ class WxprojectApplicationTests {
     public static final String TOKEN = "6048362883:AAHYWhv1ZEh2fL5f6LUN3FWLXdSQ5s6GdtU";
 
     public static void main(String[] args) throws TelegramApiException {
-        // 设置日志级别为WARNING
+        /*// 设置日志级别为WARNING
 
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         DefaultBotOptions botOptions = new DefaultBotOptions();
@@ -22,7 +22,8 @@ class WxprojectApplicationTests {
 
         //MyBot bot = new MyBot(TOKEN, botOptions);
 
-        //botsApi.registerBot(bot);
+        //botsApi.registerBot(bot);*/
+
 
 
     }
