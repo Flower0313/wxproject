@@ -9,7 +9,7 @@ import lombok.Data;
  * @Describe
  */
 @Data
-public class NewsInfoResp {
+public class NewsInfoResp  extends Parents{
     /**
      * 股票代码
      */

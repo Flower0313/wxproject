@@ -9,7 +9,7 @@ import lombok.Data;
  * @Describe
  */
 @Data
-public class TwoRowResp {
+public class TwoRowResp extends Parents {
     /**
      * 日期
      */

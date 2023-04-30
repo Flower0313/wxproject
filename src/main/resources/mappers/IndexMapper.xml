@@ -485,16 +485,16 @@
                sum(deal_vol)                                   as dealVol,
                max(highest)                                    as highest
         FROM `df_a_stock_detail`
-        WHERE ds = #{date}
+        WHERE ds = '2023-04-27'
     </select>
 
     <select id="twoRow" resultType="com.holden.wxproject.pojo.resp.TwoRowResp">
-        SELECT ds,
+        SELECT `ds`,
                sum(main_inflow + Slarge_inflow + large_inflow) AS big,
                sum(mid_inflow + small_inflow)                  AS small
         FROM `df_a_stock_detail`
         GROUP BY ds
-        ORDER BY ds LIMIT 30
+        ORDER BY ds LIMIT 3
     </select>
 
     <select id="threeRow" resultType="com.holden.wxproject.pojo.resp.ThreeRowResp">
@@ -518,14 +518,14 @@
                deal_amount   as dealAmount,
                industry
         FROM `df_a_stock_detail`
-        WHERE ds = #{date}
+        WHERE ds = '2023-04-27'
           AND board IN (2, 6)
         ORDER BY up_down_rate DESC LIMIT 10
     </select>
 
     <select id="newInfo" resultType="com.holden.wxproject.pojo.resp.NewsInfoResp">
         select code, mediaName as agency, title as content, notice_date as date
-        from df_a_stock_news limit 30
+        from df_a_stock_news limit 3
     </select>
 
 </mapper>

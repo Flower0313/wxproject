@@ -1,10 +1,16 @@
 package com.holden.wxproject;
 
+import com.holden.wxproject.config.ExecutorConfig;
 import com.holden.wxproject.controller.MyBot;
+import com.holden.wxproject.pojo.resp.OneRowResp;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 
 class WxprojectApplicationTests {
@@ -23,6 +29,13 @@ class WxprojectApplicationTests {
         //MyBot bot = new MyBot(TOKEN, botOptions);
 
         //botsApi.registerBot(bot);*/
+
+        ExecutorService executorService = ExecutorConfig.pool;
+
+        CompletableFuture<String> async = CompletableFuture.supplyAsync(() -> {
+            return "你好";
+        });
+
 
 
 

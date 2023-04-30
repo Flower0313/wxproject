@@ -9,7 +9,7 @@ import lombok.Data;
  * @Describe
  */
 @Data
-public class ThreeRowResp {
+public class ThreeRowResp  extends Parents{
     /**
      * 行业
      */

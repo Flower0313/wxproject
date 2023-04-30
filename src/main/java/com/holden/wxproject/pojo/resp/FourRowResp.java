@@ -9,7 +9,7 @@ import lombok.Data;
  * @Describe
  */
 @Data
-public class FourRowResp {
+public class FourRowResp extends Parents{
     /**
      * 股票代码
      */

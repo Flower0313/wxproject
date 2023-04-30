@@ -40,7 +40,4 @@ public class HomeController {
         return new ModelAndView("data.html");
     }
 
-    public DataResult<JSONObject> datatest() throws Exception {
-        return homeService.getInfo();
-    }
 }

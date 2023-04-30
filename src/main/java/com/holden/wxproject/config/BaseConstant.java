@@ -8,7 +8,7 @@ package com.holden.wxproject.config;
  */
 public class BaseConstant {
 
-    public static final String NURSING = "nursing";
+    public static final String NURSING = "sexy";
     public static final String SPIDER = "spider";
     public static final Integer BBI = 24;
     public static final Integer ONE = 1;

@@ -34,7 +34,7 @@ import static com.holden.wxproject.config.BaseConstant.DELAY_SECONDS;
 public class MyBot extends TelegramLongPollingBot {
 
     //@Resource(name = "dataHandleThreadPool")
-    private final ScheduledExecutorService executor = ExecutorConfig.dataHandleThreadPool();
+    //private final ScheduledExecutorService executor = ExecutorConfig.dataHandleThreadPool();
 
     @Autowired
     private BotMapper botMapper;
@@ -90,15 +90,15 @@ public class MyBot extends TelegramLongPollingBot {
                 .chatId(chatId)
                 .text(update.getMessage().getText())
                 .build());
-        executor.schedule(() -> {
-            DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), execute.getMessageId());
-            try {
-                execute(deleteMessage);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-        }, DELAY_SECONDS, TimeUnit.SECONDS);
-        executor.shutdown();
+//        executor.schedule(() -> {
+//            DeleteMessage deleteMessage = new DeleteMessage(chatId.toString(), execute.getMessageId());
+//            try {
+//                execute(deleteMessage);
+//            } catch (TelegramApiException e) {
+//                e.printStackTrace();
+//            }
+//        }, DELAY_SECONDS, TimeUnit.SECONDS);
+//        executor.shutdown();
     }
 
 
