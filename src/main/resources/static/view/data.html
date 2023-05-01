@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>ECharts</title>
+    <title>数据看板</title>
     <!-- 引入刚刚下载的 ECharts 文件 -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
@@ -17,6 +17,8 @@
     </style>
 </head>
 <body>
+
+
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
 <div class="content-wrap">
     <div class="main">
@@ -37,117 +39,116 @@
                     </div>
                 </div>
 
-                <!-- /# column -->
             </div>
             <!-- /# row -->
             <section id="main-content">
                 <!--第一栏四个图标-->
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bxs-dollar-circle' style="color:green"></i>
+                <div th:each="oneRow : ${info.t1}">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class='bx bxs-dollar-circle' style="color:green"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">主力净流入</div>
+                                        <div class="stat-digit">￥<span th:text="${oneRow.mainFlow}"></span></div>
+                                    </div>
                                 </div>
-                                <div class="stat-content dib">
-                                    <div class="stat-text">主力净流入</div>
-                                    <div class="stat-digit">￥<span>313</span></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class='bx bx-dollar-circle' style="color:red"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">散户净流入</div>
+                                        <div class="stat-digit">￥<span th:text="${oneRow.smallFlow}"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class='bx bxs-user-check' style="color:green"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">外盘</div>
+                                        <div class="stat-digit">￥<span th:text="${oneRow.outside}"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class='bx bxs-user-x' style="color:red"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">内盘</div>
+                                        <div class="stat-digit">￥<span th:text="${oneRow.inner}"></span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-dollar-circle' style="color:red"></i>
-                                </div>
-                                <div class="stat-content dib">
-                                    <div class="stat-text">主力净流出</div>
-                                    <div class="stat-digit">￥<span>212</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bxs-user-check' style="color:green"></i>
-                                </div>
-                                <div class="stat-content dib">
-                                    <div class="stat-text">散户净流入</div>
-                                    <div class="stat-digit">￥<span>414</span></div>
+                    <!--第二栏四个图标-->
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class='bx bx-trending-up' style="color:#1cde0f"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">最佳涨幅（代码）</div>
+                                        <div class="stat-digit"><span th:text="${oneRow.upRate}"></span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bxs-user-x' style="color:red"></i></div>
-                                <div class="stat-content dib">
-                                    <div class="stat-text">散户净流出</div>
-                                    <div class="stat-digit">￥<span>515</span></div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class='bx bx-trending-down' style="color:#c05533"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">最强跌幅（代码）</div>
+                                        <div class="stat-digit"><span th:text="${oneRow.downRate}"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class='bx bx-coin-stack' style="color:#9719c0"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">成交量</div>
+                                        <div class="stat-digit"><span th:text="${oneRow.dealVol}"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class='bx bx-dollar' style="color:#be260e"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">最高价</div>
+                                        <div class="stat-digit">￥<span th:text="${oneRow.highest}"></span></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--第二栏四个图标-->
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-trending-up' style="color:#1cde0f"></i>
-                                </div>
-                                <div class="stat-content dib">
-                                    <div class="stat-text">最佳涨幅（代码）</div>
-                                    <div class="stat-digit"><span>200302</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-trending-down' style="color:#c05533"></i>
-                                </div>
-                                <div class="stat-content dib">
-                                    <div class="stat-text">最强跌幅（代码）</div>
-                                    <div class="stat-digit">23331</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-coin-stack' style="color:#9719c0"></i>
-                                </div>
-                                <div class="stat-content dib">
-                                    <div class="stat-text">成交量</div>
-                                    <div class="stat-digit">￥<span>414</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="card">
-                            <div class="stat-widget-one">
-                                <div class="stat-icon dib"><i class='bx bx-dollar' style="color:#be260e"></i></div>
-                                <div class="stat-content dib">
-                                    <div class="stat-text">最高价</div>
-                                    <div class="stat-digit">￥<span>515</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
                                 <div id="t1" style="width: 100%;height: 400px"></div>
-
                             </div>
                         </div>
                     </div>
@@ -180,7 +181,7 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">代码</th>
+                                        <th scope="col">名称</th>
                                         <th scope="col">收盘价</th>
                                         <th scope="col">涨幅</th>
                                         <th scope="col">成交量</th>
@@ -189,95 +190,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
-                                        <td>@twitter</td>
+                                    <tr th:each="oneRow : ${info.t3r}">
+                                        <th scope="row" th:text="${oneRow.code}"></th>
+                                        <td th:text="${oneRow.name}"></td>
+                                        <td th:text="${oneRow.currentPrice}"></td>
+                                        <td th:text="${oneRow.upDownRate}"></td>
+                                        <td th:text="${oneRow.dealAmount}"></td>
+                                        <td th:text="${oneRow.pe}"></td>
+                                        <td th:text="${oneRow.industry}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -288,7 +208,7 @@
                     <!-- /# column -->
                 </div>
                 <!-- /# row -->
-                <div class="row">
+                <div class="row" th:each="oneRow : ${info.board}">
                     <div class="col-lg-3">
                         <div class="card p-0">
                             <div class="stat-widget-three home-widget-three">
@@ -296,8 +216,8 @@
                                     <i class='bx bxs-dollar-circle'></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-digit">5400</div>
-                                    <div class="stat-text">历史总股</div>
+                                    <div class="stat-digit" th:text="${oneRow.sh}"></div>
+                                    <div class="stat-text">沪板</div>
                                 </div>
                             </div>
                         </div>
@@ -309,8 +229,8 @@
                                     <i class='bx bxs-tennis-ball'></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-digit">1232</div>
-                                    <div class="stat-text">消失股票</div>
+                                    <div class="stat-digit" th:text="${oneRow.sz}"></div>
+                                    <div class="stat-text">深板</div>
                                 </div>
                             </div>
                         </div>
@@ -322,8 +242,8 @@
                                     <i class='bx bxs-plane'></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-digit">2223</div>
-                                    <div class="stat-text">沪股</div>
+                                    <div class="stat-digit" th:text="${oneRow.bj}"></div>
+                                    <div class="stat-text">京板</div>
                                 </div>
                             </div>
                         </div>
@@ -335,8 +255,8 @@
                                     <i class='bx bxs-game'></i>
                                 </div>
                                 <div class="stat-content">
-                                    <div class="stat-digit">1342</div>
-                                    <div class="stat-text">深股</div>
+                                    <div class="stat-digit" th:text="${oneRow.cy}"></div>
+                                    <div class="stat-text">创业板</div>
                                 </div>
                             </div>
                         </div>
@@ -365,63 +285,16 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-title">
-                                <h4><b>最新新闻</b></h4>
+                                <h4><b>各门户最新新闻</b></h4>
                             </div>
+
                             <div class="recent-comment m-t-15 scroll-box" style="height: 440px;overflow: auto">
-                                <div class="media">
+                                <div class="media" th:each="oneRow : ${info.news}">
                                     <div class="media-body">
-                                        <h4 class="media-heading color-primary">每日经济新闻</h4>
-                                        <p>神州高铁：2023年第一季度净利润约-3295万元</p>
-                                        <p class="comment-date">2023-04-27 17:17:45</p>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4 class="media-heading color-success">财联社</h4>
-                                        <p>招行、平安首季营收均同比下降 主因却是非息收入 涉房业务继续调整</p>
-                                        <p class="comment-date">2023-04-27 19:35:42</p>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4 class="media-heading color-success">华夏时报</h4>
-                                        <p>平安银行一季度净利同比增13.6%背后：零售转型进入第六年 新银保如何抢占先机？</p>
-                                        <p class="comment-date">2023-04-27 19:35:42</p>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4 class="media-heading color-success">证券时报网</h4>
-                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
-                                        <p class="comment-date">2023-04-27 19:35:42</p>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4 class="media-heading color-success">证券时报网</h4>
-                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
-                                        <p class="comment-date">2023-04-27 19:35:42</p>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4 class="media-heading color-success">证券时报网</h4>
-                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
-                                        <p class="comment-date">2023-04-27 19:35:42</p>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4 class="media-heading color-success">证券时报网</h4>
-                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
-                                        <p class="comment-date">2023-04-27 19:35:42</p>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h4 class="media-heading color-success">证券时报网</h4>
-                                        <p>中集集团一季度营收达266.5亿元 能源类订单量大幅增长</p>
-                                        <p class="comment-date">2023-04-27 19:35:42</p>
+                                        <h4 class="media-heading color-primary"
+                                            th:text="${oneRow.agency} +'('+ ${oneRow.code}+')'"></h4>
+                                        <p th:text="${oneRow.content}"></p>
+                                        <p class="comment-date" th:text="${oneRow.date}">2023-04-27 17:17:45</p>
                                     </div>
                                 </div>
                             </div>
@@ -696,11 +569,12 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     $(function () {
+        var info = [[${info.t3l}]]
         t1();
-        t2();
-        t3();
+        t2([[${info.t2}]]);
+        t3(info);
 
     })
 
@@ -733,7 +607,7 @@
         myChart.setOption(option);
     }
 
-    function t2() {
+    function t2(info) {
         var chartDom = document.getElementById('t2');
         var myChart = echarts.init(chartDom);
         var option;
@@ -741,10 +615,10 @@
         var xAxisData = [];
         var data1 = [];
         var data2 = [];
-        for (var i = 1; i < 30; i++) {
-            xAxisData.push('' + i);
-            data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-            data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
+        for (var i = 0; i < info.length; i++) {
+            xAxisData.push(info[i].ds);
+            data1.push(info[i].big);
+            data2.push(info[i].small);
         }
         option = {
             title: {
@@ -785,7 +659,7 @@
                         focus: 'series'
                     },
                     animationDelay: function (idx) {
-                        return idx * 10 + 100;
+                        return idx * 10;
                     }
                 }
             ],
@@ -798,7 +672,7 @@
         option && myChart.setOption(option);
     }
 
-    function t3() {
+    function t3(info) {
         var chartDom = document.getElementById('t3');
         var myChart = echarts.init(chartDom);
         var option;
@@ -820,25 +694,18 @@
                 {
                     name: 'Nightingale Chart',
                     type: 'pie',
-                    radius: [15, 150],
+                    radius: [10, 150],
                     center: ['50%', '50%'],
                     roseType: 'area',
                     itemStyle: {
                         borderRadius: 8
                     },
-                    data: [
-                        {value: 40, name: '保险'},
-                        {value: 38, name: '白酒'},
-                        {value: 32, name: '文化传媒'},
-                        {value: 30, name: '游戏'},
-                        {value: 28, name: '通信服务'},
-                        {value: 26, name: '计算机设备'},
-                        {value: 22, name: '软件开发'},
-                        {value: 18, name: '互联网服务'}
-                    ]
+                    data: info
+
                 }
             ]
-        };
+        }
+        ;
 
         option && myChart.setOption(option);
     }

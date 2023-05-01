@@ -36,7 +36,7 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     @SourceChange(BaseConstant.SPIDER)
-    public DataResult<JSONObject> getInfo() throws Exception {
+    public JSONObject getInfo() throws Exception {
         LocalDate currentDate = LocalDate.now();
         String date = currentDate.format(DateTimeFormatter.ofPattern(DateUtil.DATE_FORMAT_OUTPUT_ACCURATE_TIME_DAY));
 
@@ -45,8 +45,9 @@ public class HomeServiceImpl implements HomeService {
         CompletableFuture<List<TwoRowResp>> twoRowResp = CompletableFuture.supplyAsync(() -> indexMapper.twoRow());
         CompletableFuture<List<ThreeRowResp>> threeRowResp = CompletableFuture.supplyAsync(() -> indexMapper.threeRow());
         CompletableFuture<List<FourRowResp>> fourRowResp = CompletableFuture.supplyAsync(() -> indexMapper.fourRow(date));
-        CompletableFuture<List<NewsInfoResp>> newsInfoResp = CompletableFuture.supplyAsync(() -> indexMapper.newInfo(date));
-        CompletableFuture<Void> allFutures = CompletableFuture.allOf(oneRowResp, twoRowResp, threeRowResp, fourRowResp, newsInfoResp);
+        CompletableFuture<List<NewsInfoResp>> newsInfoResp = CompletableFuture.supplyAsync(() -> indexMapper.newInfo());
+        CompletableFuture<List<BoardResp>> boardInfoResp = CompletableFuture.supplyAsync(() -> indexMapper.boardInfo(date));
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(oneRowResp, twoRowResp, threeRowResp, fourRowResp, newsInfoResp, boardInfoResp);
         allFutures.join(); // 等待所有CompletableFuture执行完毕
 
 
@@ -57,7 +58,10 @@ public class HomeServiceImpl implements HomeService {
         result.put("t3l", threeRowResp.join());
         result.put("t3r", fourRowResp.join());
         result.put("news", newsInfoResp.join());
+        result.put("board", boardInfoResp.join());
 
-        return DataResult.ok(result);
+        System.out.println(">>>" + result);
+
+        return result;
     }
 }

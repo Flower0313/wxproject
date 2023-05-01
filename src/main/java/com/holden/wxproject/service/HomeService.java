@@ -18,5 +18,5 @@ public interface HomeService {
      *
      * @return data
      */
-    DataResult<JSONObject> getInfo() throws Exception;
+    JSONObject getInfo() throws Exception;
 }

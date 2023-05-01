@@ -9,39 +9,39 @@ import lombok.Data;
  * @Describe
  */
 @Data
-public class FourRowResp extends Parents{
+public class FourRowResp extends Parents {
     /**
      * 股票代码
      */
-    private String code;
+    private String code ;
 
     /**
      * 股票名称
      */
-    private String name;
+    private String name ;
 
     /**
      * 当前价
      */
-    private String currentPrice;
+    private String currentPrice ;
 
     /**
      * 涨幅
      */
-    private String upDownRate;
+    private String upDownRate ;
 
     /**
      * 市盈率
      */
-    private String pe;
+    private String pe ;
 
     /**
      * 成交量
      */
-    private String dealAmount;
+    private String dealAmount ;
 
     /**
      * 行业
      */
-    private String industry;
+    private String industry ;
 }

@@ -31,13 +31,12 @@ public class HomeController {
 
     @GetMapping("/data_center")
     public ModelAndView data() {
+        ModelAndView view = new ModelAndView("data.html");
         try {
-            DataResult<JSONObject> info = homeService.getInfo();
-            System.out.println(info);
+            view.addObject("info", homeService.getInfo());
         } catch (Exception e) {
-            e.printStackTrace();
         }
-        return new ModelAndView("data.html");
+        return view;
     }
 
 }

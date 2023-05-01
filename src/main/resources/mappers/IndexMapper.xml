@@ -476,16 +476,16 @@
     </select>
 
     <select id="oneRow" resultType="com.holden.wxproject.pojo.resp.OneRowResp">
-        SELECT sum(main_inflow + Slarge_inflow + large_inflow) AS mainFlow,
-               sum(mid_inflow + small_inflow)                  AS smallFlow,
-               concat(max(up_down_rate), '%')                  as upRate,
-               concat(min(up_down_rate), '%')                  as upDown,
-               sum(outer_disk)                                 as outside,
-               sum(inner_disk)                                 as `inner`,
-               sum(deal_vol)                                   as dealVol,
-               max(highest)                                    as highest
+        SELECT ifnull(round(sum(main_inflow + Slarge_inflow + large_inflow), 0), '今日无数据') AS mainFlow,
+               ifnull(round(sum(mid_inflow + small_inflow), 0), '今日无数据')                  AS smallFlow,
+               ifnull(concat(max(up_down_rate), '%'), '今日无数据')                            as upRate,
+               ifnull(concat(min(up_down_rate), '%'), '今日无数据')                            as downRate,
+               ifnull(round(sum(outer_disk), 0), '今日无数据')                                 as outside,
+               ifnull(round(sum(inner_disk), 0), '今日无数据')                                 as `inner`,
+               ifnull(round(sum(deal_vol), 0), '今日无数据')                                   as dealVol,
+               ifnull(max(highest), '今日无数据')                                              as highest
         FROM `df_a_stock_detail`
-        WHERE ds = '2023-04-27'
+        WHERE ds = (select max(ds) from df_a_stock_detail)
     </select>
 
     <select id="twoRow" resultType="com.holden.wxproject.pojo.resp.TwoRowResp">
@@ -494,19 +494,19 @@
                sum(mid_inflow + small_inflow)                  AS small
         FROM `df_a_stock_detail`
         GROUP BY ds
-        ORDER BY ds LIMIT 3
+        ORDER BY ds LIMIT 25
     </select>
 
     <select id="threeRow" resultType="com.holden.wxproject.pojo.resp.ThreeRowResp">
-        SELECT industry,
-               count(1) AS industryNum
+        SELECT industry as `name`,
+               count(1) AS `value`
         FROM `df_a_stock_detail`
-        WHERE ds = '2023-04-27'
+        WHERE ds = (select max(ds) from df_a_stock_detail)
           AND industry !='0.0'
         AND industry IS NOT NULL
         GROUP BY
             industry
-            limit 10
+            limit 15;
     </select>
 
     <select id="fourRow" resultType="com.holden.wxproject.pojo.resp.FourRowResp">
@@ -518,14 +518,35 @@
                deal_amount   as dealAmount,
                industry
         FROM `df_a_stock_detail`
-        WHERE ds = '2023-04-27'
+        WHERE ds = (select max(ds) from df_a_stock_detail)
           AND board IN (2, 6)
-        ORDER BY up_down_rate DESC LIMIT 10
+        ORDER BY up_down_rate DESC LIMIT 30
     </select>
 
     <select id="newInfo" resultType="com.holden.wxproject.pojo.resp.NewsInfoResp">
         select code, mediaName as agency, title as content, notice_date as date
-        from df_a_stock_news limit 3
+        from df_a_stock_news limit 10
+    </select>
+
+    <select id="boardInfo" resultType="com.holden.wxproject.pojo.resp.BoardResp">
+        SELECT count(
+                       DISTINCT
+                       IF
+                           (board = 2, CODE, NULL))  as sh,
+               count(
+                       DISTINCT
+                       IF
+                           (board = 6, CODE, NULL))  as sz,
+               count(
+                       DISTINCT
+                       IF
+                           (board = 80, CODE, NULL)) as bj,
+               count(
+                       DISTINCT
+                       IF
+                           (board = 23, CODE, NULL)) as cy
+        FROM df_a_stock_detail
+        where ds = (select max(ds) from df_a_stock_detail)
     </select>
 
 </mapper>

@@ -9,14 +9,15 @@ import lombok.Data;
  * @Describe
  */
 @Data
-public class ThreeRowResp  extends Parents{
-    /**
-     * 行业
-     */
-    private String industry;
-
+public class ThreeRowResp extends Parents {
     /**
      * 行业数量
      */
-    private String industryNum;
+    private String name;
+    /**
+     * 行业
+     */
+    private String value;
+
+
 }

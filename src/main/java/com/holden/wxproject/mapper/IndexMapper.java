@@ -102,7 +102,9 @@ public interface IndexMapper {
      */
     List<FourRowResp> fourRow(@Param("date") String date);
 
-    List<NewsInfoResp> newInfo(@Param("date") String date);
+    List<NewsInfoResp> newInfo();
+
+    List<BoardResp> boardInfo(@Param("date") String date);
 
 
 }

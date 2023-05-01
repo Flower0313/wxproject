@@ -9,7 +9,7 @@ import lombok.Data;
  * @Describe 前两栏图标
  */
 @Data
-public class OneRowResp  extends Parents{
+public class OneRowResp extends Parents {
     /**
      * 主力净流入
      */
