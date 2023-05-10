@@ -490,8 +490,8 @@
 
     <select id="twoRow" resultType="com.holden.wxproject.pojo.resp.TwoRowResp">
         SELECT `ds`,
-               sum(main_inflow + Slarge_inflow + large_inflow) AS big,
-               sum(mid_inflow + small_inflow)                  AS small
+               round(sum(main_inflow + Slarge_inflow + large_inflow)/10000,0) AS big,
+               round(sum(mid_inflow + small_inflow)/10000,0)                  AS small
         FROM `df_a_stock_detail`
         GROUP BY ds
         ORDER BY ds LIMIT 25
@@ -525,7 +525,7 @@
 
     <select id="newInfo" resultType="com.holden.wxproject.pojo.resp.NewsInfoResp">
         select code, mediaName as agency, title as content, notice_date as date
-        from df_a_stock_news limit 10
+        from df_a_stock_news limit 30
     </select>
 
     <select id="boardInfo" resultType="com.holden.wxproject.pojo.resp.BoardResp">

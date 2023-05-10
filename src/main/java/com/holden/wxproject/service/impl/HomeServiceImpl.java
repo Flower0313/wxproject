@@ -40,7 +40,6 @@ public class HomeServiceImpl implements HomeService {
         LocalDate currentDate = LocalDate.now();
         String date = currentDate.format(DateTimeFormatter.ofPattern(DateUtil.DATE_FORMAT_OUTPUT_ACCURATE_TIME_DAY));
 
-
         CompletableFuture<List<OneRowResp>> oneRowResp = CompletableFuture.supplyAsync(() -> indexMapper.oneRow(date));
         CompletableFuture<List<TwoRowResp>> twoRowResp = CompletableFuture.supplyAsync(() -> indexMapper.twoRow());
         CompletableFuture<List<ThreeRowResp>> threeRowResp = CompletableFuture.supplyAsync(() -> indexMapper.threeRow());
