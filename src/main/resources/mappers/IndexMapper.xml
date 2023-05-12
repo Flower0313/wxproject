@@ -490,8 +490,8 @@
 
     <select id="twoRow" resultType="com.holden.wxproject.pojo.resp.TwoRowResp">
         SELECT `ds`,
-               round(sum(main_inflow + Slarge_inflow + large_inflow)/10000,0) AS big,
-               round(sum(mid_inflow + small_inflow)/10000,0)                  AS small
+               round(sum(main_inflow + Slarge_inflow + large_inflow) / 10000, 0) AS big,
+               round(sum(mid_inflow + small_inflow) / 10000, 0)                  AS small
         FROM `df_a_stock_detail`
         GROUP BY ds
         ORDER BY ds LIMIT 25
@@ -515,7 +515,7 @@
                up_down_rate  as upDownRate,
                current_price as currentPrice,
                PE_ratio_d    as pe,
-               deal_amount   as dealAmount,
+               round(deal_amount,0)   as dealAmount,
                industry
         FROM `df_a_stock_detail`
         WHERE ds = (select max(ds) from df_a_stock_detail)
@@ -547,6 +547,35 @@
                            (board = 23, CODE, NULL)) as cy
         FROM df_a_stock_detail
         where ds = (select max(ds) from df_a_stock_detail)
+    </select>
+    <select id="industryReport" resultType="com.holden.wxproject.pojo.resp.IndustryReport">
+        SELECT `NAME`,
+               report_content as reportName,
+               east_rank      as rank
+        FROM `df_a_stock_industry_report`
+    </select>
+
+    <select id="chance" resultType="com.holden.wxproject.pojo.resp.ChanceResp">
+        SELECT `CODE`,
+               TOTAL_SCORE        as totalScore,
+               RISE_1_PROBABILITY as probability,
+               STOCK_RANK_RATIO   as rankRatio,
+               AVERAGE_1_INCREASE as increase
+        FROM `df_a_stock_chance`
+        ORDER BY RISE_1_PROBABILITY DESC LIMIT 5
+    </select>
+
+    <select id="bigIndex" resultType="com.holden.wxproject.pojo.resp.IndexResp">
+        SELECT `date`,
+               opening_price as open,
+               closing_price as close,
+               lowest,
+               highest
+        FROM `df_a_index_day_kline`
+        WHERE `index` = '000001'
+        ORDER BY
+            date
+            LIMIT 30
     </select>
 
 </mapper>

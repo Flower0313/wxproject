@@ -1,6 +1,7 @@
 package com.holden.wxproject.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.holden.wxproject.redis.RedisDao;
 import com.holden.wxproject.service.HomeService;
 import com.holden.wxproject.service.IndexService;
 import com.holden.wxproject.util.DataResult;
@@ -23,6 +24,10 @@ import java.sql.SQLException;
 public class HomeController {
     @Autowired
     private HomeService homeService;
+
+    @Autowired
+    private RedisDao redisDao;
+
 
     @GetMapping("/")
     public ModelAndView info() throws SQLException {

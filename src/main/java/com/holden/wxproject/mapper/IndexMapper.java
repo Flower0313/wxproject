@@ -102,9 +102,27 @@ public interface IndexMapper {
      */
     List<FourRowResp> fourRow(@Param("date") String date);
 
+    /**
+     * @return 每日新闻
+     */
     List<NewsInfoResp> newInfo();
 
     List<BoardResp> boardInfo(@Param("date") String date);
+
+    /**
+     * @return 行业报告
+     */
+    List<IndustryReport> industryReport();
+
+    /**
+     * @return 预测率
+     */
+    List<ChanceResp> chance();
+
+    /**
+     * @return 大盘指数
+     */
+    List<IndexResp> bigIndex();
 
 
 }

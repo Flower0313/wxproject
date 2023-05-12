@@ -101,7 +101,7 @@
                                     <div class="stat-icon dib"><i class='bx bx-trending-up' style="color:#1cde0f"></i>
                                     </div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">最佳涨幅（代码）</div>
+                                        <div class="stat-text">最佳涨幅</div>
                                         <div class="stat-digit"><span th:text="${oneRow.upRate}"></span></div>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                                     <div class="stat-icon dib"><i class='bx bx-trending-down' style="color:#c05533"></i>
                                     </div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">最强跌幅（代码）</div>
+                                        <div class="stat-text">最强跌幅</div>
                                         <div class="stat-digit"><span th:text="${oneRow.downRate}"></span></div>
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@
                     <div class="col-lg-6">
                         <div class="card">
                             <div class="card-body">
-                                <div id="t1" style="width: 100%;height: 400px"></div>
+                                <div id="t1" style="width: 100%;height: 450px"></div>
                             </div>
                         </div>
                     </div>
@@ -157,7 +157,7 @@
                         <div class="card">
 
                             <div class="card-body">
-                                <div id="t2" style="width: 100%;height: 400px"></div>
+                                <div id="t2" style="width: 100%;height: 450px"></div>
                             </div>
                         </div>
                     </div>
@@ -303,15 +303,14 @@
                     </div>
                     <!-- /# column -->
                     <div class="col-lg-4">
-                        <div class="card">
+                        <div class="card" style="height: 500px">
                             <div class="card-title">
-                                <h4>Timeline</h4>
-
+                                <h4><b>Timeline</b></h4>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body scroll-box" style="overflow: auto">
                                 <ul class="timeline">
                                     <li>
-                                        <div class="timeline-badge primary"><i class="fa fa-smile-o"></i></div>
+                                        <div class="timeline-badge primary"><i class="fa fa-smile-o">1</i></div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading">
                                                 <h5 class="timeline-title">School promote video sharing</h5>
@@ -322,7 +321,7 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="timeline-badge warning"><i class="fa fa-sun-o"></i></div>
+                                        <div class="timeline-badge warning"><i class="fa fa-sun-o">2</i></div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading">
                                                 <h5 class="timeline-title">Ready our school website and online
@@ -334,7 +333,7 @@
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="timeline-badge danger"><i class="fa fa-times-circle-o"></i>
+                                        <div class="timeline-badge danger"><i class="fa fa-times-circle-o">3</i>
                                         </div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading">
@@ -381,172 +380,38 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="card-title">
-                                <h4>Task</h4>
-
+                                <h4><b>Top 5</b></h4>
                             </div>
-                            <div class="todo-list">
-                                <div class="tdl-holder">
-                                    <div class="tdl-content">
-                                        <ul>
-                                            <li>
-                                                <label>
-                                                    <input type="checkbox"><i></i><span>22,Dec Publish The Final
-                                                            Exam Result</span>
-                                                    <a href='#' class="ti-close"></a>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label>
-                                                    <input type="checkbox" checked><i></i><span>First Jan Start Our
-                                                            School</span>
-                                                    <a href='#' class="ti-close"></a>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label>
-                                                    <input type="checkbox"><i></i><span>Recently Our Maganement
-                                                            Programme Start</span>
-                                                    <a href='#' class="ti-close"></a>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label>
-                                                    <input type="checkbox" checked><i></i><span>Check out some
-                                                            Popular courses</span>
-                                                    <a href='#' class="ti-close"></a>
-                                                </label>
-                                            </li>
+                            <div id="forecast" style="width: 100%;height: 428px">
 
-                                            <li>
-                                                <label>
-                                                    <input type="checkbox" checked><i></i><span>First Jan Start Our
-                                                            School</span>
-                                                    <a href='#' class="ti-close"></a>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label>
-                                                    <input type="checkbox" checked><i></i><span>Connect with one new
-                                                            person</span>
-                                                    <a href='#' class="ti-close"></a>
-                                                </label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <input type="text" class="tdl-new form-control"
-                                           placeholder="Write new item and hit 'Enter'...">
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-8">
-                        <div class="card">
+                        <div class="card" style="height: 500px">
                             <div class="card-title pr">
-                                <h4>All Expense</h4>
-
+                                <h4><b>今日行业研报</b></h4>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body scroll-box" style="overflow: auto">
                                 <div class="table-responsive">
                                     <table class="table student-data-table m-t-20">
                                         <thead>
                                         <tr>
-                                            <th><label><input type="checkbox" value=""></label>ID</th>
-                                            <th>Expense Type</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Email</th>
-                                            <th>Date</th>
+                                            <th>所在行业</th>
+                                            <th>报告内容</th>
+                                            <th>评级参考</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td><label><input type="checkbox" value=""></label>#2901</td>
-                                            <td>
-                                                Salary
-                                            </td>
-                                            <td>
-                                                $2000
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-primary">Paid</span>
-                                            </td>
-                                            <td>
-                                                edumin@gmail.com
-                                            </td>
-                                            <td>
-                                                10/05/2017
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label><input type="checkbox" value=""></label>#2901</td>
-                                            <td>
-                                                Salary
-                                            </td>
-                                            <td>
-                                                $2000
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-warning">Pending</span>
-                                            </td>
-                                            <td>
-                                                edumin@gmail.com
-                                            </td>
-                                            <td>
-                                                10/05/2017
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label><input type="checkbox" value=""></label>#2901</td>
-                                            <td>
-                                                Salary
-                                            </td>
-                                            <td>
-                                                $2000
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-primary">Paid</span>
-                                            </td>
-                                            <td>
-                                                edumin@gmail.com
-                                            </td>
-                                            <td>
-                                                10/05/2017
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label><input type="checkbox" value=""></label>#2901</td>
-                                            <td>
-                                                Salary
-                                            </td>
-                                            <td>
-                                                $2000
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-danger">Due</span>
-                                            </td>
-                                            <td>
-                                                edumin@gmail.com
-                                            </td>
-                                            <td>
-                                                10/05/2017
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><label><input type="checkbox" value=""></label>#2901</td>
-                                            <td>
-                                                Salary
-                                            </td>
-                                            <td>
-                                                $2000
-                                            </td>
-                                            <td>
-                                                <span class="badge badge-primary">Paid</span>
-                                            </td>
-                                            <td>
-                                                edumin@gmail.com
-                                            </td>
-                                            <td>
-                                                10/05/2017
+                                        <tr th:each="oneRow : ${info.industry}">
+                                            <td><span style="color:#1cde0f" th:text="${oneRow.name}"></span></td>
+                                            <td th:text="${oneRow.reportName}"></td>
+                                            <td th:switch="${oneRow.rank}">
+                                                <span class="badge badge-danger" th:case="3">牛↑↑</span>
+                                                <span class="badge badge-danger" th:case="2">牛↑</span>
+                                                <span class="badge badge-warning" th:case="0">中性</span>
+                                                <span class="badge badge-success" th:case="-2">熊↓↓</span>
+                                                <span class="badge badge-success" th:case="1">熊↓</span>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -572,39 +437,218 @@
 <script type="text/javascript" th:inline="javascript">
     $(function () {
         var info = [[${info.t3l}]]
-        t1();
+        t1([[${info.index}]]);
         t2([[${info.t2}]]);
         t3(info);
-
+        forecast([[${info.chance}]]);
     })
 
-    function t1() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('t1'));
+    function t1(info) {
+        var chartDom = document.getElementById('t1');
+        var myChart = echarts.init(chartDom);
+        var option;
 
-        // 指定图表的配置项和数据
+        const upColor = '#ec0000';
+        const upBorderColor = '#8A0000';
+        const downColor = '#00da3c';
+        const downBorderColor = '#008F28';
+        console.log(info)
+
+        const data0 = splitData(info.map(item => {
+            const dateString = item.date.replace(/-/g, '/');
+            const open = parseFloat(item.open);
+            const close = parseFloat(item.close);
+            const lowest = parseFloat(item.lowest);
+            const highest = parseFloat(item.highest);
+            return [dateString, open, close, lowest, highest];
+        }));
+
+        function splitData(rawData) {
+            const categoryData = [];
+            const values = [];
+            for (var i = 0; i < rawData.length; i++) {
+                categoryData.push(rawData[i].splice(0, 1)[0]);
+                values.push(rawData[i]);
+            }
+            return {
+                categoryData: categoryData,
+                values: values
+            };
+        }
+
+        function calculateMA(dayCount) {
+            var result = [];
+            for (var i = 0, len = data0.values.length; i < len; i++) {
+                if (i < dayCount) {
+                    result.push('-');
+                    continue;
+                }
+                var sum = 0;
+                for (var j = 0; j < dayCount; j++) {
+                    sum += +data0.values[i - j][1];
+                }
+                result.push(sum / dayCount);
+            }
+            return result;
+        }
+
         option = {
+            title: {
+                text: '上证指数',
+                left: 0
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            legend: {
+                data: ['日K', 'MA5', 'MA20']
+            },
+            grid: {
+                left: '10%',
+                right: '10%',
+                bottom: '15%'
+            },
             xAxis: {
                 type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                data: data0.categoryData,
+                boundaryGap: false,
+                axisLine: {onZero: false},
+                splitLine: {show: false},
+                min: 'dataMin',
+                max: 'dataMax'
             },
             yAxis: {
-                type: 'value'
+                scale: true,
+                splitArea: {
+                    show: true
+                }
             },
-            title: {
-                text: 'A股大盘14天走势'
-            },
+            dataZoom: [
+                {
+                    type: 'inside',
+                    start: 50,
+                    end: 100
+                },
+                {
+                    show: true,
+                    type: 'slider',
+                    top: '90%',
+                    start: 50,
+                    end: 100
+                }
+            ],
             series: [
                 {
-                    data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    name: '日K',
+                    type: 'candlestick',
+                    data: data0.values,
+                    itemStyle: {
+                        color: upColor,
+                        color0: downColor,
+                        borderColor: upBorderColor,
+                        borderColor0: downBorderColor
+                    },
+                    markPoint: {
+                        label: {
+                            formatter: function (param) {
+                                return param != null ? Math.round(param.value) + '' : '';
+                            }
+                        },
+                        data: [
+                            {
+                                name: 'highest value',
+                                type: 'max',
+                                valueDim: 'highest'
+                            },
+                            {
+                                name: 'lowest value',
+                                type: 'min',
+                                valueDim: 'lowest'
+                            },
+                            {
+                                name: 'average value on close',
+                                type: 'average',
+                                valueDim: 'close'
+                            }
+                        ],
+                        tooltip: {
+                            formatter: function (param) {
+                                return param.name + '<br>' + (param.data.coord || '');
+                            }
+                        }
+                    },
+                    markLine: {
+                        symbol: ['none', 'none'],
+                        data: [
+                            [
+                                {
+                                    name: 'from lowest to highest',
+                                    type: 'min',
+                                    valueDim: 'lowest',
+                                    symbol: 'circle',
+                                    symbolSize: 10,
+                                    label: {
+                                        show: false
+                                    },
+                                    emphasis: {
+                                        label: {
+                                            show: false
+                                        }
+                                    }
+                                },
+                                {
+                                    type: 'max',
+                                    valueDim: 'highest',
+                                    symbol: 'circle',
+                                    symbolSize: 10,
+                                    label: {
+                                        show: false
+                                    },
+                                    emphasis: {
+                                        label: {
+                                            show: false
+                                        }
+                                    }
+                                }
+                            ],
+                            {
+                                name: 'min line on close',
+                                type: 'min',
+                                valueDim: 'close'
+                            },
+                            {
+                                name: 'max line on close',
+                                type: 'max',
+                                valueDim: 'close'
+                            }
+                        ]
+                    }
+                },
+                {
+                    name: 'MA5',
                     type: 'line',
-                    smooth: true
+                    data: calculateMA(5),
+                    smooth: true,
+                    lineStyle: {
+                        opacity: 0.5
+                    }
+                },
+                {
+                    name: 'MA20',
+                    type: 'line',
+                    data: calculateMA(20),
+                    smooth: true,
+                    lineStyle: {
+                        opacity: 0.5
+                    }
                 }
             ]
         };
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        option && myChart.setOption(option);
     }
 
     function t2(info) {
@@ -706,6 +750,47 @@
             ]
         }
         ;
+
+        option && myChart.setOption(option);
+    }
+
+    function forecast(info) {
+        let result = info.map(function (data) {
+            return {
+                value: [
+                    parseFloat(data.totalScore),
+                    parseFloat(data.probability),
+                    parseFloat(data.rankRatio),
+                    parseFloat(data.increase)
+                ],
+                name: data.code
+            };
+        });
+        console.info(result)
+
+        var chartDom = document.getElementById('forecast');
+        var myChart = echarts.init(chartDom);
+        var option;
+
+
+        option = {
+            legend: {},
+            radar: {
+                indicator: [
+                    {name: '评分', max: 100},
+                    {name: '上涨概率', max: 100},
+                    {name: '上涨幅度', max: 100},
+                    {name: '超越', max: 1}
+                ]
+            },
+            series: [
+                {
+                    type: 'radar',
+                    data: result
+
+                }
+            ]
+        };
 
         option && myChart.setOption(option);
     }
