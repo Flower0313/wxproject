@@ -476,13 +476,13 @@
     </select>
 
     <select id="oneRow" resultType="com.holden.wxproject.pojo.resp.OneRowResp">
-        SELECT ifnull(round(sum(main_inflow + Slarge_inflow + large_inflow), 0), '今日无数据') AS mainFlow,
-               ifnull(round(sum(mid_inflow + small_inflow), 0), '今日无数据')                  AS smallFlow,
+        SELECT ifnull(round(sum(main_inflow + Slarge_inflow + large_inflow)/10000, 0), '今日无数据') AS mainFlow,
+               ifnull(round(sum(mid_inflow + small_inflow)/10000, 0), '今日无数据')                  AS smallFlow,
                ifnull(concat(max(up_down_rate), '%'), '今日无数据')                            as upRate,
                ifnull(concat(min(up_down_rate), '%'), '今日无数据')                            as downRate,
-               ifnull(round(sum(outer_disk), 0), '今日无数据')                                 as outside,
-               ifnull(round(sum(inner_disk), 0), '今日无数据')                                 as `inner`,
-               ifnull(round(sum(deal_vol), 0), '今日无数据')                                   as dealVol,
+               ifnull(round(sum(outer_disk)/10000, 0), '今日无数据')                                 as outside,
+               ifnull(round(sum(inner_disk)/10000, 0), '今日无数据')                                 as `inner`,
+               ifnull(round(sum(deal_vol)/10000, 0), '今日无数据')                                   as dealVol,
                ifnull(max(highest), '今日无数据')                                              as highest
         FROM `df_a_stock_detail`
         WHERE ds = (select max(ds) from df_a_stock_detail)
@@ -575,7 +575,6 @@
         WHERE `index` = '000001'
         ORDER BY
             date
-            LIMIT 30
     </select>
 
 </mapper>

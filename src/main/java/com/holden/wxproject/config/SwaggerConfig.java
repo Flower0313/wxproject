@@ -29,7 +29,7 @@ public class SwaggerConfig {
                         .title("华小量化Swagger API文档")
                         .description("by 肖华")
                         .version("1.0")
-                        .contact(new Contact("holdenxiao", "https://holden.games", "123103003@qq.com"))
+                        .contact(new Contact("holdenxiao", "https://holdenxiao.cn", "123103003@qq.com"))
                         .build())
                 .groupName("1.X版本")
                 .select()

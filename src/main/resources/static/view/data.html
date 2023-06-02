@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <title>数据看板</title>
     <!-- 引入刚刚下载的 ECharts 文件 -->
+    <link rel="icon" type="image/x-icon" href="../img/data.svg">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
     <link href="../css/data_style.css" rel="stylesheet">
@@ -35,7 +36,7 @@
                         <p>The dataset is sourced from <a href="https://www.eastmoney.com/" target="_blank"
                                                           style="color:blue;text-decoration: underline;">#eastmoney</a>
                             website and is a legitimate crawler that meets the requirements of the website.</p>
-                        <button type="button" class="btn btn-light"><a href="https://holden.games">返回</a></button>
+                        <button type="button" class="btn btn-light"><a href="https://holdenxiao.cn">返回</a></button>
                     </div>
                 </div>
 
@@ -51,7 +52,7 @@
                                     <div class="stat-icon dib"><i class='bx bxs-dollar-circle' style="color:green"></i>
                                     </div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">主力净流入</div>
+                                        <div class="stat-text">主力净流入（万）</div>
                                         <div class="stat-digit">￥<span th:text="${oneRow.mainFlow}"></span></div>
                                     </div>
                                 </div>
@@ -63,7 +64,7 @@
                                     <div class="stat-icon dib"><i class='bx bx-dollar-circle' style="color:red"></i>
                                     </div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">散户净流入</div>
+                                        <div class="stat-text">散户净流入（万）</div>
                                         <div class="stat-digit">￥<span th:text="${oneRow.smallFlow}"></span></div>
                                     </div>
                                 </div>
@@ -75,7 +76,7 @@
                                     <div class="stat-icon dib"><i class='bx bxs-user-check' style="color:green"></i>
                                     </div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">外盘</div>
+                                        <div class="stat-text">外盘（万）</div>
                                         <div class="stat-digit">￥<span th:text="${oneRow.outside}"></span></div>
                                     </div>
                                 </div>
@@ -86,7 +87,7 @@
                                 <div class="stat-widget-one">
                                     <div class="stat-icon dib"><i class='bx bxs-user-x' style="color:red"></i></div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">内盘</div>
+                                        <div class="stat-text">内盘（万）</div>
                                         <div class="stat-digit">￥<span th:text="${oneRow.inner}"></span></div>
                                     </div>
                                 </div>
@@ -125,7 +126,7 @@
                                     <div class="stat-icon dib"><i class='bx bx-coin-stack' style="color:#9719c0"></i>
                                     </div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">成交量</div>
+                                        <div class="stat-text">成交量（万）</div>
                                         <div class="stat-digit"><span th:text="${oneRow.dealVol}"></span></div>
                                     </div>
                                 </div>
@@ -425,7 +426,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="footer">
-                            <p>2023 © 个人所有. - <a href="https://holden.games">holden.games</a></p>
+                            <p>2023 © 个人所有. - <a href="https://holdenxiao.cn">holdenxiao.cn</a></p>
                         </div>
                     </div>
                 </div>
@@ -452,7 +453,6 @@
         const upBorderColor = '#8A0000';
         const downColor = '#00da3c';
         const downBorderColor = '#008F28';
-        console.log(info)
 
         const data0 = splitData(info.map(item => {
             const dateString = item.date.replace(/-/g, '/');
@@ -462,6 +462,7 @@
             const highest = parseFloat(item.highest);
             return [dateString, open, close, lowest, highest];
         }));
+
 
         function splitData(rawData) {
             const categoryData = [];
