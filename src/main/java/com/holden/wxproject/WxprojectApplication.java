@@ -15,18 +15,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@EnableAspectJAutoProxy
 public class WxprojectApplication extends WebMvcConfigurationSupport {
 
     public static void main(String[] args) {
         SpringApplication.run(WxprojectApplication.class, args);
-        /*try {
-            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            MyBot bot = new MyBot();
-            botsApi.registerBot(bot);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }*/
         System.out.println("======================== wx start ========================");
     }
 

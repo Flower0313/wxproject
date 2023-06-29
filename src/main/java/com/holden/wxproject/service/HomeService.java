@@ -1,11 +1,8 @@
 package com.holden.wxproject.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.holden.wxproject.util.DataResult;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName wxproject-HomeService

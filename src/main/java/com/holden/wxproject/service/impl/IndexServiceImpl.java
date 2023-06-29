@@ -1,7 +1,6 @@
 package com.holden.wxproject.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.holden.wxproject.annotation.SourceChange;
 import com.holden.wxproject.config.BaseConstant;
 import com.holden.wxproject.mapper.IndexMapper;
 import com.holden.wxproject.pojo.StockDTO;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +26,6 @@ public class IndexServiceImpl implements IndexService {
     private IndexMapper indexMapper;
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double MA(String code, Integer day, String date) {
         try {
             //截止当日的MA
@@ -55,7 +52,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double BIAS(String code, Integer day, String date) {
         try {
             //n日内收盘均价
@@ -69,7 +65,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> BIASLIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.BIASLIST(code, day, year);
@@ -81,7 +76,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> WRLIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.WRLIST(code, day, year);
@@ -93,7 +87,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> ROCLIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.ROCLIST(code, day, year);
@@ -105,7 +98,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> BBILIST(String code, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.BBILIST(code, year);
@@ -117,7 +109,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> KDJLIST(String code, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.KDJLIST(code, year);
@@ -129,7 +120,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> MACDLIST(String code, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.MACDLIST(code, year);
@@ -141,7 +131,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> ENELIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.ENELIST(code, day, year);
@@ -153,7 +142,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> PSYLIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.PSYLIST(code, day, year);
@@ -165,7 +153,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> BRARLIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.BRARLIST(code, day, year);
@@ -177,7 +164,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> ATRLIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.ATRLIST(code, day, year);
@@ -189,7 +175,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> EMVLIST(String code, Integer day, String year, Integer circle) {
         try {
             List<Map<String, Object>> malist = indexMapper.EMVLIST(code, day, year, circle);
@@ -201,7 +186,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> MTMLIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.MTMLIST(code, day, year);
@@ -213,7 +197,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> DPOLIST(String code, Integer day, String year, Integer circle) {
         try {
             List<Map<String, Object>> malist = indexMapper.DPOLIST(code, day, year, circle);
@@ -225,7 +208,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> ASILIST(String code, Integer day, String year) {
         try {
             List<Map<String, Object>> malist = indexMapper.ASILIST(code, day, year);
@@ -238,7 +220,6 @@ public class IndexServiceImpl implements IndexService {
 
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double WR(String code, Integer day, String date) {
         try {
             //n日内最高价
@@ -256,7 +237,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double ROC(String code, Integer day, String date) {
         try {
             List<StockDTO> stock = indexMapper.List(code, date, day);
@@ -270,7 +250,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double PSY(String code, Integer day, String date) {
         try {
             List<StockDTO> stock = indexMapper.List(code, date, day);
@@ -286,7 +265,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double ATR(String code, Integer day, String date) {
         try {
             List<StockDTO> stock = indexMapper.List(code, date, day);
@@ -309,7 +287,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double EMV(String code, String date, Integer day, Integer circle) {
         try {
             List<StockDTO> list = indexMapper.List(code, date, day);
@@ -332,7 +309,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double DPO(String code, String date, Integer day, Integer circle) {
         try {
             StockDTO current = indexMapper.current(code, date);
@@ -345,7 +321,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double MTM(String code, String date, Integer circle) {
         try {
             double closingPrice = indexMapper.getClosingPrice(code, getTargetDate(code, date, circle));
@@ -358,7 +333,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double ASI(String code, String date, Integer day) {
         try {
             List<StockDTO> list = indexMapper.List(code, date, day);
@@ -391,7 +365,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONObject ENE(String code, Integer day, String date) {
         try {
             Double ma25 = MA(code, day, date);
@@ -409,7 +382,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONObject BRAR(String code, Integer day, String date) {
         try {
             JSONObject result = new JSONObject();
@@ -428,7 +400,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double BBI(String code, String date) {
         try {
             Integer num = indexMapper.num(code);
@@ -443,7 +414,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONObject KDJ(String code, String date) {
         try {
             JSONObject result = new JSONObject();
@@ -461,7 +431,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONObject MACD(String code, String date) {
         try {
             JSONObject result = new JSONObject();
@@ -479,7 +448,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double SAR(String code, String date) {
         try {
             List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
@@ -491,7 +459,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONObject DMI(String code, String date) {
         try {
             JSONObject result = new JSONObject();
@@ -509,7 +476,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONObject MIKE(String code, String date) {
         try {
             JSONObject result = new JSONObject();
@@ -530,7 +496,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONObject RSI(String code, String date) {
         try {
             JSONObject result = new JSONObject();
@@ -548,7 +513,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double OBV(String code, String date) {
         try {
             List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
@@ -560,7 +524,6 @@ public class IndexServiceImpl implements IndexService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public Double RSV(String code, String date) {
         try {
             List<Map<String, Object>> list = indexMapper.recursiveIndex(code, date);
@@ -571,7 +534,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public boolean ifExecute(String date) {
         try {
             List<String> list = indexMapper.ifExecute(date);
@@ -582,7 +544,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public String lastExecute(String date) {
         try {
             return indexMapper.lastExecute(date);
@@ -592,7 +553,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public Double getHighest(String code, String date) {
         try {
             return indexMapper.getHighest(code, date);
@@ -602,7 +562,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public Double getLowest(String code, String date) {
         try {
             return indexMapper.getLowest(code, date);
@@ -612,7 +571,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public Double getClosingPrice(String code, String date) {
         try {
             return indexMapper.getClosingPrice(code, date);
@@ -622,7 +580,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public String getTargetDate(String code, String date, Integer day) {
         try {
             return indexMapper.getTargetDate(code, date, day);
@@ -632,7 +589,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public Double AVG(String code, String date, Integer day, String field) {
         try {
             return indexMapper.AVG(code, date, day, field);
@@ -642,7 +598,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public Double HIGH(String code, String date, Integer day, String field) {
         try {
             return indexMapper.HIGH(code, date, day, field);
@@ -652,7 +607,6 @@ public class IndexServiceImpl implements IndexService {
         }
     }
 
-    @SourceChange(BaseConstant.SPIDER)
     public Double LOW(String code, String date, Integer day, String field) {
         try {
             return indexMapper.LOW(code, date, day, field);

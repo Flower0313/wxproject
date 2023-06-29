@@ -1,26 +1,15 @@
 package com.holden.wxproject.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.holden.wxproject.annotation.SourceChange;
-import com.holden.wxproject.config.BaseConstant;
 import com.holden.wxproject.mapper.StockMapper;
 import com.holden.wxproject.pojo.StockTypeEnum;
 import com.holden.wxproject.service.SotckService;
 import com.holden.wxproject.util.ClickHouseUtil;
 import com.holden.wxproject.util.DataResult;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
-import org.ansj.splitWord.analysis.IndexAnalysis;
-import org.ansj.splitWord.analysis.NlpAnalysis;
-import org.ansj.splitWord.analysis.ToAnalysis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.sql.*;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -46,7 +35,6 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getSingleStock(String code, Integer dateType, String value) {
         if ("".equals(code) || "".equals(value) || code == null || value == null) {
             return DataResult.fail("值不能为空!");
@@ -88,14 +76,12 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, String>>> getIndustryReport(String date) {
         List<Map<String, String>> industryReport = stockMapper.getIndustryReport(date);
         return DataResult.ok(industryReport);
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> getContiniation(Integer times, Integer tag) {
         try {
             if (Objects.isNull(times) || Objects.isNull(tag)) {
@@ -116,7 +102,6 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> getContiniationFinance(Integer times, Integer tag) {
         try {
             if (Objects.isNull(times) || Objects.isNull(tag)) {
@@ -137,7 +122,6 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> judgeNews() {
         try {
             List<Map<String, Object>> keywords = stockMapper.keywords();
@@ -153,7 +137,6 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> targetNews(String keyword) {
         try {
             List<Map<String, Object>> maps = stockMapper.targetNews(keyword);
@@ -164,21 +147,18 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> targetStock(String code, String name) {
         List<Map<String, Object>> maps = stockMapper.targetStock(code, name);
         return DataResult.ok(maps);
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<Map<String, Object>>> stockHot() {
         List<Map<String, Object>> result = stockMapper.sotckHot();
         return DataResult.ok(result);
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<String>> getStockCode(String date) {
         try {
             List<String> stockCode = stockMapper.getStockCode(date);
@@ -190,7 +170,6 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getKline(String code, Integer dateType, String value) {
         try {
             List<Map<String, Object>> kline = stockMapper.getKline(code, dateType, value);
@@ -202,7 +181,6 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getCalendar(Integer dateType, String value) {
         try {
             StringBuilder sb = new StringBuilder();
@@ -216,7 +194,6 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getMaxMinDs(String date) {
         try {
             List<Map<String, Object>> maxMinDs = stockMapper.getMaxMinDs(date);
@@ -228,7 +205,6 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getBigMarketStocks(String date, Double ratio, String order, Integer type) {
         try {
             if (!("desc").equals(order) && !("asc").equals(order)) {

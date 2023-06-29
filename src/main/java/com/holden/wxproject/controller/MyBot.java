@@ -1,28 +1,16 @@
 package com.holden.wxproject.controller;
 
-import com.holden.wxproject.annotation.SourceChange;
 import com.holden.wxproject.config.BaseConstant;
-import com.holden.wxproject.config.ExecutorConfig;
 import com.holden.wxproject.mapper.BotMapper;
-import com.holden.wxproject.mapper.IndexMapper;
 import com.holden.wxproject.pojo.HoldenOptions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
-import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
-import javax.annotation.Resource;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import static com.holden.wxproject.config.BaseConstant.DELAY_SECONDS;
 
 /**
  * @ClassName wxproject-WriteTest
@@ -58,7 +46,6 @@ public class MyBot extends TelegramLongPollingBot {
      * @param update 用户消息
      */
     @Override
-    @SourceChange(BaseConstant.PHOENIX)
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             //checkAuth(update.getMessage().getChat());

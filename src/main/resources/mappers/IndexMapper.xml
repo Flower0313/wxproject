@@ -578,7 +578,7 @@
     </select>
 
     <select id="test" resultType="java.lang.String">
-        SELECT count(*) FROM `df_calendar`
+        SELECT count(*) FROM `user_info`
     </select>
 
 </mapper>

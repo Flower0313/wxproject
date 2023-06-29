@@ -1,9 +1,6 @@
 package com.holden.wxproject.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
-import com.holden.wxproject.annotation.SourceChange;
-import com.holden.wxproject.config.BaseConstant;
-import com.holden.wxproject.config.DataSourceType;
 import com.holden.wxproject.mapper.PicBannerMapper;
 import com.holden.wxproject.pojo.PicBanner;
 import com.holden.wxproject.service.PicBannerService;
@@ -40,7 +37,6 @@ public class PicBannerServiceImpl implements PicBannerService {
     private String FileHttp;
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONArray findAllPic() {
         List<PicBanner> allPic = picBannerMapper.findAllPic();
         JSONArray objects = new JSONArray();

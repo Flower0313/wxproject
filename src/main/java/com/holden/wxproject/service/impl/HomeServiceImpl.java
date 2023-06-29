@@ -1,33 +1,28 @@
 package com.holden.wxproject.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.holden.wxproject.annotation.SourceChange;
+import com.holden.wxproject.annotation.DataBase;
 import com.holden.wxproject.config.BaseConstant;
 import com.holden.wxproject.mapper.IndexMapper;
 import com.holden.wxproject.pojo.resp.*;
 import com.holden.wxproject.redis.RedisDao;
 import com.holden.wxproject.service.HomeService;
+import com.holden.wxproject.util.DataSourceUtil;
 import com.holden.wxproject.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.util.StreamUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @ClassName wxproject-HomeServiceImpl
@@ -48,7 +43,6 @@ public class HomeServiceImpl implements HomeService {
     private RedisDao redisDao;
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
     public JSONObject getInfo() throws Exception {
         LocalDate currentDate = LocalDate.now();
         String date = currentDate.format(DateTimeFormatter.ofPattern(DateUtil.DATE_FORMAT_OUTPUT_ACCURATE_TIME_DAY));
@@ -65,8 +59,6 @@ public class HomeServiceImpl implements HomeService {
             redisAlive = false;
             log.info("redis挂了");
         }
-        System.out.println("<><><><><>");
-
 
         CompletableFuture<List<OneRowResp>> oneRowResp = CompletableFuture.supplyAsync(() -> indexMapper.oneRow(date));
         CompletableFuture<List<TwoRowResp>> twoRowResp = CompletableFuture.supplyAsync(() -> indexMapper.twoRow());
@@ -110,9 +102,8 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    @SourceChange(BaseConstant.SPIDER)
+    @DataBase(BaseConstant.PHOENIX)
     public void test() {
-        String test = indexMapper.test();
-        System.out.println(test + ">>>>>>>");
+        indexMapper.test();
     }
 }
