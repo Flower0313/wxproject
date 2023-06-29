@@ -157,6 +157,11 @@
             <artifactId>telegrambots</artifactId>
             <version>6.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>3.4.0</version>
+        </dependency>
 
         <!--<dependency>
             <groupId>org.apache.logging.log4j</groupId>

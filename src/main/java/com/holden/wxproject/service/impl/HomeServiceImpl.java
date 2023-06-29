@@ -3,18 +3,23 @@ package com.holden.wxproject.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.holden.wxproject.annotation.SourceChange;
 import com.holden.wxproject.config.BaseConstant;
-import com.holden.wxproject.config.ExecutorConfig;
 import com.holden.wxproject.mapper.IndexMapper;
 import com.holden.wxproject.pojo.resp.*;
 import com.holden.wxproject.redis.RedisDao;
 import com.holden.wxproject.service.HomeService;
-import com.holden.wxproject.util.DataResult;
 import com.holden.wxproject.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StreamUtils;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -35,6 +40,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class HomeServiceImpl implements HomeService {
     @Resource
     private IndexMapper indexMapper;
+
+    @Value("${img.storeage}")
+    private String imgStoreage;
 
     @Autowired
     private RedisDao redisDao;
@@ -57,6 +65,7 @@ public class HomeServiceImpl implements HomeService {
             redisAlive = false;
             log.info("redis挂了");
         }
+        System.out.println("<><><><><>");
 
 
         CompletableFuture<List<OneRowResp>> oneRowResp = CompletableFuture.supplyAsync(() -> indexMapper.oneRow(date));
@@ -91,5 +100,19 @@ public class HomeServiceImpl implements HomeService {
 
 
         return result;
+    }
+
+    @Override
+    public byte[] getImage(String url) throws IOException {
+        // 图片的路径和名称
+        org.springframework.core.io.Resource resource = new FileSystemResource(imgStoreage + url);
+        return Files.readAllBytes(resource.getFile().toPath());
+    }
+
+    @Override
+    @SourceChange(BaseConstant.SPIDER)
+    public void test() {
+        String test = indexMapper.test();
+        System.out.println(test + ">>>>>>>");
     }
 }

@@ -124,5 +124,7 @@ public interface IndexMapper {
      */
     List<IndexResp> bigIndex();
 
+    String test();
+
 
 }

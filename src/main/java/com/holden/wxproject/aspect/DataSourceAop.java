@@ -22,8 +22,8 @@ public class DataSourceAop {
     @Before("within(com.holden.wxproject.service.impl.*) && @annotation(sourceChange)")
     public void setDataSource2test01(JoinPoint point, SourceChange sourceChange) throws Throwable {
         String value = sourceChange.value();
-        if (value.equals("sexy")) {
-            DataSourceType.setDataBaseType(DataSourceType.DataBaseType.Sexy);
+        if (value.equals("phoenix")) {
+            DataSourceType.setDataBaseType(DataSourceType.DataBaseType.Phoenix);
         } else if (value.equals("spider")) {
             DataSourceType.setDataBaseType(DataSourceType.DataBaseType.Spider);
         } else {

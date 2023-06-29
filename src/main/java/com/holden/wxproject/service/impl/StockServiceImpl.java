@@ -46,7 +46,7 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.NURSING)
+    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getSingleStock(String code, Integer dateType, String value) {
         if ("".equals(code) || "".equals(value) || code == null || value == null) {
             return DataResult.fail("值不能为空!");
@@ -178,7 +178,7 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.NURSING)
+    @SourceChange(BaseConstant.SPIDER)
     public DataResult<List<String>> getStockCode(String date) {
         try {
             List<String> stockCode = stockMapper.getStockCode(date);
@@ -190,7 +190,7 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.NURSING)
+    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getKline(String code, Integer dateType, String value) {
         try {
             List<Map<String, Object>> kline = stockMapper.getKline(code, dateType, value);
@@ -202,7 +202,7 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.NURSING)
+    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getCalendar(Integer dateType, String value) {
         try {
             StringBuilder sb = new StringBuilder();
@@ -216,7 +216,7 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.NURSING)
+    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getMaxMinDs(String date) {
         try {
             List<Map<String, Object>> maxMinDs = stockMapper.getMaxMinDs(date);
@@ -228,7 +228,7 @@ public class StockServiceImpl implements SotckService {
     }
 
     @Override
-    @SourceChange(BaseConstant.NURSING)
+    @SourceChange(BaseConstant.SPIDER)
     public DataResult<Object> getBigMarketStocks(String date, Double ratio, String order, Integer type) {
         try {
             if (!("desc").equals(order) && !("asc").equals(order)) {

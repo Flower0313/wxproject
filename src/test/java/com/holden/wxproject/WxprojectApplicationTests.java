@@ -1,12 +1,16 @@
 package com.holden.wxproject;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 
+@SpringBootTest
 class WxprojectApplicationTests {
 
 
-    public static void main(String[] args) throws TelegramApiException {
-
+    @Test
+    public void test() {
+        
     }
 }

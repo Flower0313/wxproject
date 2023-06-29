@@ -577,4 +577,8 @@
             date
     </select>
 
+    <select id="test" resultType="java.lang.String">
+        SELECT count(*) FROM `df_calendar`
+    </select>
+
 </mapper>

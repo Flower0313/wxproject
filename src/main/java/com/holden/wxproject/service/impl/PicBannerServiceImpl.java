@@ -40,7 +40,7 @@ public class PicBannerServiceImpl implements PicBannerService {
     private String FileHttp;
 
     @Override
-    @SourceChange(BaseConstant.NURSING)
+    @SourceChange(BaseConstant.SPIDER)
     public JSONArray findAllPic() {
         List<PicBanner> allPic = picBannerMapper.findAllPic();
         JSONArray objects = new JSONArray();

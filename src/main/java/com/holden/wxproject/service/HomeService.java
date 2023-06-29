@@ -3,6 +3,7 @@ package com.holden.wxproject.service;
 import com.alibaba.fastjson.JSONObject;
 import com.holden.wxproject.util.DataResult;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +20,14 @@ public interface HomeService {
      * @return data
      */
     JSONObject getInfo() throws Exception;
+
+
+    /**
+     * 返回图片
+     *
+     * @param url 链接
+     */
+    byte[] getImage(String url) throws IOException;
+
+    void test();
 }

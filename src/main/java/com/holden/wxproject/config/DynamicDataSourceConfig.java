@@ -27,12 +27,12 @@ import java.util.Map;
 public class DynamicDataSourceConfig {
 
     // 将这个对象放入Spring容器中
-    @Bean(name = "sexy")
+    @Bean(name = "phoenix")
     // 表示这个数据源是默认数据源
     @Primary
     // 读取application.properties中的配置参数映射成为一个对象
     // prefix表示参数的前缀
-    @ConfigurationProperties(prefix = "spring.datasource.sexy")
+    @ConfigurationProperties(prefix = "spring.datasource.phoenix")
     public DataSource getDateSource1() {
         return DataSourceBuilder.create().build();
     }
@@ -46,11 +46,11 @@ public class DynamicDataSourceConfig {
 
 
     @Bean(name = "dynamicDataSource")
-    public DynamicDataSource DataSource(@Qualifier("sexy") DataSource primaryDataSource,
+    public DynamicDataSource DataSource(@Qualifier("phoenix") DataSource primaryDataSource,
                                         @Qualifier("spider") DataSource secondaryDataSource) {
         //这个地方是比较核心的targetDataSource 集合是我们数据库和名字之间的映射
         Map<Object, Object> targetDataSource = new HashMap<>();
-        targetDataSource.put(DataSourceType.DataBaseType.Sexy, primaryDataSource);
+        targetDataSource.put(DataSourceType.DataBaseType.Phoenix, primaryDataSource);
         targetDataSource.put(DataSourceType.DataBaseType.Spider, secondaryDataSource);
         DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setTargetDataSources(targetDataSource);

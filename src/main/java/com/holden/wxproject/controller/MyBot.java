@@ -58,7 +58,7 @@ public class MyBot extends TelegramLongPollingBot {
      * @param update 用户消息
      */
     @Override
-    @SourceChange(BaseConstant.NURSING)
+    @SourceChange(BaseConstant.PHOENIX)
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             //checkAuth(update.getMessage().getChat());

@@ -10,7 +10,7 @@ public class DataSourceType {
 
     //内部枚举类，用于选择特定的数据类型
     public enum DataBaseType {
-        Sexy, Spider
+        Phoenix, Spider
     }
 
     // 使用ThreadLocal保证线程安全
@@ -26,7 +26,7 @@ public class DataSourceType {
 
     // 获取数据源类型
     public static DataBaseType getDataBaseType() {
-        DataBaseType dataBaseType = TYPE.get() == null ? DataBaseType.Sexy : TYPE.get();
+        DataBaseType dataBaseType = TYPE.get() == null ? DataBaseType.Phoenix : TYPE.get();
         return dataBaseType;
     }
 
