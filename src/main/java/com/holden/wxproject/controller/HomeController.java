@@ -50,6 +50,12 @@ public class HomeController {
     }
 
 
+    @GetMapping("/gjf")
+    public ModelAndView gjf() {
+        return new ModelAndView("gjf.html");
+    }
+
+
     @GetMapping(value = "/image/{url:.+}", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getImage(@PathVariable("url") String url) throws IOException {
         return homeService.getImage(url);

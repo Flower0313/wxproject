@@ -2,9 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.holden.wxproject.mapper.TelegramMapper">
 
+    <resultMap id="UserResultMap" type="com.holden.wxproject.pojo.UserVO">
+        <id column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <id column="balance" property="balance" jdbcType="DECIMAL"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
     <update id="add">
         update user_info
         set balance=balance + ${score}
         where user_id = #{id}
     </update>
+
+    <select id="select" resultMap="UserResultMap">
+        select user_id, balance, type, update_time
+        from user_info
+    </select>
 </mapper>

@@ -29,4 +29,9 @@ public class TelegramBotController {
         return telegramService.add(id, score);
     }
 
+    @GetMapping("/select")
+    public String select(){
+        return telegramService.select();
+    }
+
 }

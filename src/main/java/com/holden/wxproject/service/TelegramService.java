@@ -15,4 +15,11 @@ public interface TelegramService {
      * @param score 积分
      */
     String add(String id, Integer score);
+
+    /**
+     * 查询用户
+     *
+     * @return
+     */
+    String select();
 }

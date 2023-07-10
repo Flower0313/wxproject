@@ -51,7 +51,7 @@ public class DataSourceConfig {
 
     /**
      * 配置@Transactional注解,用来管理事务的
-     * @Autowired
+     * Autowired
      * private PlatformTransactionManager transactionManager;
      *
      * @return

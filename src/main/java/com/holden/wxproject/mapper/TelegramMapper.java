@@ -1,7 +1,10 @@
 package com.holden.wxproject.mapper;
 
+import com.holden.wxproject.pojo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @ClassName wxproject-TelegramMapper
@@ -18,4 +21,6 @@ public interface TelegramMapper {
      * @param score 积分
      */
     void add(@Param("id") String id, @Param("score") Integer score);
+
+    List<UserVO> select();
 }
